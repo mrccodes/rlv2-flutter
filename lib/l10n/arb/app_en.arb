@@ -1,7 +1,33 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+    "dashboardAppBarTitle": "Recipe Dasboard",
+    "@dashboardAppBarTitle": {
+        "description": "Find, create, and edit existing recipes."
+    },
+
+    "menuTitle": "Menu",
+    "@menuTitle": {
+        "description": "Access account, dashboard, settings and more."
+    },
+
+    "dashboardButton": "Dashboard",
+    "@dashboardButton": {
+      "description": "Text for Dashboard button"
+    },
+
+    "settingsButton": "Settings",
+    "@settingsButton": {
+      "description": "Text for Settings button"
+    },
+    
+    "accountButton": "Account",
+    "@accountButton": {
+      "description": "Text for Account button"
+    },
+
+    "myRecipesDropdownOption": "My Recipes",
+    "@myRecipesDropdownOption": {
+      "description": "Text for My Recipes dropdown option button"
     }
+
 }

@@ -1,7 +1,33 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
+   "menuTitle": "Menú",
+    "@menuTitle": {
+        "description": "Título mostrado en el Drawer de navegación"
+    },
+
+    "dashboardAppBarTitle": "Contador",
+    "@dashboardAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    },
+
+    "dashboardButton": "Tablero",
+    "@dashboardButton": {
+        "description": "Texto del botón para navegar a la página de inicio"
+    },
+
+    "settingsButton": "Configuración",
+    "@settingsButton": {
+        "description": "Texto del botón para navegar a la página de configuración"
+    },
+
+    "accountButton": "Cuenta",
+    "@accountButton": {
+        "description": "Texto del botón para navegar a la página de cuenta"
+    },
+
+    "myRecipesDropdownOption": "Mis Recetas",
+    "@myRecipesDropdownOption": {
+      "description": "Texto para la opción del botón desplegable de Mis Recetas"
+}
+
 }
