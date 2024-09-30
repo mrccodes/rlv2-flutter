@@ -17,10 +17,12 @@ class MyAppTheme {
         onSurface: Color(0xFF140700),  // Text/icons on surfaces
         onError: Colors.white,  // Text/icons on error
         brightness: Brightness.light,  // Light theme
+        inversePrimary: Color(0xFF5FA2FF),  // Inverse Primary color
       ),
 
+
       // Background settings
-      scaffoldBackgroundColor: const Color(0xFFF0E6DC),
+      scaffoldBackgroundColor:const Color(0xFFF0E6DC), // Background color
 
       // App bar settings
      appBarTheme: const AppBarTheme(

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rlv2_flutter/app/view/app.dart';
-import 'package:rlv2_flutter/dashboard/dashboard_view.dart';
+import 'package:rlv2_flutter/app/app.dart';
+import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class DropdownItem {
