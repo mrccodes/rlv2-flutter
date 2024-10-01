@@ -36,6 +36,7 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
     state = state.copyWith(isLoading: true, errorMessage: '');
     try {
       // Simulate a network call.
+      // ignore: inference_failure_on_instance_creation
       await Future.delayed(const Duration(seconds: 2));
       // Update state with new data.
       state = state.copyWith(
