@@ -3,7 +3,7 @@ import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;

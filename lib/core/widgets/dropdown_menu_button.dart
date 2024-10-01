@@ -56,7 +56,7 @@ class _DropdownMenuButtonState extends State<DropdownMenuButton> {
   @override
   Widget build(BuildContext context) {
     // Fetch localized text from context using localization (AppLocalizations, for example)
-    final defaultLabel = context.l10n.myRecipesDropdownOption; 
+    final defaultLabel = context.l10n.myRecipesDropdownOption;
 
     // Create default dropdown item using localized text
     final defaultDropdownItem = DropdownItem(

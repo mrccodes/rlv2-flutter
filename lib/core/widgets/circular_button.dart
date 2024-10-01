@@ -10,7 +10,6 @@ class CustomCircularButton extends ConsumerWidget {
   final bool isSelected;
 
   const CustomCircularButton({
-
     required this.icon,
     required this.label,
     required this.onPressed,
@@ -21,7 +20,8 @@ class CustomCircularButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final color = isSelected ? theme.colorScheme.primary : theme.colorScheme.secondary;
+    final color =
+        isSelected ? theme.colorScheme.primary : theme.colorScheme.secondary;
 
     return GestureDetector(
       onTap: onPressed,
@@ -62,9 +62,8 @@ class CustomCircularButton extends ConsumerWidget {
                     fontSize: 14,
                     height: 1, // Set line height to match font size
                   ),
-                ) ,
-              )
-              ,
+                ),
+              ),
             ],
           ),
         ),

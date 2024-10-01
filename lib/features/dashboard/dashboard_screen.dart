@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/providers/dashboard_provider.dart';
@@ -15,7 +14,6 @@ class DashboardScreen extends ConsumerWidget {
     final dashboardState = ref.watch(dashboardViewModelProvider);
     final dashboardViewModel = ref.read(dashboardViewModelProvider.notifier);
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
-
 
     return Scaffold(
       key: scaffoldKey,
@@ -37,9 +35,11 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: dashboardViewModel.loadDashboardData,  
-                      child: const Text('Refresh',
-                      style: TextStyle(color: Colors.white),),
+                      onPressed: dashboardViewModel.loadDashboardData,
+                      child: const Text(
+                        'Refresh',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),

@@ -26,7 +26,7 @@ class CustomBottomNavigationBar extends ConsumerWidget {
             child: BottomAppBar(
               shape: const CircularNotchedRectangle(),
               color: Colors.white,
-              padding:  const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               height: 65,
               child: Container(
                 height: 70,
@@ -59,7 +59,8 @@ class CustomBottomNavigationBar extends ConsumerWidget {
           ),
           // Center Circular Button
           Positioned(
-            bottom: -25, // Adjust to control how much it extends beyond the screen
+            bottom:
+                -25, // Adjust to control how much it extends beyond the screen
             child: CustomCircularButton(
               icon: Icons.add,
               label: 'New Recipe',
@@ -83,9 +84,9 @@ class CustomBottomNavigationBar extends ConsumerWidget {
     required WidgetRef ref,
   }) {
     final theme = Theme.of(context);
-    final color = selectedIndex == index ? 
-      theme.colorScheme.primary : 
-      theme.colorScheme.secondary;
+    final color = selectedIndex == index
+        ? theme.colorScheme.primary
+        : theme.colorScheme.secondary;
 
     return MaterialButton(
       minWidth: 40,

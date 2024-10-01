@@ -9,7 +9,6 @@ class DashboardState {
     this.isLoading = false,
     this.errorMessage = '',
   });
-  
 
   final int notificationsCount;
   final bool isLoading;
@@ -51,4 +50,3 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
     }
   }
 }
-
