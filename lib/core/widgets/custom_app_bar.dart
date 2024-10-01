@@ -1,17 +1,21 @@
-import 'package:flutter/material.dart';
+// lib/core/widgets/app_bar.dart
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
-  final String title;
-  
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/providers/scaffold_provider.dart';
+
+class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const CustomAppBar({
-    Key? key,
-    required this.scaffoldKey,
     required this.title,
-  }) : super(key: key);
-  
+    super.key,
+  });
+
+  final String title;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scaffoldKey = ref.watch(scaffoldKeyProvider);
+
     return AppBar(
       title: Row(
         children: [

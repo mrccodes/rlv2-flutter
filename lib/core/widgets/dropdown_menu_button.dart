@@ -1,26 +1,20 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:rlv2_flutter/app/view/app.dart';
-import 'package:rlv2_flutter/dashboard/dashboard_view.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class DropdownItem {
+  DropdownItem({required this.id, required this.label});
   final String id;
   final String label;
-
-  DropdownItem({required this.id, required this.label});
 }
 
 class DropdownMenuButton extends StatefulWidget {
-  final Future<List<DropdownItem>> Function()? initializeFunc;
-  final List<DropdownItem>? staticList;
-
   const DropdownMenuButton({
-    Key? key,
+    super.key,
     this.initializeFunc, // Function to initialize the list dynamically
     this.staticList, // Static list of values
-  }) : super(key: key);
+  });
+  final Future<List<DropdownItem>> Function()? initializeFunc;
+  final List<DropdownItem>? staticList;
 
   @override
   State<DropdownMenuButton> createState() => _DropdownMenuButtonState();
@@ -45,7 +39,7 @@ class _DropdownMenuButtonState extends State<DropdownMenuButton> {
       });
     } else if (widget.initializeFunc != null) {
       // If an initialization function is provided, call it
-      final List<DropdownItem> fetchedList = await widget.initializeFunc!();
+      final fetchedList = await widget.initializeFunc!();
       setState(() {
         list = fetchedList;
         dropdownValue = list.isNotEmpty ? list.first : null;
@@ -55,8 +49,9 @@ class _DropdownMenuButtonState extends State<DropdownMenuButton> {
 
   @override
   Widget build(BuildContext context) {
-    // Fetch localized text from context using localization (AppLocalizations, for example)
-    final defaultLabel = context.l10n.myRecipesDropdownOption; 
+    // Fetch localized text from context using
+    // localization (AppLocalizations, for example)
+    final defaultLabel = context.l10n.myRecipesDropdownOption;
 
     // Create default dropdown item using localized text
     final defaultDropdownItem = DropdownItem(
@@ -73,7 +68,7 @@ class _DropdownMenuButtonState extends State<DropdownMenuButton> {
             value: dropdownValue ?? defaultDropdownItem,
             onChanged: (DropdownItem? newValue) {
               setState(() {
-                dropdownValue = newValue!;
+                dropdownValue = newValue;
               });
             },
             items:
