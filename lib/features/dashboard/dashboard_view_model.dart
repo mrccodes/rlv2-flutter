@@ -1,5 +1,6 @@
 // lib/features/dashboard/dashboard_view_model.dart
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Define the state of the dashboard.
@@ -38,9 +39,10 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
       // Simulate a network call.
       // ignore: inference_failure_on_instance_creation
       await Future.delayed(const Duration(seconds: 2));
+      final apiUrl = dotenv.env['API_URL'];
       // Update state with new data.
       state = state.copyWith(
-        firstName: 'Matt',
+        firstName: 'Matt $apiUrl',
         isLoading: false,
       );
     } catch (e) {

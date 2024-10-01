@@ -44,10 +44,16 @@ class RecipeVersionWithData extends RecipeVersion {
   factory RecipeVersionWithData.fromJson(Map<String, dynamic> json) {
     return RecipeVersionWithData(
       simpleIngredients: (json['simpleIngredients'] as List)
-          .map((item) => SimpleIngredient.fromJson(item as Map<String, dynamic>))
+          .map(
+            (item) => SimpleIngredient.fromJson(item as Map<String, dynamic>),
+          )
           .toList(),
       complexIngredients: (json['complexIngredients'] as List)
-          .map((item) => RecipeVersionComplexIngredient.fromJson(item as Map<String, dynamic>))
+          .map(
+            (item) => RecipeVersionComplexIngredient.fromJson(
+            item as Map<String, dynamic>,
+            ),
+          )
           .toList(),
       steps: (json['steps'] as List)
           .map((item) => Step.fromJson(item as Map<String, dynamic>))

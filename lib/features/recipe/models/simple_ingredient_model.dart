@@ -2,10 +2,10 @@ class SimpleIngredient {
   SimpleIngredient({
     required this.id,
     required this.name,
-    this.brand,
-    this.origin,
     required this.createdAt,
     required this.updatedAt,
+    this.brand,
+    this.origin,
   });
 
   factory SimpleIngredient.fromJson(Map<String, dynamic> json) {
