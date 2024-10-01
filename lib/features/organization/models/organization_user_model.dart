@@ -28,7 +28,6 @@ class OrganizationUser {
   final String organizationName;
   final String createdAt;
 
-
   Map<String, dynamic> toJson() {
     return {
       'id': id,

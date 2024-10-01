@@ -17,8 +17,10 @@ class RecipeWithData extends Recipe {
   factory RecipeWithData.fromJson(Map<String, dynamic> json) {
     return RecipeWithData(
       versions: (json['versions'] as List)
-          .map((item) =>
-              RecipeVersionWithData.fromJson(item as Map<String, dynamic>),)
+          .map(
+            (item) =>
+                RecipeVersionWithData.fromJson(item as Map<String, dynamic>),
+          )
           .toList(),
       id: json['id'] as String,
       name: json['name'] as String,
@@ -33,7 +35,7 @@ class RecipeWithData extends Recipe {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'versions': versions.map((version) => version.toJson()).toList(), 
+      'versions': versions.map((version) => version.toJson()).toList(),
       'id': id,
       'name': name,
       'author': author,

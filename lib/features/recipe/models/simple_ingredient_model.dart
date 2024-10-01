@@ -26,7 +26,6 @@ class SimpleIngredient {
   final String createdAt;
   final String updatedAt;
 
-
   Map<String, dynamic> toJson() {
     return {
       'id': id,

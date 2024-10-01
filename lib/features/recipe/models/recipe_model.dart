@@ -8,7 +8,6 @@ class Recipe {
     this.updatedAt,
   });
 
-
   factory Recipe.fromJson(Map<String, String> json) {
     return Recipe(
       id: json['id']!,

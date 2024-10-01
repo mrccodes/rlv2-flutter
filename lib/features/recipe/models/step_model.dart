@@ -6,7 +6,6 @@ class Step {
     required this.stepNumber,
     required this.createdAt,
     required this.updatedAt,
-
   });
 
   factory Step.fromJson(Map<String, dynamic> json) {

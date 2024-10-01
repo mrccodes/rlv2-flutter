@@ -51,7 +51,7 @@ class RecipeVersionWithData extends RecipeVersion {
       complexIngredients: (json['complexIngredients'] as List)
           .map(
             (item) => RecipeVersionComplexIngredient.fromJson(
-            item as Map<String, dynamic>,
+              item as Map<String, dynamic>,
             ),
           )
           .toList(),
@@ -69,8 +69,8 @@ class RecipeVersionWithData extends RecipeVersion {
           .toList(),
 
       // Handle parent class constructor fields
-      id: json['id'] as String,  
-      recipeId: json['recipeId'] as String, 
+      id: json['id'] as String,
+      recipeId: json['recipeId'] as String,
       versionNumber: json['versionNumber'] as int,
       deleted: json['deleted'] as bool,
       difficulty: json['difficulty'] as String,

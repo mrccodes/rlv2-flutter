@@ -20,7 +20,6 @@ class RecipeVersionComplexIngredient {
       unit: json['unit']! as String,
       createdAt: json['createdAt']! as String,
       updatedAt: json['updatedAt']! as String,
-
     );
   }
   final String id;
@@ -30,8 +29,6 @@ class RecipeVersionComplexIngredient {
   final String unit;
   final String createdAt;
   final String updatedAt;
-
-
 
   Map<String, dynamic> toJson() {
     return {
