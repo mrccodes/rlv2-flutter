@@ -3,14 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 
-import '../../helpers/test_setup.dart';
-
 void main() {
   group('App', () {
-    // Create an instance of the mock
-
-    // Set up mock behavior for dotenv.load()
-    setUp(testSetup);
     testWidgets('renders DashboardScreen', (tester) async {
       await tester.pumpWidget(const ProviderScope(child: App()));
       expect(find.byType(DashboardScreen), findsOneWidget);

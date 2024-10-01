@@ -5,11 +5,8 @@ import 'package:rlv2_flutter/core/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/core/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 
-import '../../helpers/test_setup.dart';
-
 void main() {
   group('DashboardScreen', () {
-    setUp(testSetup);
     testWidgets('renders primary nav components', (tester) async {
       await tester.pumpWidget(
         const ProviderScope(
