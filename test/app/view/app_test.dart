@@ -7,7 +7,7 @@ import '../../helpers/test_setup.dart';
 
 void main() {
   group('App', () {
-        setUpAll(() async {
+    setUpAll(() async {
       await testSetup();
     });
 
