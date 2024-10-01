@@ -51,19 +51,19 @@ class MyAppTheme {
       // Text styles
       textTheme: const TextTheme(
         headlineSmall: TextStyle(
-            color: Color(0xFF140700),
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+          color: Color(0xFF140700),
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
         headlineMedium: TextStyle(
-            color: Color(0xFF140700),
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
+          color: Color(0xFF140700),
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
         ),
         headlineLarge: TextStyle(
-            color: Color(0xFF140700),
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
+          color: Color(0xFF140700),
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
         ),
         bodyMedium: TextStyle(color: Color(0xFF140700), fontSize: 16),
         bodySmall: TextStyle(color: Color(0xFF140700), fontSize: 14),

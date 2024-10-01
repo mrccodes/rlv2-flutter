@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class DropdownItem {
-
   DropdownItem({required this.id, required this.label});
   final String id;
   final String label;
 }
 
 class DropdownMenuButton extends StatefulWidget {
-
   const DropdownMenuButton({
     super.key,
     this.initializeFunc, // Function to initialize the list dynamically
@@ -51,7 +49,7 @@ class _DropdownMenuButtonState extends State<DropdownMenuButton> {
 
   @override
   Widget build(BuildContext context) {
-    // Fetch localized text from context using 
+    // Fetch localized text from context using
     // localization (AppLocalizations, for example)
     final defaultLabel = context.l10n.myRecipesDropdownOption;
 

@@ -27,27 +27,24 @@ class DashboardScreen extends ConsumerWidget {
           : dashboardState.errorMessage.isNotEmpty
               ? Center(child: Text(dashboardState.errorMessage))
               : Center(
-                child:    Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Hello${
-                        dashboardState.firstName != '' ? 
-                        ' ${dashboardState.firstName}' : ''}!',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: dashboardViewModel.loadDashboardData,
-                      child: const Text(
-                        'Refresh',
-                        style: TextStyle(color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Hello${dashboardState.firstName != '' ? ' ${dashboardState.firstName}' : ''}!',
+                        style: const TextStyle(fontSize: 18),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: dashboardViewModel.loadDashboardData,
+                        child: const Text(
+                          'Refresh',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-           
     );
   }
 }

@@ -39,7 +39,7 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
       await Future.delayed(const Duration(seconds: 2));
       // Update state with new data.
       state = state.copyWith(
-        firstName:'Matt',
+        firstName: 'Matt',
         isLoading: false,
       );
     } catch (e) {

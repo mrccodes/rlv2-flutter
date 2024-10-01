@@ -43,7 +43,7 @@ class CustomCircularButton extends ConsumerWidget {
           onTap: onPressed,
           customBorder: const CircleBorder(),
           // Optional: Customize splash color
-          splashColor: color.withOpacity(0.2), 
+          splashColor: color.withOpacity(0.2),
           child: SizedBox(
             width: 110,
             height: 110,
@@ -51,7 +51,7 @@ class CustomCircularButton extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 // Ensure the column sizes to its content
-                mainAxisSize: MainAxisSize.min, 
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
