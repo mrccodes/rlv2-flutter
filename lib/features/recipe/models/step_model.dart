@@ -9,14 +9,14 @@ class Step {
 
   });
 
-  factory Step.fromJson(Map<String, String> json) {
+  factory Step.fromJson(Map<String, dynamic> json) {
     return Step(
-      id: json['id']!,
-      instruction: json['instruction']!,
-      versionId: json['versionId']!,
-      stepNumber: int.parse(json['stepNumber']!),
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      id: json['id'] as String,
+      instruction: json['instruction'] as String,
+      versionId: json['versionId'] as String,
+      stepNumber: json['stepNumber'] as int,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
   final String id;

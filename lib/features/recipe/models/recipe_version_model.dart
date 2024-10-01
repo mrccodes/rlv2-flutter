@@ -5,45 +5,45 @@ class RecipeVersion {
     required this.versionNumber,
     required this.deleted,
     required this.difficulty,
-    required this.description,
-    required this.cookTime,
-    required this.prepTime,
-    required this.servings,
-    required this.rating,
-    required this.calories,
-    required this.fat,
-    required this.protein,
-    required this.carbs,
-    required this.saturatedFat,
-    required this.cholesterol,
-    required this.sodium,
-    required this.fiber,
     required this.createdAt,
     required this.updatedAt,
+    required this.servings,
+    this.description,
+    this.cookTime,
+    this.prepTime,
+    this.rating,
+    this.calories,
+    this.fat,
+    this.protein,
+    this.carbohydrates,
+    this.saturatedFat,
+    this.cholesterol,
+    this.sodium,
+    this.fiber,
   });
 
-  factory RecipeVersion.fromJson(Map<String, String> json) {
+  factory RecipeVersion.fromJson(Map<String, dynamic> json) {
     return RecipeVersion(
-      id: json['id']!,
-      recipeId: json['recipeId']!,
-      versionNumber: int.parse(json['versionNumber']!),
-      deleted: bool.parse(json['deleted']!),
-      difficulty: json['difficulty']!,
-      description: json['description'],
-      cookTime: json['cookTime'] != null ? int.parse(json['cookTime']!) : null,
-      prepTime: json['prepTime'] != null ? int.parse(json['prepTime']!) : null,
-      servings: json['servings'] != null ? int.parse(json['servings']!) : null,
-      rating: json['rating'] != null ? int.parse(json['rating']!) : null,
-      calories: json['calories'] != null ? int.parse(json['calories']!) : null,
-      fat: json['fat'] != null ? int.parse(json['fat']!) : null,
-      protein: json['protein'] != null ? int.parse(json['protein']!) : null,
-      carbs: json['carbs'] != null ? int.parse(json['carbs']!) : null,
-      saturatedFat: json['saturatedFat'] != null ? int.parse(json['saturatedFat']!) : null,
-      cholesterol: json['cholesterol'] != null ? int.parse(json['cholesterol']!) : null,
-      sodium: json['sodium'] != null ? int.parse(json['sodium']!) : null,
-      fiber: json['fiber'] != null ? int.parse(json['fiber']!) : null,
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      id: json['id']! as String,
+      recipeId: json['recipeId']! as String,
+      versionNumber: json['versionNumber']! as int,
+      deleted: json['deleted']! as bool,
+      difficulty: json['difficulty']! as String,
+      servings: json['servings']! as int,
+      description: json['description'] as String?,
+      cookTime: json['cookTime'] as int?,
+      prepTime: json['prepTime'] as int?,
+      rating: json['rating'] as int?,
+      calories: json['calories'] as int?,
+      fat: json['fat'] as int?,
+      protein: json['protein'] as int,
+      carbohydrates: json['carbohydrates'] as int,
+      saturatedFat: json['saturatedFat'] as int,
+      cholesterol: json['cholesterol'] as int,
+      sodium: json['sodium'] as int,
+      fiber: json['fiber'] as int,
+      createdAt: json['createdAt']! as String,
+      updatedAt: json['updatedAt']! as String,
     );
   }
   final String id;
@@ -59,7 +59,7 @@ class RecipeVersion {
   final int? calories;
   final int? fat;
   final int? protein;
-  final int? carbs;
+  final int? carbohydrates;
   final int? saturatedFat;
   final int? cholesterol;
   final int? sodium;
@@ -82,7 +82,7 @@ class RecipeVersion {
       'calories': calories,
       'fat': fat,
       'protein': protein,
-      'carbs': carbs,
+      'carbohydrates': carbohydrates,
       'saturatedFat': saturatedFat,
       'cholesterol': cholesterol,
       'sodium': sodium,

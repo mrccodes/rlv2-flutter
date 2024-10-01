@@ -2,26 +2,27 @@ class SimpleIngredient {
   SimpleIngredient({
     required this.id,
     required this.name,
-    required this.brand,
-    required this.origin,
+    this.brand,
+    this.origin,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory SimpleIngredient.fromJson(Map<String, String> json) {
+  factory SimpleIngredient.fromJson(Map<String, dynamic> json) {
     return SimpleIngredient(
-      id: json['id']!,
-      name: json['name']!,
-      brand: json['brand']!,
-      origin: json['origin']!,
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      id: json['id']! as String,
+      name: json['name']! as String,
+      brand: json['brand'] as String?,
+      origin: json['origin'] as String?,
+      createdAt: json['createdAt']! as String,
+      updatedAt: json['updatedAt']! as String,
     );
   }
+
   final String id;
   final String name;
-  final String brand;
-  final String origin;
+  final String? brand;
+  final String? origin;
   final String createdAt;
   final String updatedAt;
 

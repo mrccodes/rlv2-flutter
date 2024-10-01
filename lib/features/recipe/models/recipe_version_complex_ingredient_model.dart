@@ -1,5 +1,5 @@
-class RecipeVersionCompleIngredient {
-  RecipeVersionCompleIngredient({
+class RecipeVersionComplexIngredient {
+  RecipeVersionComplexIngredient({
     required this.id,
     // Points to the recipe version which calls for this complex ingredient
     required this.parentRecipeVersionId,
@@ -11,15 +11,15 @@ class RecipeVersionCompleIngredient {
     required this.updatedAt,
   });
 
-  factory RecipeVersionCompleIngredient.fromJson(Map<String, String> json) {
-    return RecipeVersionCompleIngredient(
-      id: json['id']!,
-      parentRecipeVersionId: json['parentRecipeVersionId']!,
-      childRecipeVersionId: json['childRecipeVersionId']!,
-      qty: int.parse(json['qty']!),
-      unit: json['unit']!,
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+  factory RecipeVersionComplexIngredient.fromJson(Map<String, dynamic> json) {
+    return RecipeVersionComplexIngredient(
+      id: json['id']! as String,
+      parentRecipeVersionId: json['parentRecipeVersionId']! as String,
+      childRecipeVersionId: json['childRecipeVersionId']! as String,
+      qty: json['qty']! as int,
+      unit: json['unit']! as String,
+      createdAt: json['createdAt']! as String,
+      updatedAt: json['updatedAt']! as String,
 
     );
   }
@@ -42,7 +42,6 @@ class RecipeVersionCompleIngredient {
       'unit': unit,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
-
     };
   }
 }
