@@ -9,10 +9,7 @@ import '../../helpers/test_setup.dart';
 
 void main() {
   group('DashboardScreen', () {
-    setUpAll(() async {
-      await testSetup();
-    });
-
+    setUp(testSetup);
     testWidgets('renders primary nav components', (tester) async {
       await tester.pumpWidget(
         const ProviderScope(

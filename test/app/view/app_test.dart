@@ -7,10 +7,10 @@ import '../../helpers/test_setup.dart';
 
 void main() {
   group('App', () {
-    setUpAll(() async {
-      await testSetup();
-    });
+    // Create an instance of the mock
 
+    // Set up mock behavior for dotenv.load()
+    setUp(testSetup);
     testWidgets('renders DashboardScreen', (tester) async {
       await tester.pumpWidget(const ProviderScope(child: App()));
       expect(find.byType(DashboardScreen), findsOneWidget);
