@@ -1,10 +1,4 @@
 class User {
-  final String id;
-  final String username;
-  final String email;
-  final String password;
-  final String createdAt;
-  final String updatedAt;
 
   User({
     required this.id,
@@ -26,6 +20,12 @@ class User {
       updatedAt: json['updatedAt']!,
     );
   }
+  final String id;
+  final String username;
+  final String email;
+  final String password;
+  final String createdAt;
+  final String updatedAt;
 
   // Method to convert a User object to a JSON object
   Map<String, dynamic> toJson() {

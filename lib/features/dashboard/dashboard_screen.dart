@@ -26,11 +26,14 @@ class DashboardScreen extends ConsumerWidget {
           ? const Center(child: CircularProgressIndicator())
           : dashboardState.errorMessage.isNotEmpty
               ? Center(child: Text(dashboardState.errorMessage))
-              : Column(
+              : Center(
+                child:    Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'You have ${dashboardState.notificationsCount} new notifications!',
+                      'Hello${
+                        dashboardState.firstName != '' ? 
+                        ' ${dashboardState.firstName}' : ''}!',
                       style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(height: 20),
@@ -43,6 +46,8 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
+              ),
+           
     );
   }
 }

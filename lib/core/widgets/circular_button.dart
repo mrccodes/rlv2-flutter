@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomCircularButton extends ConsumerWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onPressed;
-  final bool isSelected;
-
   const CustomCircularButton({
     required this.icon,
     required this.label,
     required this.onPressed,
-    Key? key,
+    super.key,
     this.isSelected = false,
-  }) : super(key: key);
+  });
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,11 +22,10 @@ class CustomCircularButton extends ConsumerWidget {
     final color =
         isSelected ? theme.colorScheme.primary : theme.colorScheme.secondary;
 
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: 110, // Adjust size as needed
-        height: 110,
+    return Material(
+      color: Colors.transparent,
+      shape: const CircleBorder(),
+      child: Ink(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
@@ -41,30 +39,40 @@ class CustomCircularButton extends ConsumerWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8), // Adjust padding
-          child: Column(
-            mainAxisSize: MainAxisSize.min, // Add this line
-
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 40,
-                color: color,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 25),
-                child: Text(
-                  label,
-                  style: TextStyle(
+        child: InkWell(
+          onTap: onPressed,
+          customBorder: const CircleBorder(),
+          // Optional: Customize splash color
+          splashColor: color.withOpacity(0.2), 
+          child: SizedBox(
+            width: 110,
+            height: 110,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                // Ensure the column sizes to its content
+                mainAxisSize: MainAxisSize.min, 
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    size: 40,
                     color: color,
-                    fontSize: 14,
-                    height: 1, // Set line height to match font size
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: Text(
+                      label,
+                      style: TextStyle(
+                        color: color,
+                        fontSize: 14,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

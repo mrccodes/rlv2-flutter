@@ -15,7 +15,6 @@ class CustomBottomNavigationBar extends ConsumerWidget {
     return SizedBox(
       height: 100, // Adjust height to fit the circular button
       child: Stack(
-        clipBehavior: Clip.none, // Allow overflow
         alignment: Alignment.bottomCenter,
         children: [
           // BottomAppBar

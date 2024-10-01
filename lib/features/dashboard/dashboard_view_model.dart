@@ -5,22 +5,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Define the state of the dashboard.
 class DashboardState {
   DashboardState({
-    this.notificationsCount = 0,
+    this.firstName = '',
     this.isLoading = false,
     this.errorMessage = '',
   });
 
-  final int notificationsCount;
+  final String firstName;
   final bool isLoading;
   final String errorMessage;
 
   DashboardState copyWith({
-    int? notificationsCount,
+    String? firstName,
     bool? isLoading,
     String? errorMessage,
   }) {
     return DashboardState(
-      notificationsCount: notificationsCount ?? this.notificationsCount,
+      firstName: firstName ?? this.firstName,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
     );
@@ -36,10 +36,10 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
     state = state.copyWith(isLoading: true, errorMessage: '');
     try {
       // Simulate a network call.
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       // Update state with new data.
       state = state.copyWith(
-        notificationsCount: 5,
+        firstName:'Matt',
         isLoading: false,
       );
     } catch (e) {
