@@ -7,6 +7,6 @@ Future<void> testSetup() async {
 
   dotenv.testLoad(fileInput: 'API_URL=https://api.example.com\n');
 
-   // ignore: avoid_print
+  // ignore: avoid_print
   print('Tests setup.');
 }
