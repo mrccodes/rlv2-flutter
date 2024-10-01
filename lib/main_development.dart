@@ -4,6 +4,6 @@ import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/bootstrap.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
   await bootstrap(() => const ProviderScope(child: App()));
 }
