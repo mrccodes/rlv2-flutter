@@ -14,6 +14,7 @@ class DashboardScreen extends ConsumerWidget {
     final dashboardState = ref.watch(dashboardViewModelProvider);
     final dashboardViewModel = ref.read(dashboardViewModelProvider.notifier);
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
+    final firstName = dashboardState.firstName;
 
     return Scaffold(
       key: scaffoldKey,
@@ -31,7 +32,7 @@ class DashboardScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Hello${dashboardState.firstName != '' ? ' ${dashboardState.firstName}' : ''}!',
+                        'Hello${firstName != '' ? ' $firstName' : ''}!',
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(height: 20),
