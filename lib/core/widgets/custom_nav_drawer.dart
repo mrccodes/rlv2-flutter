@@ -26,7 +26,7 @@ class CustomDrawer extends ConsumerWidget {
             leading: const Icon(Icons.account_circle),
             title: Text(l10n.accountButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               Navigator.pop(context);
               // Navigate to account screen
@@ -36,7 +36,7 @@ class CustomDrawer extends ConsumerWidget {
             leading: const Icon(Icons.home),
             title: Text(l10n.dashboardButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               Navigator.pop(context);
               // Handle dashboard navigation
@@ -46,7 +46,7 @@ class CustomDrawer extends ConsumerWidget {
             leading: const Icon(Icons.settings),
             title: Text(l10n.settingsButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               Navigator.pop(context);
               // Navigate to settings
@@ -56,7 +56,7 @@ class CustomDrawer extends ConsumerWidget {
             leading: const Icon(Icons.logout),
             title: Text(l10n.logoutButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               // Navigator.pop(context);
               ref.read(authNotifierProvider.notifier).logout();

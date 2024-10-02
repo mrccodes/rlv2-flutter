@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:rlv2_flutter/core/models/api_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
@@ -19,6 +17,7 @@ Future<User> login({required String email, required String password}) async {
   AppLogger.info('Attempting to login at $apiUrl$endpoint');
 
   try {
+    // ignore: inference_failure_on_function_invocation
     final response = await dio.post(
       endpoint,
       data: {'email': email, 'password': password},
@@ -32,10 +31,12 @@ Future<User> login({required String email, required String password}) async {
 
     // Ensure that responseData is a Map
     if (responseData is Map<String, dynamic>) {
-      if (responseData.containsKey('data') && responseData['data'] is Map<String, dynamic>) {
+      if (
+          responseData.containsKey('data') && 
+          responseData['data'] is Map<String, dynamic>
+        ) {
         final userData = responseData['data'];
 
-        // Assuming User has a fromJson constructor
         return User.fromJson(userData as Map<String, dynamic>);
       } else {
         throw Exception('User data is null or not in expected format.');

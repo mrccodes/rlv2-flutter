@@ -84,7 +84,7 @@ class CustomBottomNavigationBar extends ConsumerWidget {
   }) {
     final theme = Theme.of(context);
     final color = selectedIndex == index
-        ? theme.colorScheme.primary
+        ? theme.primaryColor
         : theme.colorScheme.secondary;
 
     return MaterialButton(

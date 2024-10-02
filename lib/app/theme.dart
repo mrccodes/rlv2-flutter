@@ -40,7 +40,7 @@ class MyAppTheme {
       // Button settings
       buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFFBC5F04),
-        textTheme: ButtonTextTheme.primary,
+        textTheme: ButtonTextTheme.accent,
       ),
 
 
