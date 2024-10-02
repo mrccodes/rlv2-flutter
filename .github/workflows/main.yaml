@@ -21,13 +21,11 @@ jobs:
     with:
       flutter_channel: stable
       min_coverage: 0
-      pre-build-steps:
-        # Add a new step to create or copy the .env file before the build
+      pre-build-steps: |
         - name: Create .env file
           run: |
             echo "API_URL=https://dummy-url-for-ci" > .env
             echo "API_KEY=dummy-api-key" >> .env
-
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
