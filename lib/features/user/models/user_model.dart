@@ -8,7 +8,6 @@ class User {
     required this.updatedAt,
   });
 
-  // Factory method to create a User from a JSON object
   factory User.fromJson(Map<String, String> json) {
     return User(
       id: json['id']!,
@@ -26,7 +25,6 @@ class User {
   final String createdAt;
   final String updatedAt;
 
-  // Method to convert a User object to a JSON object
   Map<String, dynamic> toJson() {
     return {
       'id': id,

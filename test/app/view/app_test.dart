@@ -5,7 +5,7 @@ import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 
 void main() {
   group('App', () {
-    testWidgets('renders DashboardPage', (tester) async {
+    testWidgets('renders DashboardScreen', (tester) async {
       await tester.pumpWidget(const ProviderScope(child: App()));
       expect(find.byType(DashboardScreen), findsOneWidget);
     });
