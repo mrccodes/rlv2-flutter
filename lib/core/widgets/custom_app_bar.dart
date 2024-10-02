@@ -15,8 +15,12 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
+    final theme = Theme.of(context);
 
     return AppBar(
+      iconTheme: IconThemeData(
+        color: theme.colorScheme.primary,
+      ),
       title: Row(
         children: [
           Image.asset(
@@ -33,7 +37,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.menu),
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: theme.colorScheme.primary,
           onPressed: () {
             scaffoldKey.currentState?.openEndDrawer();
           },

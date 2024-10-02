@@ -19,8 +19,7 @@ class CustomCircularButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final color =
-        isSelected ? theme.colorScheme.primary : theme.colorScheme.secondary;
+    final color = isSelected ? theme.primaryColor : theme.colorScheme.secondary;
 
     return Material(
       color: Colors.transparent,

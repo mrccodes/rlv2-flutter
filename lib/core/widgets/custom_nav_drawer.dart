@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_service_provider.dart';
+import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends ConsumerWidget {
   const CustomDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -23,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.account_circle),
             title: Text(l10n.accountButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               Navigator.pop(context);
               // Navigate to account screen
@@ -33,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: Text(l10n.dashboardButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               Navigator.pop(context);
               // Handle dashboard navigation
@@ -43,10 +46,26 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.settings),
             title: Text(l10n.settingsButton),
             textColor: Theme.of(context).colorScheme.onSurface,
-            iconColor: Theme.of(context).colorScheme.primary,
+            iconColor: Theme.of(context).primaryColor,
             onTap: () {
               Navigator.pop(context);
               // Navigate to settings
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: Text(l10n.logoutButton),
+            textColor: Theme.of(context).colorScheme.onSurface,
+            iconColor: Theme.of(context).primaryColor,
+            onTap: () {
+              // Navigator.pop(context);
+              ref.read(authNotifierProvider.notifier).logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<LandingScreen>(
+                  builder: (_) => const LandingScreen(),
+                ),
+              );
             },
           ),
         ],

@@ -8,11 +8,11 @@ class MyAppTheme {
 
       // Secondary color used for widgets like FABs, text selection, etc.
       colorScheme: const ColorScheme(
-        primary: Color(0xFFBC5F04), // Primary color
-        secondary: Color(0xFF140700), // Secondary color
+        primary: Colors.white, // Primary color
+        secondary: Color(0xFF35302D), // Secondary color
         surface: Color(0xFFF0E6DC), // Surface color (cards, modals)
-        error: Colors.red, // Error color
-        onPrimary: Colors.white, // Text/icons on primary color
+        error: Color.fromARGB(255, 167, 21, 21), // Error color
+        onPrimary: Color(0xFF140700), // Text/icons on primary color
         onSecondary: Colors.white, // Text/icons on secondary color
         onSurface: Color(0xFF140700), // Text/icons on surfaces
         onError: Colors.white, // Text/icons on error
@@ -39,13 +39,7 @@ class MyAppTheme {
       // Button settings
       buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFFBC5F04),
-        textTheme: ButtonTextTheme.primary,
-      ),
-
-      // Floating Action Button (FAB) style
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Color(0xFF140700),
-        foregroundColor: Colors.white,
+        textTheme: ButtonTextTheme.accent,
       ),
 
       // Text styles
@@ -67,6 +61,7 @@ class MyAppTheme {
         ),
         bodyMedium: TextStyle(color: Color(0xFF140700), fontSize: 16),
         bodySmall: TextStyle(color: Color(0xFF140700), fontSize: 14),
+        bodyLarge: TextStyle(color: Color(0xFF140700), fontSize: 18),
       ),
 
       // Elevated button style
