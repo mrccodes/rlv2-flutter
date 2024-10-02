@@ -40,7 +40,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
-        ),
+      ),
       body: authState.isLoading
           ? const SplashScreen()
           : Padding(
@@ -57,7 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onSaved: (value) => _email = value!,
                     ),
                     TextFormField(
-                       key: const ValueKey('passwordField'),
+                      key: const ValueKey('passwordField'),
                       decoration: const InputDecoration(labelText: 'Password'),
                       obscureText: true,
                       validator: (value) =>

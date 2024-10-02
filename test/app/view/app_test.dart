@@ -5,14 +5,11 @@ import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 
-
 // Mock AuthState
 
 // In your test
 
 void main() {
-
-
   group('App', () {
     testWidgets('renders Landing Screen', (tester) async {
       await tester.pumpWidget(const ProviderScope(child: App()));
