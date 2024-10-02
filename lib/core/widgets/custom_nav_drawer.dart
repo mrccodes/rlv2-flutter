@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_service_provider.dart';
-import 'package:rlv2_flutter/features/auth/screens/landing_page.dart';
+import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class CustomDrawer extends ConsumerWidget {
@@ -62,13 +62,12 @@ class CustomDrawer extends ConsumerWidget {
               ref.read(authNotifierProvider.notifier).logout();
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute<LandingPage>(
-                  builder: (_) => const LandingPage(),
+                MaterialPageRoute<LandingScreen>(
+                  builder: (_) => const LandingScreen(),
                 ),
               );
             },
           ),
-
         ],
       ),
     );

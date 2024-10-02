@@ -3,7 +3,6 @@
 class ApiResponse<T> {
   ApiResponse({required this.data, required this.message});
 
-
   factory ApiResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,

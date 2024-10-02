@@ -22,7 +22,8 @@ class LandingScreen extends StatelessWidget {
             );
           },
           child: const Text('Go to Login'),
+        ),
       ),
-    ),);
+    );
   }
 }

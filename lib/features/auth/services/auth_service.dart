@@ -12,40 +12,38 @@ class AuthService {
   final Dio dio = Dio();
   late final String apiUrl;
 
-Future<User> login({required String email, required String password}) async {
-  final endpoint = '$apiUrl/login';
-  AppLogger.info('Attempting to login at $apiUrl$endpoint');
+  Future<User> login({required String email, required String password}) async {
+    final endpoint = '$apiUrl/login';
+    AppLogger.info('Attempting to login at $apiUrl$endpoint');
 
-  try {
-    // ignore: inference_failure_on_function_invocation
-    final response = await dio.post(
-      endpoint,
-      data: {'email': email, 'password': password},
-      options: Options(headers: {'Content-Type': 'application/json'}),
-    );
+    try {
+      // ignore: inference_failure_on_function_invocation
+      final response = await dio.post(
+        endpoint,
+        data: {'email': email, 'password': password},
+        options: Options(headers: {'Content-Type': 'application/json'}),
+      );
 
-    AppLogger.info('Response Status: ${response.statusCode}');
-    AppLogger.info('Response Data: ${response.data}');
+      AppLogger.info('Response Status: ${response.statusCode}');
+      AppLogger.info('Response Data: ${response.data}');
 
-    final responseData = response.data;
+      final responseData = response.data;
 
-    // Ensure that responseData is a Map
-    if (responseData is Map<String, dynamic>) {
-      if (
-          responseData.containsKey('data') && 
-          responseData['data'] is Map<String, dynamic>
-        ) {
-        final userData = responseData['data'];
+      // Ensure that responseData is a Map
+      if (responseData is Map<String, dynamic>) {
+        if (responseData.containsKey('data') &&
+            responseData['data'] is Map<String, dynamic>) {
+          final userData = responseData['data'];
 
-        return User.fromJson(userData as Map<String, dynamic>);
+          return User.fromJson(userData as Map<String, dynamic>);
+        } else {
+          throw Exception('User data is null or not in expected format.');
+        }
       } else {
-        throw Exception('User data is null or not in expected format.');
+        throw Exception('Unexpected response format: ${response.data}');
       }
-    } else {
-      throw Exception('Unexpected response format: ${response.data}');
-    }
-  } on DioException catch (e) {
-    // Handle Dio-specific errors...
+    } on DioException catch (e) {
+      // Handle Dio-specific errors...
       if (e.response != null) {
         AppLogger.error('Dio Error: ${e.response!.statusCode}');
         AppLogger.error('Dio Error: ${e.response!.data}');
@@ -68,12 +66,11 @@ Future<User> login({required String email, required String password}) async {
       } else {
         throw Exception('Failed to login (e.response): $e');
       }
-  } catch (e) {
-    AppLogger.error(e.toString());
-    throw Exception('Failed to login: $e');
+    } catch (e) {
+      AppLogger.error(e.toString());
+      throw Exception('Failed to login: $e');
+    }
   }
-}
-
 
   // Add other authentication methods like logout, register if needed
   Future<User> logout() async {
@@ -91,4 +88,3 @@ Future<User> login({required String email, required String password}) async {
     }
   }
 }
-

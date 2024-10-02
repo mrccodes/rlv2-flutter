@@ -4,7 +4,6 @@ class ErrorScreen extends StatelessWidget {
   const ErrorScreen({required this.error, super.key});
   final Object error;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

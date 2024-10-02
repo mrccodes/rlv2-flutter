@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration:  const InputDecoration(labelText: 'Email'),
+                      decoration: const InputDecoration(labelText: 'Email'),
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter your email' : null,
                       onSaved: (value) => _email = value!,

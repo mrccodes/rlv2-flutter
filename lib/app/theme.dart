@@ -6,7 +6,6 @@ class MyAppTheme {
       // Define your primary color (accent for buttons, appbars, etc.)
       primaryColor: const Color(0xFFBC5F04),
 
-
       // Secondary color used for widgets like FABs, text selection, etc.
       colorScheme: const ColorScheme(
         primary: Colors.white, // Primary color
@@ -42,7 +41,6 @@ class MyAppTheme {
         buttonColor: Color(0xFFBC5F04),
         textTheme: ButtonTextTheme.accent,
       ),
-
 
       // Text styles
       textTheme: const TextTheme(
