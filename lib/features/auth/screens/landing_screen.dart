@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+class LandingScreen extends StatelessWidget {
+  const LandingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
