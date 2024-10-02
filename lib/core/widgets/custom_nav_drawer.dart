@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
+import 'package:rlv2_flutter/features/auth/screens/landing_page.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends ConsumerWidget {
   const CustomDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -49,6 +52,23 @@ class CustomDrawer extends StatelessWidget {
               // Navigate to settings
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: Text(l10n.logoutButton),
+            textColor: Theme.of(context).colorScheme.onSurface,
+            iconColor: Theme.of(context).colorScheme.primary,
+            onTap: () {
+              // Navigator.pop(context);
+              ref.read(authNotifierProvider.notifier).logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<LandingPage>(
+                  builder: (_) => const LandingPage(),
+                ),
+              );
+            },
+          ),
+
         ],
       ),
     );

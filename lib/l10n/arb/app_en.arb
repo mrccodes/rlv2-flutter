@@ -28,6 +28,11 @@
     "myRecipesDropdownOption": "My Recipes",
     "@myRecipesDropdownOption": {
       "description": "Text for My Recipes dropdown option button"
+    },
+
+    "logoutButton": "Logout",
+    "@logoutButton": {
+      "description": "Text for logout button"
     }
 
 }
