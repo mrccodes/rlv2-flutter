@@ -38,7 +38,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final authState = ref.watch(authNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(
+        title: const Text('Login'),
+        ),
       body: authState.isLoading
           ? const SplashScreen()
           : Padding(
@@ -48,12 +50,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Column(
                   children: [
                     TextFormField(
+                      key: const ValueKey('emailField'),
                       decoration: const InputDecoration(labelText: 'Email'),
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter your email' : null,
                       onSaved: (value) => _email = value!,
                     ),
                     TextFormField(
+                       key: const ValueKey('passwordField'),
                       decoration: const InputDecoration(labelText: 'Password'),
                       obscureText: true,
                       validator: (value) =>
@@ -62,6 +66,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
+                      key: const ValueKey('submitButton'),
                       onPressed: _submit,
                       child: const Text('Login'),
                     ),

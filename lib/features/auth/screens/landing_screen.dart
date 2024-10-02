@@ -12,6 +12,7 @@ class LandingScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
+          key: const ValueKey('loginButton'),
           onPressed: () {
             // Navigate to LoginScreen
             Navigator.push(

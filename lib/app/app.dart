@@ -17,9 +17,8 @@ class App extends ConsumerWidget {
       theme: MyAppTheme.theme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: '/',
+      home: const LandingScreen(),
       routes: {
-        '/': (context) => const LandingScreen(),
         '/login': (context) => const LoginScreen(),
         '/dashboard': (context) => authState.user != null
             ? const DashboardScreen()
