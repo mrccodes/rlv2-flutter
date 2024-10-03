@@ -16,6 +16,8 @@ class DashboardScreen extends ConsumerWidget {
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
     final userSessionContextState =
         ref.watch(userContextSessionNotifierProvider);
+    final firstName = 
+      userSessionContextState.userSessionContext?.userInformation?.firstName;
 
     return Scaffold(
       key: scaffoldKey,
@@ -41,14 +43,10 @@ class DashboardScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Hello${userSessionContextState.userSessionContext?.userInformation?.firstName ?? ''}!',
+                        'Hello${ firstName != null ? ' $firstName' : ''}!',
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(height: 20),
-                      const Text(
-                        'Refresh',
-                        style: TextStyle(color: Colors.white),
-                      ),
                     ],
                   ),
                 ),

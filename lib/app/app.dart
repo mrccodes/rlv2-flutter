@@ -24,10 +24,7 @@ class App extends ConsumerWidget {
       home: const LandingScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/dashboard': (context) =>
-            authState.isLoading // || userSessionContextState.isLoading
-                ? const SplashScreen()
-                : const DashboardScreen(),
+        '/dashboard': (context) => const DashboardScreen(),
       },
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
-import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/auth/widgets/login_form.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -13,97 +13,43 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class LoginScreenState extends ConsumerState<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-  String _email = '';
-  String _password = '';
-
-  Future<void> _submit() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      await ref.read(authNotifierProvider.notifier).login(_email, _password);
-      final authState = ref.read(authNotifierProvider);
-      if (authState.user != null) {
-        unawaited(ref
-            .read(userContextSessionNotifierProvider.notifier)
-            .loadUserSession(authState.user!.id));
-        if (mounted) {
-          unawaited(Navigator.pushReplacementNamed(context, '/dashboard'));
-        }
-      } else if (authState.error != null && mounted) {
-        _showError(authState.error!);
-      }
-    }
-  }
-
-  Future<void> _testSubmit() async {
-    _formKey.currentState!.save();
-    await ref
-        .read(authNotifierProvider.notifier)
-        .login('matt@matt.com', 'password123');
-    final authState = ref.read(authNotifierProvider);
-    if (authState.user != null) {
-      await ref
-          .read(userContextSessionNotifierProvider.notifier)
-          .loadUserSession(authState.user!.id);
-      if (mounted) {
-        unawaited(Navigator.pushReplacementNamed(context, '/dashboard'));
-      }
-    } else if (authState.error != null && mounted) {
-      _showError(authState.error!);
-    }
-  }
-
-  void _showError(String error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(error)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
+
+  
+    // Handle loading
+    if (authState.isLoading) {
+      return const SplashScreen();
+    } 
+
+    // Handle successful login
+    if (authState.user != null) {
+      // Use WidgetsBinding to delay the navigation until after the build is done
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      });
+      return const SplashScreen(); // Placeholder during navigation
+    } 
+
+    // Handle login error
+    if (authState.error != null) {
+      // Use WidgetsBinding to show error after build completes
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(authState.error!)),
+        );
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: authState.isLoading
-          ? const SplashScreen()
-          : Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      key: const ValueKey('emailField'),
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter your email' : null,
-                      onSaved: (value) => _email = value!,
-                    ),
-                    TextFormField(
-                      key: const ValueKey('passwordField'),
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter your password' : null,
-                      onSaved: (value) => _password = value!,
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      key: const ValueKey('submitButton'),
-                      onPressed: _submit,
-                      child: const Text('Login'),
-                    ),
-                    ElevatedButton(
-                      onPressed: _testSubmit,
-                      child: const Text('Login Test'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      body: const Padding(
+        padding: EdgeInsets.all(16),
+        child: LoginForm(),
+      ),
     );
   }
 }

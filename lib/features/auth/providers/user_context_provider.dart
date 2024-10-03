@@ -4,6 +4,7 @@ import 'package:rlv2_flutter/features/auth/notifiers/auth_notifier.dart';
 import 'package:rlv2_flutter/features/auth/notifiers/user_context_notifier.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/services/user_session_context_service.dart';
+import 'package:rlv2_flutter/utils/app_logger.dart';
 
 // provider
 final userSessionContextServiceProvider = Provider<UserSessionContextService>(
@@ -29,7 +30,9 @@ final userSessionListenerProvider = Provider<void>((ref) {
   ref.listen<AuthState>(authNotifierProvider, (previous, next) {
     final previousUserId = previous?.user?.id;
     final nextUserId = next.user?.id;
-
+    AppLogger.info('AuthState changed');
+    AppLogger.info('Previous user id: $previousUserId');
+    AppLogger.info('Next user id: $nextUserId');
     // Check if userId has changed
     if (previousUserId != nextUserId && nextUserId != null) {
       // Call loadUserSession with the new userId
