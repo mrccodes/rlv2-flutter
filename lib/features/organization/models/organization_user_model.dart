@@ -9,15 +9,15 @@ class OrganizationUser {
     required this.createdAt,
   });
 
-  factory OrganizationUser.fromJson(Map<String, String> json) {
+  factory OrganizationUser.fromJson(Map<String, dynamic> json) {
     return OrganizationUser(
-      id: json['id']!,
-      organizationId: json['organizationId']!,
-      userId: json['userId']!,
-      isOwner: json['isOwner']!,
-      username: json['username']!,
-      organizationName: json['organizationName']!,
-      createdAt: json['createdAt']!,
+      id: json['id'] as String,
+      organizationId: json['organizationId'] as String,
+      userId: json['userId'] as String,
+      isOwner: json['isOwner'] as String,
+      username: json['username'] as String,
+      organizationName: json['organizationName'] as String,
+      createdAt: json['createdAt'] as String,
     );
   }
   final String id;

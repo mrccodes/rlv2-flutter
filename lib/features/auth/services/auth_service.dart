@@ -1,16 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
-class AuthService {
-  AuthService({this.baseUrl = 'http://172.27.7.89:3000', this.version = 'v1'}) {
-    apiUrl = '$baseUrl/$version';
-  }
-
-  final String baseUrl;
-  final String version;
-  final Dio dio = Dio();
-  late final String apiUrl;
+class AuthService extends ApiService {
 
   Future<User> login({required String email, required String password}) async {
     final endpoint = '$apiUrl/login';

@@ -8,14 +8,14 @@ class UserInformation {
     required this.bio,
   });
 
-  factory UserInformation.fromJson(Map<String, String> json) {
+  factory UserInformation.fromJson(Map<String, dynamic> json) {
     return UserInformation(
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      image: json['image'],
-      bio: json['bio'],
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      firstName: json['firstName'] as String?,
+      lastName: json['lastName'] as String?,
+      image: json['image'] as String?,
+      bio: json['bio'] as String?,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
   final String? firstName;

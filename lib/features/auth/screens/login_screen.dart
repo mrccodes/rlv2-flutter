@@ -20,6 +20,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       await ref.read(authNotifierProvider.notifier).login(_email, _password);
+
       final authState = ref.read(authNotifierProvider);
       if (authState.user != null) {
         // ignore: use_build_context_synchronously

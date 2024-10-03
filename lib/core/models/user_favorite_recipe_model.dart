@@ -11,17 +11,17 @@ class UserFavoriteRecipe {
     required this.username,
   });
 
-  factory UserFavoriteRecipe.fromJson(Map<String, String> json) {
+  factory UserFavoriteRecipe.fromJson(Map<String, dynamic> json) {
     return UserFavoriteRecipe(
-      id: json['id']!,
-      recipeVersionId: json['recipeVersionId']!,
-      userId: json['userId']!,
-      recipeId: json['recipeId']!,
-      createdAt: json['createdAt']!,
-      recipeName: json['recipeName']!,
-      recipeAuthor: json['recipeAuthor']!,
-      recipeVersionDescription: json['recipeVersionDescription']!,
-      username: json['username']!,
+      id: json['id'] as String,
+      recipeVersionId: json['recipeVersionId'] as String,
+      userId: json['userId'] as String,
+      recipeId: json['recipeId'] as String,
+      createdAt: json['createdAt'] as String,
+      recipeName: json['recipeName'] as String,
+      recipeAuthor: json['recipeAuthor'] as String,
+      recipeVersionDescription: json['recipeVersionDescription'] as String,
+      username: json['username'] as String,
     );
   }
   final String id;
