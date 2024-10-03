@@ -1,7 +1,6 @@
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_model.dart';
 
 class UserWithToken extends User {
-
   UserWithToken({
     required super.id,
     required super.password,
@@ -27,12 +26,11 @@ class UserWithToken extends User {
   }
   final String token;
 
-
   // Override toJson method to include the token in the output
   @override
   Map<String, dynamic> toJson() {
     final data = super.toJson(); // Get JSON from the base class
-    data['token'] = token;       // Add the token field
+    data['token'] = token; // Add the token field
     return data;
   }
 }

@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:rlv2_flutter/core/services/api_service.dart';
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
-
-
 
 class AuthService extends ApiService {
   Future<User> login({required String email, required String password}) async {
@@ -27,14 +25,14 @@ class AuthService extends ApiService {
         if (responseData.containsKey('data') &&
             responseData['data'] is Map<String, dynamic>) {
           final userData = responseData['data'];
-           // Access the Set-Cookie header
-             final cookies = response.headers['set-cookie'];
-             if (cookies != null && cookies.isNotEmpty) {
+          // Access the Set-Cookie header
+          final cookies = response.headers['set-cookie'];
+          if (cookies != null && cookies.isNotEmpty) {
             // Assuming your token is prefixed by 'Authorization='
             final cookieString = cookies[0];
             final token = RegExp(
               'Authorization=([^;]+)',
-              ).firstMatch(cookieString)?.group(1);
+            ).firstMatch(cookieString)?.group(1);
 
             if (token != null) {
               // Store just the token securely

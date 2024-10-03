@@ -1,20 +1,18 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/providers/auth_service_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
-import 'package:rlv2_flutter/core/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
@@ -25,36 +23,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       await ref.read(authNotifierProvider.notifier).login(_email, _password);
       final authState = ref.read(authNotifierProvider);
       if (authState.user != null) {
-
-        unawaited(ref.read(userContextSessionNotifierProvider.notifier)
+        unawaited(ref
+            .read(userContextSessionNotifierProvider.notifier)
             .loadUserSession(authState.user!.id));
-        // ignore: use_build_context_synchronously
-        await Navigator.pushReplacementNamed(context, '/dashboard');
-      } else if (authState.error != null) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(authState.error!)),
-        );
+        if (mounted) {
+          unawaited(Navigator.pushReplacementNamed(context, '/dashboard'));
+        }
+      } else if (authState.error != null && mounted) {
+        _showError(authState.error!);
       }
     }
   }
+
   Future<void> _testSubmit() async {
-      _formKey.currentState!.save();
-      await ref.read(authNotifierProvider.notifier).login('mrc@matt.com', 'password123');
-      final authState = ref.read(authNotifierProvider);
-      if (authState.user != null) {
-
-        await ref.read(userContextSessionNotifierProvider.notifier)
-            .loadUserSession(authState.user!.id);
-        // ignore: use_build_context_synchronously
-        await Navigator.pushReplacementNamed(context, '/dashboard');
-      } else if (authState.error != null) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(authState.error!)),
-        );
+    _formKey.currentState!.save();
+    await ref
+        .read(authNotifierProvider.notifier)
+        .login('mrc@matt.com', 'password123');
+    final authState = ref.read(authNotifierProvider);
+    if (authState.user != null) {
+      await ref
+          .read(userContextSessionNotifierProvider.notifier)
+          .loadUserSession(authState.user!.id);
+      if (mounted) {
+        unawaited(Navigator.pushReplacementNamed(context, '/dashboard'));
       }
+    } else if (authState.error != null && mounted) {
+      _showError(authState.error!);
+    }
+  }
 
+  void _showError(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(error)),
+    );
   }
 
   @override

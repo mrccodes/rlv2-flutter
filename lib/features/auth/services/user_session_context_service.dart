@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:rlv2_flutter/core/services/api_service.dart';
-import 'package:rlv2_flutter/features/user/models/user_session_context_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class UserSessionContextService extends ApiService {
-  Future<UserSessionContext> getUserSessionContext(
-      {required String userId,}) async {
+  Future<UserSessionContext> getUserSessionContext({
+    required String userId,
+  }) async {
     final endpoint = '/userSessionContext/$userId';
 
     AppLogger.info('Attempting API request at $apiUrl$endpoint');

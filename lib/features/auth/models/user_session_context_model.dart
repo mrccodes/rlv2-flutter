@@ -1,14 +1,13 @@
-
 import 'package:rlv2_flutter/core/models/user_favorite_recipe_model.dart';
 import 'package:rlv2_flutter/features/organization/models/organization_user_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/stripe/models/subscription_model.dart';
-import 'package:rlv2_flutter/features/user/models/user_information_model.dart';
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
-import 'package:rlv2_flutter/features/user/models/user_settings_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_information_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_settings_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
-class UserSessionContext  {
+class UserSessionContext {
   UserSessionContext({
     required this.user,
     required this.userSettings,
@@ -24,17 +23,17 @@ class UserSessionContext  {
     AppLogger.info('UserSessionContext.fromJson: $json');
     return UserSessionContext(
       user: User.fromJson(json['user'] as Map<String, dynamic>),
-      userInformation: json['userInformation'] != null ? 
-        UserInformation.fromJson(
-          json['userInformation'] as Map<String, dynamic>,
-        ) : null,
+      userInformation: json['userInformation'] != null
+          ? UserInformation.fromJson(
+              json['userInformation'] as Map<String, dynamic>,
+            )
+          : null,
       userSettings: UserSettings.fromJson(
         json['userSettings'] as Map<String, dynamic>,
       ),
       userFavoriteRecipes: (json['userFavoriteRecipes'] as List)
           .map(
-            (item) =>
-                UserFavoriteRecipe.fromJson(item as Map<String, dynamic>),
+            (item) => UserFavoriteRecipe.fromJson(item as Map<String, dynamic>),
           )
           .toList(),
       // organizationUsers: (json['organizationUsers'] as List)
@@ -45,8 +44,7 @@ class UserSessionContext  {
       //     .toList(),
       userRecipes: (json['userRecipes'] as List)
           .map(
-            (item) =>
-                RecipeWithData.fromJson(item as Map<String, dynamic>),
+            (item) => RecipeWithData.fromJson(item as Map<String, dynamic>),
           )
           .toList(),
       // subscriptions: (json['subscriptions'] as List)
@@ -55,7 +53,6 @@ class UserSessionContext  {
       //           Subscription.fromJson(item as Map<String, dynamic>),
       //     )
       //     .toList(),
-
     );
   }
   final User user;
@@ -66,19 +63,17 @@ class UserSessionContext  {
   final List<RecipeWithData> userRecipes;
   // final List<Subscription> subscriptions;
 
-
-
   // Method to convert a UserSettings object to a JSON object
   Map<String, dynamic> toJson() {
     return {
       'user': user.toJson(),
-      'userInformation':  userInformation?.toJson(),
+      'userInformation': userInformation?.toJson(),
       'userSettings': userSettings.toJson(),
-      'userFavoriteRecipes': userFavoriteRecipes.map((recipe) => recipe.toJson()).toList(),
+      'userFavoriteRecipes':
+          userFavoriteRecipes.map((recipe) => recipe.toJson()).toList(),
       // 'organizationUsers': organizationUsers.map((user) => user.toJson()).toList(),
       'userRecipes': userRecipes.map((recipe) => recipe.toJson()).toList(),
       // 'subscriptions': subscriptions.map((subscription) => subscription.toJson()).toList(),
-  
     };
   }
 }

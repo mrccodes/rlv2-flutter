@@ -1,7 +1,6 @@
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class Subscription {
-
   Subscription({
     required this.id,
     required this.created,
@@ -31,7 +30,8 @@ class Subscription {
       currentPeriodStart: json['current_period_start'] as int,
       customer: json['customer'] as String,
       items: (json['items'] as List<dynamic>)
-          .map((item) => SubscriptionItem.fromJson(item as Map<String, dynamic>))
+          .map(
+              (item) => SubscriptionItem.fromJson(item as Map<String, dynamic>))
           .toList(),
       latestInvoice: json['latest_invoice'] as String,
       pendingInvoiceItemInterval: json['pending_invoice_item_interval'],
@@ -61,7 +61,7 @@ class Subscription {
   final dynamic trialSettings;
   final dynamic trialStart;
 
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'created': created,
@@ -119,7 +119,7 @@ class SubscriptionItem {
   final int quantity;
   final String subscription;
 
-   Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'object': object,
@@ -131,8 +131,6 @@ class SubscriptionItem {
       'subscription': subscription,
     };
   }
-
-
 }
 
 class Price {

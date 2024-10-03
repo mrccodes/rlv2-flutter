@@ -18,6 +18,4 @@ class ApiResponse<T> {
   final bool success;
   final T? data; // The data on a successful response
   final String? errorMessage; // The error message on a failure response
-
-
 }
