@@ -1,3 +1,5 @@
+import 'package:rlv2_flutter/utils/app_logger.dart';
+
 class Subscription {
 
   Subscription({
@@ -9,17 +11,18 @@ class Subscription {
     required this.customer,
     required this.items,
     required this.latestInvoice,
-    required this.pendingInvoiceItemInterval,
     required this.pendingSetupIntent,
-    required this.pendingUpdate,
     required this.startDate,
     required this.status,
+    this.pendingInvoiceItemInterval,
+    this.pendingUpdate,
     this.trialEnd,
     this.trialSettings,
     this.trialStart,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) {
+    AppLogger.info('Subscription.fromJson: $json');
     return Subscription(
       id: json['id'] as String,
       created: json['created'] as int,

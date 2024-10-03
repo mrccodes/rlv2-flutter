@@ -1,11 +1,6 @@
 class UserSettings {
   UserSettings({
     required this.userId,
-    required this.preferredMode,
-    required this.preferredVolumeUnit,
-    required this.preferredMassUnit,
-    required this.preferredLengthUnit,
-    required this.preferredTemperatureUnit,
     required this.notifications,
     required this.pushNotifications,
     required this.emailNotifications,
@@ -14,17 +9,22 @@ class UserSettings {
     required this.showTipsAndTricks,
     required this.createdAt,
     required this.updatedAt,
+    this.preferredMode,
+    this.preferredVolumeUnit,
+    this.preferredMassUnit,
+    this.preferredLengthUnit,
+    this.preferredTemperatureUnit,
   });
 
   // Factory method to create a UserSettings from a JSON object
   factory UserSettings.fromJson(Map<String, dynamic> json) {
     return UserSettings(
       userId: json['userId'] as String,
-      preferredMode: json['preferredMode'] as String,
-      preferredVolumeUnit: json['preferredVolumeUnit'] as String,
-      preferredMassUnit: json['preferredMassUnit'] as String,
-      preferredLengthUnit: json['preferredLengthUnit'] as String,
-      preferredTemperatureUnit: json['preferredTemperatureUnit'] as String,
+      preferredMode: json['preferredMode'] as String?,
+      preferredVolumeUnit: json['preferredVolumeUnit'] as String?,
+      preferredMassUnit: json['preferredMassUnit'] as String?,
+      preferredLengthUnit: json['preferredLengthUnit'] as String?,
+      preferredTemperatureUnit: json['preferredTemperatureUnit'] as String?,
       notifications: json['notifications'] as bool,
       pushNotifications: json['pushNotifications'] as bool,
       emailNotifications: json['emailNotifications'] as bool,
@@ -36,11 +36,11 @@ class UserSettings {
     );
   }
   final String userId;
-  final String preferredMode;
-  final String preferredVolumeUnit;
-  final String preferredMassUnit;
-  final String preferredLengthUnit;
-  final String preferredTemperatureUnit;
+  final String? preferredMode;
+  final String? preferredVolumeUnit;
+  final String? preferredMassUnit;
+  final String? preferredLengthUnit;
+  final String? preferredTemperatureUnit;
   final bool notifications;
   final bool pushNotifications;
   final bool emailNotifications;

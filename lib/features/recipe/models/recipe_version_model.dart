@@ -14,12 +14,12 @@ class RecipeVersion {
     this.rating,
     this.calories,
     this.fat,
-    this.protein,
-    this.carbohydrates,
     this.saturatedFat,
     this.cholesterol,
     this.sodium,
+    this.carbohydrates,
     this.fiber,
+    this.protein,
   });
 
   factory RecipeVersion.fromJson(Map<String, dynamic> json) {

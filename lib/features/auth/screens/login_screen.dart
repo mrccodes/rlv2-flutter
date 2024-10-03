@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/features/auth/providers/auth_service_provider.dart';
+import 'package:rlv2_flutter/core/providers/auth_service_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
+import 'package:rlv2_flutter/core/providers/user_context_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -20,9 +23,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       await ref.read(authNotifierProvider.notifier).login(_email, _password);
-
       final authState = ref.read(authNotifierProvider);
       if (authState.user != null) {
+
+        unawaited(ref.read(userContextSessionNotifierProvider.notifier)
+            .loadUserSession(authState.user!.id));
         // ignore: use_build_context_synchronously
         await Navigator.pushReplacementNamed(context, '/dashboard');
       } else if (authState.error != null) {
@@ -32,6 +37,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         );
       }
     }
+  }
+  Future<void> _testSubmit() async {
+      _formKey.currentState!.save();
+      await ref.read(authNotifierProvider.notifier).login('mrc@matt.com', 'password123');
+      final authState = ref.read(authNotifierProvider);
+      if (authState.user != null) {
+
+        await ref.read(userContextSessionNotifierProvider.notifier)
+            .loadUserSession(authState.user!.id);
+        // ignore: use_build_context_synchronously
+        await Navigator.pushReplacementNamed(context, '/dashboard');
+      } else if (authState.error != null) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(authState.error!)),
+        );
+      }
+
   }
 
   @override
@@ -70,6 +93,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       key: const ValueKey('submitButton'),
                       onPressed: _submit,
                       child: const Text('Login'),
+                    ),
+                    ElevatedButton(
+                      onPressed: _testSubmit,
+                      child: const Text('Login Test'),
                     ),
                   ],
                 ),

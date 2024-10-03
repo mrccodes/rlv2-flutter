@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/providers/dashboard_provider.dart';
 import 'package:rlv2_flutter/core/providers/scaffold_provider.dart';
+import 'package:rlv2_flutter/core/providers/user_context_provider.dart';
 import 'package:rlv2_flutter/core/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/core/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/core/widgets/custom_nav_drawer.dart';
@@ -12,9 +13,9 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dashboardState = ref.watch(dashboardViewModelProvider);
-    final dashboardViewModel = ref.read(dashboardViewModelProvider.notifier);
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
-    final firstName = dashboardState.firstName;
+    final userSessionContextState = ref.watch(userContextSessionNotifierProvider);
+
 
     return Scaffold(
       key: scaffoldKey,
@@ -23,26 +24,30 @@ class DashboardScreen extends ConsumerWidget {
       ),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: const CustomBottomNavigationBar(),
-      body: dashboardState.isLoading
+
+      body: userSessionContextState.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : dashboardState.errorMessage.isNotEmpty
-              ? Center(child: Text(dashboardState.errorMessage))
+          : dashboardState.errorMessage.isNotEmpty || 
+            userSessionContextState.error != null
+              ? Center(child: Text(dashboardState.errorMessage.isNotEmpty ? 
+                dashboardState.errorMessage : 
+                userSessionContextState.error!,
+                ),
+              )
               : Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Hello${firstName != '' ? ' $firstName' : ''}!',
+                        'Hello${userSessionContextState.userSessionContext?.userInformation?.firstName ??
+      ''}!',
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: dashboardViewModel.loadDashboardData,
-                        child: const Text(
+                       const Text(
                           'Refresh',
                           style: TextStyle(color: Colors.white),
                         ),
-                      ),
                     ],
                   ),
                 ),

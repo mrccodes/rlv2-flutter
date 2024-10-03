@@ -7,8 +7,8 @@ class UserFavoriteRecipe {
     required this.recipeId,
     required this.recipeName,
     required this.recipeAuthor,
-    required this.recipeVersionDescription,
     required this.username,
+    this.recipeVersionDescription,
   });
 
   factory UserFavoriteRecipe.fromJson(Map<String, dynamic> json) {
@@ -20,7 +20,7 @@ class UserFavoriteRecipe {
       createdAt: json['createdAt'] as String,
       recipeName: json['recipeName'] as String,
       recipeAuthor: json['recipeAuthor'] as String,
-      recipeVersionDescription: json['recipeVersionDescription'] as String,
+      recipeVersionDescription: json['recipeVersionDescription'] as String?,
       username: json['username'] as String,
     );
   }
@@ -31,8 +31,8 @@ class UserFavoriteRecipe {
   final String createdAt;
   final String recipeName;
   final String recipeAuthor;
-  final String recipeVersionDescription;
   final String username;
+  final String? recipeVersionDescription;
 
   Map<String, dynamic> toJson() {
     return {
