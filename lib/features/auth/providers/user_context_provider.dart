@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:rlv2_flutter/core/providers/auth_service_provider.dart';
+import 'package:rlv2_flutter/features/auth/notifiers/auth_notifier.dart';
 import 'package:rlv2_flutter/features/auth/notifiers/user_context_notifier.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/services/user_session_context_service.dart';
 
 // provider

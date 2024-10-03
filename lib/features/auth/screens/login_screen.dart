@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/core/providers/auth_service_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
 
@@ -39,7 +39,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     _formKey.currentState!.save();
     await ref
         .read(authNotifierProvider.notifier)
-        .login('mrc@matt.com', 'password123');
+        .login('matt@matt.com', 'password123');
     final authState = ref.read(authNotifierProvider);
     if (authState.user != null) {
       await ref

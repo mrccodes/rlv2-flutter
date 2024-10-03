@@ -1,34 +1,35 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:rlv2_flutter/app/app.dart';
+import 'package:rlv2_flutter/core/models/api_model.dart';
 import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class UserSessionContextService extends ApiService {
-  Future<UserSessionContext> getUserSessionContext({
+  Future<UserSessionContext?> getUserSessionContext({
     required String userId,
   }) async {
     final endpoint = '/userSessionContext/$userId';
 
-    AppLogger.info('Attempting API request at $apiUrl$endpoint');
-
     try {
-      // ignore: inference_failure_on_function_invocation
-      final response = await dio.get(
+      final response = await getRequest<UserSessionContext>(
         endpoint,
+        UserSessionContext.fromJson,
       );
 
-      AppLogger.info('Response Status: ${response.statusCode}');
-      AppLogger.info('Response Data: ${response.data}');
+      final responseStr = response;
+      AppLogger.info('getRequest respone: $responseStr');
 
-      final responseData = response.data;
+      if (response.data == null) {
+        throw Exception(response.message);
+      }
 
-      // Ensure that responseData is a Map
-      // final userContext = validateResponseData<UserSessionContext>(responseData);
-      final userContext = responseData['data'];
-
-      AppLogger.info('UserSessionContext: $userContext');
-
-      return UserSessionContext.fromJson(userContext as Map<String, dynamic>);
+      final userSessionContext = response.data!;
+      AppLogger.info('userSessionContext: $userSessionContext');
+      return response.data;
     } on DioException catch (e) {
       // Handle Dio-specific errors...
       if (e.response != null) {

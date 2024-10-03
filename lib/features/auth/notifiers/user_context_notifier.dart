@@ -33,18 +33,14 @@ class UserSessionNotifier extends StateNotifier<UserSessionState> {
       AppLogger.info('Loading user session for user: $userId');
       state = UserSessionState(isLoading: true);
 
-      // Reading session from storage
-      final jsonString = await storage.read(key: 'userSession');
-      AppLogger.info('User session jsonString: $jsonString');
-
-      UserSessionContext userSessionContext;
-
-      AppLogger.info('Fetching user session context for user: $userId');
-      userSessionContext =
+      AppLogger.info('Set UserSessionState to loading');
+      final userSessionContext =
           await userSessionContextService.getUserSessionContext(userId: userId);
 
-      // Update the state with the loaded session data
+  
       state = UserSessionState(userSessionContext: userSessionContext);
+      AppLogger.info(
+          'State updated with user session data $userSessionContext');
       AppLogger.info('State updated with user session data');
     } catch (e, stackTrace) {
       AppLogger.error('Error loading user session: $e');

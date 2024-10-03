@@ -19,8 +19,14 @@ class UserSessionContext {
   });
 
   // Factory method to create a UserSettings from a JSON object
-  factory UserSessionContext.fromJson(Map<String, dynamic> json) {
+  factory UserSessionContext.fromJson(dynamic json) {
     AppLogger.info('UserSessionContext.fromJson: $json');
+    // ensure obj is a Map
+    if (json is! Map<String, dynamic>) {
+      throw Exception(
+        'Invalid JSON object passed to UserSessionContext.fromJson'
+        );
+    }
     return UserSessionContext(
       user: User.fromJson(json['user'] as Map<String, dynamic>),
       userInformation: json['userInformation'] != null
@@ -75,5 +81,18 @@ class UserSessionContext {
       'userRecipes': userRecipes.map((recipe) => recipe.toJson()).toList(),
       // 'subscriptions': subscriptions.map((subscription) => subscription.toJson()).toList(),
     };
+  }
+
+
+    // Override toString method for better logging
+  @override
+  String toString() {
+    return '''
+      User: ${user.toString()},
+      UserInformation: ${userInformation?.toString()},
+      UserSettings: ${userSettings.toString()},
+      UserFavoriteRecipes: ${userFavoriteRecipes.length} favorite recipes,
+      UserRecipes: ${userRecipes.length} recipes
+    ''';
   }
 }

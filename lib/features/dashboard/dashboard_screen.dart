@@ -26,7 +26,8 @@ class DashboardScreen extends ConsumerWidget {
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: userSessionContextState.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : dashboardState.errorMessage.isNotEmpty ||
+          : 
+          dashboardState.errorMessage.isNotEmpty ||
                   userSessionContextState.error != null
               ? Center(
                   child: Text(

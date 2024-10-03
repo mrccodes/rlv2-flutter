@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rlv2_flutter/core/models/api_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class ApiService {
@@ -55,19 +58,37 @@ class ApiService {
     );
   }
 
-  // add method to validate response data
-// Modify method to be generic
-  T validateResponseData<T>(dynamic responseData) {
-    if (responseData is Map<String, dynamic>) {
-      if (responseData.containsKey('data') && responseData['data'] is T) {
-        return responseData['data'] as T;
+  Future<ApiResponse<T>> getRequest<T>(
+    String endpoint,
+    T Function(Map<String, dynamic>) fromJson, // Make sure this takes a Map
+  ) async {
+    try {
+      final response = await dio.get<Map<String, dynamic>>(endpoint);
+
+      final responseData = response.data!;
+
+      if (response.statusCode == 200) {
+        final data = fromJson(responseData['data'] as Map<String, dynamic>);
+        return ApiResponse.success(
+          data,
+          responseData['message'] as String,
+          response.statusCode!,
+        );
       } else {
-        AppLogger.error('Data is null or not in expected format.');
-        AppLogger.error(responseData['data'].toString());
-        throw Exception('Data is null or not in expected format.');
+        return ApiResponse.error(
+          responseData['message'] as String,
+          response.statusCode!,
+          responseData['errors'] != null
+              ? List<String>.from(responseData['errors'] as List<dynamic>)
+              : [],
+        );
       }
-    } else {
-      throw Exception('Unexpected response format: $responseData');
+    } catch (e) {
+      return ApiResponse.error(
+        'Exception: $e',
+        500,
+        ['An unknown error occurred'],
+      );
     }
   }
 }
