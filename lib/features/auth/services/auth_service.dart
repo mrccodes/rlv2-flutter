@@ -14,7 +14,6 @@ class AuthService extends ApiService {
       final response = await dio.post(
         endpoint,
         data: {'email': email, 'password': password},
-        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       AppLogger.info('Response Status: ${response.statusCode}');
@@ -67,12 +66,7 @@ class AuthService extends ApiService {
 
   // Add other authentication methods like logout, register if needed
   Future<User> logout() async {
-    final response = await dio.post<User>(
-      '$apiUrl/logout',
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-      ),
-    );
+    final response = await dio.post<User>('$apiUrl/logout');
 
     if (response.statusCode == 200) {
       return User.fromJson(response.data! as Map<String, String>);
