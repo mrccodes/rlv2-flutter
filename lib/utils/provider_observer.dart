@@ -10,8 +10,8 @@ class MyProviderObserver extends ProviderObserver {
     ProviderContainer container,
   ) {
     super.didUpdateProvider(provider, previousValue, newValue, container);
-    AppLogger.info(
-        'Provider: ${provider.name ?? provider.runtimeType} updated. New value: $newValue');
+    final nameOrType = provider.name ?? provider.runtimeType;
+    AppLogger.info('Provider: $nameOrType updated. New value: $newValue');
   }
 
   @override
@@ -21,8 +21,9 @@ class MyProviderObserver extends ProviderObserver {
     ProviderContainer container,
   ) {
     super.didAddProvider(provider, value, container);
-    AppLogger.info(
-        'Provider: ${provider.name ?? provider.runtimeType} added. Value: $value');
+    final nameOrType = provider.name ?? provider.runtimeType;
+
+    AppLogger.info('Provider: $nameOrType added. Value: $value');
   }
 
   @override
@@ -31,7 +32,7 @@ class MyProviderObserver extends ProviderObserver {
     ProviderContainer container,
   ) {
     super.didDisposeProvider(provider, container);
-    AppLogger.info(
-        'Provider: ${provider.name ?? provider.runtimeType} disposed.');
+    final nameOrType = provider.name ?? provider.runtimeType;
+    AppLogger.info('Provider: $nameOrType disposed.');
   }
 }
