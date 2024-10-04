@@ -15,12 +15,16 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
-    final theme = Theme.of(context);
+    final navButtonShowing = Navigator.of(context).canPop();
+    final isLandingPage = ModalRoute.of(context)?.settings.name == '/';
 
     return AppBar(
       iconTheme: IconThemeData(
-        color: theme.colorScheme.primary,
+        color: Theme.of(context).colorScheme.primary,
       ),
+      titleSpacing: navButtonShowing && !isLandingPage
+          ? -15
+          : NavigationToolbar.kMiddleSpacing,
       title: Row(
         children: [
           Image.asset(
@@ -37,7 +41,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.menu),
-          color: theme.colorScheme.primary,
+          color: Theme.of(context).colorScheme.primary,
           onPressed: () {
             scaffoldKey.currentState?.openEndDrawer();
           },

@@ -39,4 +39,15 @@ class User {
       'updatedAt': updatedAt,
     };
   }
+
+  @override
+  String toString() {
+    return 'User{id: $id, '
+        'username: $username, '
+        'email: $email, '
+        'password: $password, '
+        'stripeCustomerId: $stripeCustomerId, '
+        'createdAt: $createdAt, '
+        'updatedAt: $updatedAt}';
+  }
 }

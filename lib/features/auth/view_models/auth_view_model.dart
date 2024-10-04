@@ -1,22 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rlv2_flutter/features/auth/models/user_model.dart';
 import 'package:rlv2_flutter/features/auth/services/auth_service.dart';
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/utils/app_logger.dart';
 
-// Provide the AuthService
-final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService(); // Replace with your API base URL
-});
-
-// Authentication State
 class AuthState {
   AuthState({this.user, this.isLoading = false, this.error});
   final User? user;
   final bool isLoading;
   final String? error;
+  bool get isAuthenticated => user != null;
+  AuthState Function() initial = AuthState.new;
 }
 
-// StateNotifier to manage AuthState
 class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier({required this.authService, required this.storage})
       : super(AuthState());
@@ -25,27 +21,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> login(String email, String password) async {
     try {
+      final existingId = state.user?.id;
+      AppLogger.info('checking for existing id: $existingId');
       state = AuthState(isLoading: true);
       final user = await authService.login(email: email, password: password);
+      final userId = user.id;
+      AppLogger.info('updating AuthState User: $userId');
+
       state = AuthState(user: user);
-      // Optionally, store token or user info securely
-      await storage.write(key: 'user_id', value: user.id);
+      final newStateId = state.user!.id;
+      AppLogger.info('writing user_id to storage: $newStateId');
+      // await storage.write(key: 'user_id', value: user.id);
     } catch (e) {
       state = AuthState(error: e.toString());
     }
   }
 
-  // Add logout and other methods as needed
   Future<void> logout() async {
     await storage.delete(key: 'user_id');
     state = AuthState();
   }
 }
-
-// Provide the AuthNotifier
-final authNotifierProvider =
-    StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  final authService = ref.watch(authServiceProvider);
-  const storage = FlutterSecureStorage();
-  return AuthNotifier(authService: authService, storage: storage);
-});

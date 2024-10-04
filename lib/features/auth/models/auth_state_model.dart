@@ -1,6 +1,6 @@
 // lib/features/auth/models/auth_state_model.dart
 
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/features/auth/models/user_model.dart';
 
 class AuthStateModel {
   AuthStateModel({

@@ -1,19 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/core/services/api_service.dart';
+import 'package:rlv2_flutter/features/auth/models/user_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
-class AuthService {
-  AuthService({this.baseUrl = 'http://172.27.7.89:3000', this.version = 'v1'}) {
-    apiUrl = '$baseUrl/$version';
-  }
-
-  final String baseUrl;
-  final String version;
-  final Dio dio = Dio();
-  late final String apiUrl;
-
+class AuthService extends ApiService {
   Future<User> login({required String email, required String password}) async {
-    final endpoint = '$apiUrl/login';
+    const endpoint = '/login';
     AppLogger.info('Attempting to login at $apiUrl$endpoint');
 
     try {
@@ -21,7 +13,6 @@ class AuthService {
       final response = await dio.post(
         endpoint,
         data: {'email': email, 'password': password},
-        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       AppLogger.info('Response Status: ${response.statusCode}');
@@ -34,6 +25,20 @@ class AuthService {
         if (responseData.containsKey('data') &&
             responseData['data'] is Map<String, dynamic>) {
           final userData = responseData['data'];
+          // Access the Set-Cookie header
+          final cookies = response.headers['set-cookie'];
+          if (cookies != null && cookies.isNotEmpty) {
+            // Assuming your token is prefixed by 'Authorization='
+            final cookieString = cookies[0];
+            final token = RegExp(
+              'Authorization=([^;]+)',
+            ).firstMatch(cookieString)?.group(1);
+
+            if (token != null) {
+              // Store just the token securely
+              await storage.write(key: 'auth_token', value: token);
+            }
+          }
 
           return User.fromJson(userData as Map<String, dynamic>);
         } else {
@@ -74,12 +79,7 @@ class AuthService {
 
   // Add other authentication methods like logout, register if needed
   Future<User> logout() async {
-    final response = await dio.post<User>(
-      '$apiUrl/logout',
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-      ),
-    );
+    final response = await dio.post<User>('$apiUrl/logout');
 
     if (response.statusCode == 200) {
       return User.fromJson(response.data! as Map<String, String>);

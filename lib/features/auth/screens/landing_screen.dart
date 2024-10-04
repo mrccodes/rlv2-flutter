@@ -1,5 +1,6 @@
 // features/auth/screens/landing_page.dart
 import 'package:flutter/material.dart';
+import 'package:rlv2_flutter/core/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -10,6 +11,9 @@ class LandingScreen extends StatelessWidget {
     // final theme = Theme.of(context);
     // Your landing page UI
     return Scaffold(
+      appBar: const CustomAppBar(
+        title: 'RecipeLab',
+      ),
       body: Center(
         child: ElevatedButton(
           key: const ValueKey('loginButton'),
