@@ -1,46 +1,147 @@
-name: rlv2_flutter
+# name: rlv2_flutter
 
-concurrency:
-  group: $-$
-  cancel-in-progress: true
+# concurrency:
+#   group: $-$
+#   cancel-in-progress: true
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+
+name: Flutter Package Workflow
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      analyze_directories:
+        required: false
+        type: string
+        default: "lib test"
+      concurrency:
+        required: false
+        type: number
+        default: 4
+      coverage_excludes:
+        required: false
+        type: string
+        default: ""
+      flutter_channel:
+        required: false
+        type: string
+        default: "stable"
+      flutter_version:
+        required: false
+        type: string
+        default: ""
+      format_directories:
+        required: false
+        type: string
+        default: "lib test"
+      format_line_length:
+        required: false
+        type: string
+        default: "80"
+      min_coverage:
+        required: false
+        type: number
+        default: 100
+      runs_on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
+      setup:
+        required: false
+        type: string
+        default: ""
+      test_optimization:
+        required: false
+        type: boolean
+        default: true
+      test_recursion:
+        required: false
+        type: boolean
+        default: false
+      working_directory:
+        required: false
+        type: string
+        default: "."
+      package_get_excludes:
+        required: false
+        type: string
+        default: "!*"
+    secrets:
+      ssh_key:
+        required: false
+
+
 
 jobs:
   semantic-pull-request:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
 
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      flutter_channel: stable
-      min_coverage: 0
-      setup: |
-        echo "API_URL=https://dummy-url-for-ci" > .env
-        echo "API_KEY=dummy-api-key" >> .env
+    defaults:
+      run:
+        working-directory: .
 
-  update-coverage:
     runs-on: ubuntu-latest
-    needs: build  # This ensures the update-coverage job runs after test completes
+
     steps:
-      - name: Download coverage artifact
-        uses: actions/download-artifact@v4
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          name: coverage-report
-          path: coverage/
+          channel: stable
+          cache: true
+          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
+
+      # - name: 🤫 Set SSH Key
+      #   env:
+      #     ssh_key: ${{secrets.ssh_key}}
+      #   if: env.ssh_key != null
+      #   uses: webfactory/ssh-agent@v0.9.0
+      #   with:
+      #     ssh-private-key: ${{secrets.ssh_key}}
+
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          very_good packages get --recursive --ignore=${{inputs.package_get_excludes}}
+
+      - name: ⚙️ Run Setup
+        run: |
+          echo "API_URL=https://dummy-url-for-ci" > .env
+          echo "API_KEY=dummy-api-key" >> .env
+
+      - name: ✨ Check Formatting
+        run: dart format --line-length 80 --set-exit-if-changed lib test
+
+      - name: 🕵️ Analyze
+        run: flutter analyze lib test
+
+      - name: 🧪 Run Tests
+        run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
+
+      # - name: 📊 Check Code Coverage
+      #   uses: VeryGoodOpenSource/very_good_coverage@v3
+      #   with:
+      #     path: ./coverage/lcov.info
+      #     min_coverage: 0
+
       - name: Parse Coverage and Generate Badge
         run: |
           # Use a script to parse the lcov.info and get the coverage percentage
           COVERAGE=$(genhtml --quiet --output-directory out --branch-coverage --function-coverage coverage/lcov.info | grep -Po '(?<=lines......: )\d+')
           echo "Coverage is ${COVERAGE}%"
 
-          # Update the coverage badge using Shields.io or any other service
+          # Update the coverage badge using Shields.io 
           curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen" -o coverage-badge.svg
       - name: Commit and Push Badge Update
         run: |
@@ -49,6 +150,13 @@ jobs:
           git add coverage_badge.svg
           git commit -m "Update coverage badge"
           git push origin main
+
+
+  update-coverage:
+    runs-on: ubuntu-latest
+    needs: build  # This ensures the update-coverage job runs after test completes
+    steps:
+
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
