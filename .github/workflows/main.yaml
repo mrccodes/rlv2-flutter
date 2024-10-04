@@ -1,84 +1,16 @@
-# name: rlv2_flutter
+name: rlv2_flutter
 
-# concurrency:
-#   group: $-$
-#   cancel-in-progress: true
-
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
-
-
-name: Flutter Package Workflow
+concurrency:
+  group: $-$
+  cancel-in-progress: true
 
 on:
-  workflow_call:
-    inputs:
-      analyze_directories:
-        required: false
-        type: string
-        default: "lib test"
-      concurrency:
-        required: false
-        type: number
-        default: 4
-      coverage_excludes:
-        required: false
-        type: string
-        default: ""
-      flutter_channel:
-        required: false
-        type: string
-        default: "stable"
-      flutter_version:
-        required: false
-        type: string
-        default: ""
-      format_directories:
-        required: false
-        type: string
-        default: "lib test"
-      format_line_length:
-        required: false
-        type: string
-        default: "80"
-      min_coverage:
-        required: false
-        type: number
-        default: 100
-      runs_on:
-        required: false
-        type: string
-        default: "ubuntu-latest"
-      setup:
-        required: false
-        type: string
-        default: ""
-      test_optimization:
-        required: false
-        type: boolean
-        default: true
-      test_recursion:
-        required: false
-        type: boolean
-        default: false
-      working_directory:
-        required: false
-        type: string
-        default: "."
-      package_get_excludes:
-        required: false
-        type: string
-        default: "!*"
-    secrets:
-      ssh_key:
-        required: false
-
-
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   semantic-pull-request:
