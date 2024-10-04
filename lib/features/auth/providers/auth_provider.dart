@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:rlv2_flutter/features/auth/notifiers/auth_notifier.dart';
 import 'package:rlv2_flutter/features/auth/services/auth_service.dart';
+import 'package:rlv2_flutter/features/auth/view_models/auth_view_model.dart';
 
 final authProvider = Provider<AuthService>((ref) {
   return AuthService(); // Replace with your API base URL
