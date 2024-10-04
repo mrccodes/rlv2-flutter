@@ -72,22 +72,27 @@ jobs:
 
       - name: Parse Coverage and Generate Badge
         run: |
+          # Check if lcov.info exists
           if [ ! -f coverage/lcov.info ]; then
             echo "coverage/lcov.info file not found!"
             exit 1
           fi
 
+          # Print the contents of the lcov.info file to debug if it was generated correctly
+          echo "Contents of coverage/lcov.info:"
+          cat coverage/lcov.info
+
+          # Parse the coverage
           genhtml --quiet --output-directory out --branch-coverage --function-coverage coverage/lcov.info
           if [ $? -ne 0 ]; then
             echo "genhtml command failed."
             exit 1
           fi
 
-          echo "Checking genhtml output:"
-          genhtml --quiet --output-directory out --branch-coverage --function-coverage coverage/lcov.info
-
+          # Extract the coverage percentage
           COVERAGE=$(genhtml --quiet --output-directory out --branch-coverage --function-coverage coverage/lcov.info | grep -Po '(?<=lines......: )\d+')
 
+          # Debugging: Print the extracted coverage
           echo "Extracted coverage: $COVERAGE"
 
           if [ -z "$COVERAGE" ]; then
@@ -97,6 +102,7 @@ jobs:
 
           echo "Coverage is ${COVERAGE}%"
 
+          # Generate the badge
           curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen" -o coverage-badge.svg
 
 
