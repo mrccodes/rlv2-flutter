@@ -15,13 +15,14 @@ final userSessionContextServiceProvider = Provider<UserSessionContextService>(
 
 // FlutterSecureStorage provider
 final secureStorageProvider = Provider<FlutterSecureStorage>(
-  (ref) => const FlutterSecureStorage(), 
+  (ref) => const FlutterSecureStorage(),
 );
 
 // UserSessionRepository provider
 final userSessionRepositoryProvider = Provider<UserSessionRepository>((ref) {
   final storage = ref.watch(secureStorageProvider);
-  final userSessionContextService = ref.watch(userSessionContextServiceProvider);
+  final userSessionContextService =
+      ref.watch(userSessionContextServiceProvider);
   return UserSessionRepository(
     storage: storage,
     userSessionContextService: userSessionContextService,
@@ -31,7 +32,7 @@ final userSessionRepositoryProvider = Provider<UserSessionRepository>((ref) {
 // Update the UserContextSessionNotifier provider to use the repository
 final userContextSessionNotifierProvider =
     StateNotifierProvider<UserSessionNotifier, UserSessionState>((ref) {
-  final userSessionRepository = ref.watch(userSessionRepositoryProvider); 
+  final userSessionRepository = ref.watch(userSessionRepositoryProvider);
   return UserSessionNotifier(repository: userSessionRepository);
 });
 

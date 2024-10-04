@@ -25,9 +25,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final user = await authService.login(email: email, password: password);
       final userId = user.id;
       AppLogger.info('updating AuthState User: $userId');
-        
+
       state = AuthState(user: user);
-      final newStateId= state.user!.id;
+      final newStateId = state.user!.id;
       AppLogger.info('writing user_id to storage: $newStateId');
       // await storage.write(key: 'user_id', value: user.id);
     } catch (e) {

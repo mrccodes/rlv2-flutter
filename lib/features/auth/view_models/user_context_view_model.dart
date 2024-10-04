@@ -28,10 +28,12 @@ class UserSessionNotifier extends StateNotifier<UserSessionState> {
       AppLogger.info('Loading user session for user: $userId');
       state = UserSessionState(isLoading: true);
 
-      final userSessionContext = await repository.fetchUserSessionContext(userId);
+      final userSessionContext =
+          await repository.fetchUserSessionContext(userId);
 
       state = UserSessionState(userSessionContext: userSessionContext);
-      AppLogger.info('State updated with user session data $userSessionContext');
+      AppLogger.info(
+          'State updated with user session data $userSessionContext');
     } catch (e, stackTrace) {
       AppLogger.error('Error loading user session: $e');
       AppLogger.error('Stack trace: $stackTrace');
@@ -41,7 +43,7 @@ class UserSessionNotifier extends StateNotifier<UserSessionState> {
 
   Future<void> saveUserSession(UserSessionContext context) async {
     try {
-      await repository.saveUserSessionContext(context); 
+      await repository.saveUserSessionContext(context);
       state = UserSessionState(userSessionContext: context);
       AppLogger.info('User session saved to storage');
     } catch (e, stackTrace) {
@@ -53,7 +55,7 @@ class UserSessionNotifier extends StateNotifier<UserSessionState> {
 
   Future<void> clearUserSession() async {
     try {
-      await repository.clearUserSessionContext(); 
+      await repository.clearUserSessionContext();
       state = UserSessionState();
       AppLogger.info('User session cleared from storage');
     } catch (e, stackTrace) {

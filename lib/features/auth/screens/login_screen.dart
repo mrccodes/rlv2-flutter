@@ -19,11 +19,11 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     ref.watch(userSessionListenerProvider);
     final authState = ref.watch(authNotifierProvider);
-  
+
     // Handle loading
     if (authState.isLoading) {
       return const SplashScreen();
-    } 
+    }
 
     // Handle successful login
     if (authState.user != null) {
@@ -32,7 +32,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
         Navigator.pushReplacementNamed(context, '/dashboard');
       });
       return const SplashScreen(); // Placeholder during navigation
-    } 
+    }
 
     // Handle login error
     if (authState.error != null) {
@@ -47,11 +47,11 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     // Handle form login
     Future<void> handleLogin(String email, String password) async {
       await ref.read(authNotifierProvider.notifier).login(email, password);
-    } 
+    }
 
     return Scaffold(
       appBar: const CustomAppBar(
-        title:  'RecipeLab',
+        title: 'RecipeLab',
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

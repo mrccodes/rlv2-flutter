@@ -16,8 +16,8 @@ class DashboardScreen extends ConsumerWidget {
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
     final userSessionContextState =
         ref.watch(userContextSessionNotifierProvider);
-    final firstName = 
-      userSessionContextState.userSessionContext?.userInformation?.firstName;
+    final firstName =
+        userSessionContextState.userSessionContext?.userInformation?.firstName;
 
     return Scaffold(
       key: scaffoldKey,
@@ -28,8 +28,7 @@ class DashboardScreen extends ConsumerWidget {
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: userSessionContextState.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : 
-          dashboardState.errorMessage.isNotEmpty ||
+          : dashboardState.errorMessage.isNotEmpty ||
                   userSessionContextState.error != null
               ? Center(
                   child: Text(
@@ -43,7 +42,7 @@ class DashboardScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Hello${ firstName != null ? ' $firstName' : ''}!',
+                        'Hello${firstName != null ? ' $firstName' : ''}!',
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(height: 20),

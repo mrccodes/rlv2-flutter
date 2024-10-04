@@ -10,7 +10,6 @@ class App extends ConsumerWidget {
   const App({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return MaterialApp(
       theme: MyAppTheme.theme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

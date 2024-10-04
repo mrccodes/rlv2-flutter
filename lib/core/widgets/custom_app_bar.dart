@@ -17,10 +17,11 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final scaffoldKey = ref.watch(scaffoldKeyProvider);
     final navButtonShowing = Navigator.of(context).canPop();
     final isLandingPage = ModalRoute.of(context)?.settings.name == '/';
-    
+
     return AppBar(
-      titleSpacing: navButtonShowing && !isLandingPage ? 
-        -15 : NavigationToolbar.kMiddleSpacing,
+      titleSpacing: navButtonShowing && !isLandingPage
+          ? -15
+          : NavigationToolbar.kMiddleSpacing,
       title: Row(
         children: [
           Image.asset(

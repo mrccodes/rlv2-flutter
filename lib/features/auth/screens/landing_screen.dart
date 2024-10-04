@@ -13,7 +13,7 @@ class LandingScreen extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'RecipeLab',
-        ),
+      ),
       body: Center(
         child: ElevatedButton(
           key: const ValueKey('loginButton'),
