@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rlv2_flutter/features/auth/models/user_model.dart';
-import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/services/auth_service.dart';
+import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class AuthState {
   AuthState({this.user, this.isLoading = false, this.error});
@@ -19,10 +19,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> login(String email, String password) async {
     try {
+      final existingId = state.user?.id;
+      AppLogger.info('checking for existing id: $existingId');
       state = AuthState(isLoading: true);
       final user = await authService.login(email: email, password: password);
+      final userId = user.id;
+      AppLogger.info('updating AuthState User: $userId');
+        
       state = AuthState(user: user);
-      await storage.write(key: 'user_id', value: user.id);
+      final newStateId= state.user!.id;
+      AppLogger.info('writing user_id to storage: $newStateId');
+      // await storage.write(key: 'user_id', value: user.id);
     } catch (e) {
       state = AuthState(error: e.toString());
     }

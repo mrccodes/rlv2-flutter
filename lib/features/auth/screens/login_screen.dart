@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
 import 'package:rlv2_flutter/features/auth/widgets/login_form.dart';
 
@@ -15,8 +16,8 @@ class LoginScreen extends ConsumerStatefulWidget {
 class LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    ref.watch(userSessionListenerProvider);
     final authState = ref.watch(authNotifierProvider);
-
   
     // Handle loading
     if (authState.isLoading) {
@@ -42,13 +43,20 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       });
     }
 
+    // Handle form login
+    Future<void> handleLogin(String email, String password) async {
+      await ref.read(authNotifierProvider.notifier).login(email, password);
+    } 
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: LoginForm(),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: LoginForm(
+          onSubmit: handleLogin,
+        ),
       ),
     );
   }

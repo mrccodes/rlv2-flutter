@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/features/auth/notifiers/auth_notifier.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
-  const LoginForm({super.key});
-
+  const LoginForm({super.key, this.onSubmit});
+  
+  // Use Future<void> Function()? for function signature
+  final Future<void> Function(String email, String password)? onSubmit;
+  
   @override
   LoginFormState createState() => LoginFormState();
 }
-
 class LoginFormState extends ConsumerState<LoginForm> {
   final formKey = GlobalKey<FormState>();
   String email = '';
@@ -19,7 +20,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
   Future<void> submit() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      await ref.read(authNotifierProvider.notifier).login(email, password);
+
+      // Safely call onSubmit if provided
+      await widget.onSubmit?.call(email, password); 
     }
   }
 
