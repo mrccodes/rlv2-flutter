@@ -22,7 +22,7 @@ class DashboardScreen extends ConsumerWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CustomAppBar(
-        title: 'RecipeLab',
+        title: 'Dashboard',
       ),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: const CustomBottomNavigationBar(),

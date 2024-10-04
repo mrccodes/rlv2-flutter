@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
@@ -49,8 +50,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     } 
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
+      appBar: const CustomAppBar(
+        title:  'RecipeLab',
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
