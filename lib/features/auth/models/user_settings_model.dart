@@ -69,4 +69,9 @@ class UserSettings {
       'updatedAt': updatedAt,
     };
   }
+
+  @override
+  String toString() {
+    return 'UserSettings{userId: $userId, preferredMode: $preferredMode, preferredVolumeUnit: $preferredVolumeUnit, preferredMassUnit: $preferredMassUnit, preferredLengthUnit: $preferredLengthUnit, preferredTemperatureUnit: $preferredTemperatureUnit, notifications: $notifications, pushNotifications: $pushNotifications, emailNotifications: $emailNotifications, newsletter: $newsletter, dataSharingConsent: $dataSharingConsent, showTipsAndTricks: $showTipsAndTricks, createdAt: $createdAt, updatedAt: $updatedAt}';
+  }
 }

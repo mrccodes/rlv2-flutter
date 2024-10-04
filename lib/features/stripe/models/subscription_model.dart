@@ -16,7 +16,6 @@ class Subscription {
     this.pendingInvoiceItemInterval,
     this.pendingUpdate,
     this.trialEnd,
-    this.trialSettings,
     this.trialStart,
   });
 
@@ -40,7 +39,6 @@ class Subscription {
       startDate: json['start_date'] as int,
       status: json['status'] as String,
       trialEnd: json['trial_end'],
-      trialSettings: json['trial_settings'],
       trialStart: json['trial_start'],
     );
   }
@@ -58,7 +56,6 @@ class Subscription {
   final int startDate; // timestamp
   final String status; // subscription status
   final dynamic trialEnd;
-  final dynamic trialSettings;
   final dynamic trialStart;
 
   Map<String, dynamic> toJson() {
@@ -77,7 +74,6 @@ class Subscription {
       'start_date': startDate,
       'status': status,
       'trial_end': trialEnd,
-      'trial_settings': trialSettings,
       'trial_start': trialStart,
     };
   }
@@ -88,8 +84,8 @@ class SubscriptionItem {
     required this.id,
     required this.object,
     required this.created,
-    required this.plans,
-    required this.prices,
+    required this.plan,
+    required this.price,
     required this.quantity,
     required this.subscription,
     this.billingThresholds,
@@ -100,12 +96,8 @@ class SubscriptionItem {
       object: json['object'] as String,
       billingThresholds: json['billing_thresholds'] as dynamic,
       created: json['created'] as int,
-      plans: (json['plans'] as List<dynamic>)
-          .map((plan) => Plan.fromJson(plan as Map<String, dynamic>))
-          .toList(),
-      prices: (json['prices'] as List<dynamic>)
-          .map((price) => Price.fromJson(price as Map<String, dynamic>))
-          .toList(),
+      plan:  Plan.fromJson(json['plan'] as Map<String, dynamic>),
+      price: Price.fromJson(json['price'] as Map<String, dynamic>),
       quantity: json['quantity'] as int,
       subscription: json['subscription'] as String,
     );
@@ -114,8 +106,8 @@ class SubscriptionItem {
   final String object;
   final dynamic billingThresholds;
   final int created;
-  final List<Plan> plans;
-  final List<Price> prices;
+  final Plan plan;
+  final Price price;
   final int quantity;
   final String subscription;
 
@@ -125,8 +117,8 @@ class SubscriptionItem {
       'object': object,
       'billing_thresholds': billingThresholds,
       'created': created,
-      'plans': plans.map((plan) => plan.toJson()).toList(),
-      'prices': prices.map((price) => price.toJson()).toList(),
+      'plan': plan.toJson(),
+      'price': price.toJson(),
       'quantity': quantity,
       'subscription': subscription,
     };

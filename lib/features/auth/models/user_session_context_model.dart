@@ -14,7 +14,7 @@ class UserSessionContext {
     required this.userFavoriteRecipes,
     required this.organizationUsers,
     required this.userRecipes,
-    // required this.subscriptions,
+    required this.subscriptions,
     this.userInformation,
   });
 
@@ -45,18 +45,16 @@ class UserSessionContext {
       organizationUsers: (json['organizationUsers'] as List<dynamic>?)?.map(
         (item) => OrganizationUser.fromJson(item as Map<String, dynamic>),
       ).toList() ?? [],
-
       userRecipes: (json['userRecipes'] as List)
           .map(
             (item) => RecipeWithData.fromJson(item as Map<String, dynamic>),
           )
           .toList(),
-      // subscriptions: (json['subscriptions'] as List)
-      //     .map(
-      //       (item) =>
-      //           Subscription.fromJson(item as Map<String, dynamic>),
-      //     )
-      //     .toList(),
+      subscriptions: (json['subscriptions'] as List<dynamic>?)?.map(
+            (item) =>
+                Subscription.fromJson(item as Map<String, dynamic>),
+          )
+          .toList() ?? [],
     );
   }
   final User user;
@@ -65,7 +63,7 @@ class UserSessionContext {
   final List<UserFavoriteRecipe> userFavoriteRecipes;
   final List<OrganizationUser> organizationUsers;
   final List<RecipeWithData> userRecipes;
-  // final List<Subscription> subscriptions;
+  final List<Subscription> subscriptions;
 
   // Method to convert a UserSettings object to a JSON object
   Map<String, dynamic> toJson() {
@@ -77,8 +75,9 @@ class UserSessionContext {
           userFavoriteRecipes.map((recipe) => recipe.toJson()).toList(),
       'organizationUsers': organizationUsers.map((user) => user.toJson()).toList(),
       'userRecipes': userRecipes.map((recipe) => recipe.toJson()).toList(),
-      // 'subscriptions': subscriptions.map(
-      //  (subscription) => subscription.toJson()).toList(),
+      'subscriptions': subscriptions.map(
+       (subscription) => subscription.toJson(),
+       ).toList(),
     };
   }
 
@@ -86,10 +85,10 @@ class UserSessionContext {
   @override
   String toString() {
     return '''
-      User: ${user.toString()},
-      UserInformation: ${userInformation?.toString()},
-      UserSettings: ${userSettings.toString()},
-      OrganizationUsers: ${organizationUsers.length} users,
+      User: $user,
+      UserInformation: $userInformation,
+      UserSettings: $userSettings,
+      OrganizationUsers: ${organizationUsers.length} instances,
       UserFavoriteRecipes: ${userFavoriteRecipes.length} favorite recipes,
       UserRecipes: ${userRecipes.length} recipes
     ''';
