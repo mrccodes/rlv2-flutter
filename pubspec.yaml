@@ -10,7 +10,6 @@ dependencies:
   dio: ^5.7.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
   flutter_dotenv: ^5.0.2
   flutter_localizations:
     sdk: flutter
@@ -23,7 +22,6 @@ dependencies:
   riverpod_annotation: ^3.0.0-dev.3
 
 dev_dependencies:
-  bloc_test: ^9.1.7
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4

@@ -9,6 +9,6 @@ Future<void> main() async {
   await dotenv.load();
   ProviderScope(
     observers: [MyProviderObserver()],
-    child: const App(),
+    child:  const App(),
   );
 }
