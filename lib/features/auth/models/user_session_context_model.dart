@@ -12,7 +12,7 @@ class UserSessionContext {
     required this.user,
     required this.userSettings,
     required this.userFavoriteRecipes,
-    // required this.organizationUsers,
+    required this.organizationUsers,
     required this.userRecipes,
     // required this.subscriptions,
     this.userInformation,
@@ -24,8 +24,8 @@ class UserSessionContext {
     // ensure obj is a Map
     if (json is! Map<String, dynamic>) {
       throw Exception(
-        'Invalid JSON object passed to UserSessionContext.fromJson'
-        );
+          'Invalid JSON object passed to UserSessionContext.fromJson',
+          );
     }
     return UserSessionContext(
       user: User.fromJson(json['user'] as Map<String, dynamic>),
@@ -42,12 +42,10 @@ class UserSessionContext {
             (item) => UserFavoriteRecipe.fromJson(item as Map<String, dynamic>),
           )
           .toList(),
-      // organizationUsers: (json['organizationUsers'] as List)
-      //     .map(
-      //       (item) =>
-      //           OrganizationUser.fromJson(item as Map<String, dynamic>),
-      //     )
-      //     .toList(),
+      organizationUsers: (json['organizationUsers'] as List<dynamic>?)?.map(
+        (item) => OrganizationUser.fromJson(item as Map<String, dynamic>),
+      ).toList() ?? [],
+
       userRecipes: (json['userRecipes'] as List)
           .map(
             (item) => RecipeWithData.fromJson(item as Map<String, dynamic>),
@@ -65,7 +63,7 @@ class UserSessionContext {
   final UserInformation? userInformation;
   final UserSettings userSettings;
   final List<UserFavoriteRecipe> userFavoriteRecipes;
-  // final List<OrganizationUser> organizationUsers;
+  final List<OrganizationUser> organizationUsers;
   final List<RecipeWithData> userRecipes;
   // final List<Subscription> subscriptions;
 
@@ -77,20 +75,21 @@ class UserSessionContext {
       'userSettings': userSettings.toJson(),
       'userFavoriteRecipes':
           userFavoriteRecipes.map((recipe) => recipe.toJson()).toList(),
-      // 'organizationUsers': organizationUsers.map((user) => user.toJson()).toList(),
+      'organizationUsers': organizationUsers.map((user) => user.toJson()).toList(),
       'userRecipes': userRecipes.map((recipe) => recipe.toJson()).toList(),
-      // 'subscriptions': subscriptions.map((subscription) => subscription.toJson()).toList(),
+      // 'subscriptions': subscriptions.map(
+      //  (subscription) => subscription.toJson()).toList(),
     };
   }
 
-
-    // Override toString method for better logging
+  // Override toString method for better logging
   @override
   String toString() {
     return '''
       User: ${user.toString()},
       UserInformation: ${userInformation?.toString()},
       UserSettings: ${userSettings.toString()},
+      OrganizationUsers: ${organizationUsers.length} users,
       UserFavoriteRecipes: ${userFavoriteRecipes.length} favorite recipes,
       UserRecipes: ${userRecipes.length} recipes
     ''';
