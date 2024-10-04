@@ -17,9 +17,9 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
 
   build:
-    defaults:
-      run:
-        working-directory: .
+    # defaults:
+    #   run:
+    #     working-directory: .
 
     runs-on: ubuntu-latest
 
@@ -69,12 +69,11 @@ jobs:
 
       - name: Parse Coverage and Generate Badge
         run: |
-          # Use a script to parse the lcov.info and get the coverage percentage
           COVERAGE=$(genhtml --quiet --output-directory out --branch-coverage --function-coverage coverage/lcov.info | grep -Po '(?<=lines......: )\d+')
           echo "Coverage is ${COVERAGE}%"
 
-          # Update the coverage badge using Shields.io 
           curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen" -o coverage-badge.svg
+
       - name: Commit and Push Badge Update
         run: |
           git config --global user.name 'github-actions'
