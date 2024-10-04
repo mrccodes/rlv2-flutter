@@ -82,13 +82,6 @@ jobs:
           git commit -m "Update coverage badge"
           git push origin main
 
-
-  update-coverage:
-    runs-on: ubuntu-latest
-    needs: build  # This ensures the update-coverage job runs after test completes
-    steps:
-
-
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
     with:
