@@ -1,13 +1,12 @@
 // lib/models/api_response.dart
 
 class ApiResponse<T> {
-  ApiResponse(
-    {
-      required this.statusCode,
-      required this.message,
-      this.data,
-      this.errors,
-    });
+  ApiResponse({
+    required this.statusCode,
+    required this.message,
+    this.data,
+    this.errors,
+  });
   // Helper method to create a success response
   factory ApiResponse.success(
     T data,

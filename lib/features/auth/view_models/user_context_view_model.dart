@@ -33,8 +33,8 @@ class UserSessionNotifier extends StateNotifier<UserSessionState> {
 
       state = UserSessionState(userSessionContext: userSessionContext);
       AppLogger.info(
-          'State updated with user session data $userSessionContext',
-          );
+        'State updated with user session data $userSessionContext',
+      );
     } catch (e, stackTrace) {
       AppLogger.error('Error loading user session: $e');
       AppLogger.error('Stack trace: $stackTrace');

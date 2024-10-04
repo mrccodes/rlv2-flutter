@@ -42,13 +42,12 @@ class User {
 
   @override
   String toString() {
-    return 
-    'User{id: $id, '
-    'username: $username, '
-    'email: $email, '
-    'password: $password, '
-    'stripeCustomerId: $stripeCustomerId, '
-    'createdAt: $createdAt, '
-    'updatedAt: $updatedAt}';
+    return 'User{id: $id, '
+        'username: $username, '
+        'email: $email, '
+        'password: $password, '
+        'stripeCustomerId: $stripeCustomerId, '
+        'createdAt: $createdAt, '
+        'updatedAt: $updatedAt}';
   }
 }

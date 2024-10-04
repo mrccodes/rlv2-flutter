@@ -7,8 +7,8 @@ import 'package:rlv2_flutter/utils/provider_observer.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
-   ProviderScope(
-        observers: [MyProviderObserver()],
-        child: const App(),
+  ProviderScope(
+    observers: [MyProviderObserver()],
+    child: const App(),
   );
 }
