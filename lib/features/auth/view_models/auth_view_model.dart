@@ -9,6 +9,8 @@ class AuthState {
   final User? user;
   final bool isLoading;
   final String? error;
+  bool get isAuthenticated => user != null;
+  AuthState Function() initial = AuthState.new; 
 }
 
 class AuthNotifier extends StateNotifier<AuthState> {
