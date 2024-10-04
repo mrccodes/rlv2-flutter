@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - name: 📚 Git Checkout
@@ -69,8 +69,6 @@ jobs:
       - name: Set Write Permissions for Non-Main Branches
         if: github.ref != 'refs/heads/main'  # Only allow write for non-main branches
         run: echo "Setting write permissions for non-main branches"
-        permissions:
-          contents: write  # Give write permissions only for non-main branches
 
       - name: 🧪 Run Tests with Coverage (Only for PRs)
         if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
