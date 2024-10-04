@@ -102,7 +102,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add coverage-badge.svg
+          git add coverage_badge.svg
           git commit -m "Update coverage badge"
           git push origin HEAD:${{ github.head_ref }}  # Push to PR source branch (non-main branches)
 
