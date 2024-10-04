@@ -17,13 +17,95 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
 
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      flutter_channel: stable
-      min_coverage: 0
-      setup: |
-        echo "API_URL=https://dummy-url-for-ci" > .env
-        echo "API_KEY=dummy-api-key" >> .env
+    # defaults:
+    #   run:
+    #     working-directory: .
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
+
+      # - name: 🤫 Set SSH Key
+      #   env:
+      #     ssh_key: ${{secrets.ssh_key}}
+      #   if: env.ssh_key != null
+      #   uses: webfactory/ssh-agent@v0.9.0
+      #   with:
+      #     ssh-private-key: ${{secrets.ssh_key}}
+
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          very_good packages get --recursive --ignore=!*
+
+      - name: ⚙️ Run Setup
+        run: |
+          echo "API_URL=https://dummy-url-for-ci" > .env
+          echo "API_KEY=dummy-api-key" >> .env
+
+      - name: ✨ Check Formatting
+        run: dart format --line-length 80 --set-exit-if-changed lib test
+
+      - name: 🕵️ Analyze
+        run: flutter analyze lib test
+
+      - name: 🧪 Run Tests
+        run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
+
+      - name: Set Write Permissions for Non-Main Branches
+        if: github.ref != 'refs/heads/main'  # Only allow write for non-main branches
+        run: echo "Setting write permissions for non-main branches"
+
+      - name: 🧪 Run Tests with Coverage (Only for PRs)
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
+        run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
+
+      - name: Install lcov
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
+        run: sudo apt-get install -y lcov
+
+      - name: Parse Coverage and Generate Badge
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
+        run: |
+          if [ ! -f coverage/lcov.info ]; then
+            echo "coverage/lcov.info file not found!"
+            exit 1
+          fi
+
+          TOTAL_LINES=$(grep -Po '(?<=LF:)\d+' coverage/lcov.info | awk '{s+=$1} END {print s}')
+          COVERED_LINES=$(grep -Po '(?<=LH:)\d+' coverage/lcov.info | awk '{s+=$1} END {print s}')
+          if [ "$TOTAL_LINES" -eq 0 ]; then
+            echo "No lines found in lcov.info"
+            exit 1
+          fi
+          COVERAGE=$(echo "scale=2; ($COVERED_LINES / $TOTAL_LINES) * 100" | bc)
+
+          echo "Coverage: ${COVERAGE}%"
+          curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen" -o coverage-badge.svg
+
+      - name: Commit and Push Badge Update
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only allow pushing for non-main branches
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add coverage-badge.svg
+          git commit -m "Update coverage badge"
+          git push origin HEAD:${{ github.head_ref }}  # Push to PR source branch (non-main branches)
+
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
