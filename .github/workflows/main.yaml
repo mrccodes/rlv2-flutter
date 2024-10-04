@@ -45,7 +45,7 @@ jobs:
       - name: 📦 Install Dependencies
         run: |
           flutter pub global activate very_good_cli
-          very_good packages get --recursive --ignore=${{inputs.package_get_excludes}}
+          very_good packages get --recursive --ignore=!*
 
       - name: ⚙️ Run Setup
         run: |
