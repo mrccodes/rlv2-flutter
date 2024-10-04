@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -35,7 +33,8 @@ class ApiService {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           AppLogger.info(
-              'Sending request to ${options.baseUrl}${options.path}');
+              'Sending request to ${options.baseUrl}${options.path}',
+              );
           // Retrieve the token from secure storage
           final authToken = await storage.read(key: 'auth_token');
 

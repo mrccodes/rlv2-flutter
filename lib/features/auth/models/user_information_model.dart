@@ -38,6 +38,13 @@ class UserInformation {
 
   @override
   String toString() {
-    return 'UserInformation{firstName: $firstName, lastName: $lastName, image: $image, bio: $bio, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 
+      'UserInformation{'
+      'firstName: $firstName, '
+      'lastName: $lastName, '
+      'image: $image, '
+      'bio: $bio, '
+      'createdAt: $createdAt, '
+      'updatedAt: $updatedAt}';
   }
 }

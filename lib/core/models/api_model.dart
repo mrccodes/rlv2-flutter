@@ -2,10 +2,12 @@
 
 class ApiResponse<T> {
   ApiResponse(
-      {required this.statusCode,
+    {
+      required this.statusCode,
       required this.message,
       this.data,
-      this.errors});
+      this.errors,
+    });
   // Helper method to create a success response
   factory ApiResponse.success(
     T data,

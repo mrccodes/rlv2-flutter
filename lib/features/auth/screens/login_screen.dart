@@ -27,7 +27,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
     // Handle successful login
     if (authState.user != null) {
-      // Use WidgetsBinding to delay the navigation until after the build is done
+      // Use WidgetsBinding to delay the 
+      // navigation until after the build is done
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/dashboard');
       });

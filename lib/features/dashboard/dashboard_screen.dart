@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/features/dashboard/providers/dashboard_provider.dart';
 import 'package:rlv2_flutter/core/providers/scaffold_provider.dart';
-import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
 import 'package:rlv2_flutter/core/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/core/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/core/widgets/custom_nav_drawer.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/dashboard/providers/dashboard_provider.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});

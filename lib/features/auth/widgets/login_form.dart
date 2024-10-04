@@ -27,13 +27,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
     }
   }
 
-  Future<void> testSubmit() async {
-    formKey.currentState!.save();
-    await ref
-        .read(authNotifierProvider.notifier)
-        .login('matt@matt.com', 'password123');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -63,10 +56,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
           ElevatedButton(
             onPressed: submit,
             child: const Text('Submit'),
-          ),
-          ElevatedButton(
-            onPressed: testSubmit,
-            child: const Text('Test Submit'),
           ),
         ],
       ),

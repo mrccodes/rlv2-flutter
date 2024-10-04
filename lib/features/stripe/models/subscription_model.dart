@@ -30,7 +30,8 @@ class Subscription {
       customer: json['customer'] as String,
       items: (json['items'] as List<dynamic>)
           .map(
-              (item) => SubscriptionItem.fromJson(item as Map<String, dynamic>))
+              (item) => SubscriptionItem.fromJson(item as Map<String, dynamic>),
+              )
           .toList(),
       latestInvoice: json['latest_invoice'] as String,
       pendingInvoiceItemInterval: json['pending_invoice_item_interval'],
@@ -96,7 +97,7 @@ class SubscriptionItem {
       object: json['object'] as String,
       billingThresholds: json['billing_thresholds'] as dynamic,
       created: json['created'] as int,
-      plan:  Plan.fromJson(json['plan'] as Map<String, dynamic>),
+      plan: Plan.fromJson(json['plan'] as Map<String, dynamic>),
       price: Price.fromJson(json['price'] as Map<String, dynamic>),
       quantity: json['quantity'] as int,
       subscription: json['subscription'] as String,
