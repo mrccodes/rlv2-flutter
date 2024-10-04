@@ -23,6 +23,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: 📚 Git Checkout
         uses: actions/checkout@v4
@@ -63,17 +66,22 @@ jobs:
       - name: 🧪 Run Tests
         run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
 
-      # - name: 📊 Check Code Coverage
-      #   uses: VeryGoodOpenSource/very_good_coverage@v3
-      #   with:
-      #     path: ./coverage/lcov.info
-      #     min_coverage: 0
+      - name: Set Write Permissions for Non-Main Branches
+        if: github.ref != 'refs/heads/main'  # Only allow write for non-main branches
+        run: echo "Setting write permissions for non-main branches"
+        permissions:
+          contents: write  # Give write permissions only for non-main branches
+
+      - name: 🧪 Run Tests with Coverage (Only for PRs)
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
+        run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
 
       - name: Install lcov
-        run: sudo apt-get install -y lcov  # Install lcov and genhtml
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
+        run: sudo apt-get install -y lcov
 
       - name: Parse Coverage and Generate Badge
-        if: ${{ github.event_name == 'pull_request' }}  # Only run for PRs
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
         run: |
           if [ ! -f coverage/lcov.info ]; then
             echo "coverage/lcov.info file not found!"
@@ -92,13 +100,13 @@ jobs:
           curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen" -o coverage-badge.svg
 
       - name: Commit and Push Badge Update
-        if: ${{ github.event_name == 'pull_request' }}  # Only run for PRs
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only allow pushing for non-main branches
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add coverage-badge.svg
           git commit -m "Update coverage badge"
-          git push origin HEAD:${{ github.head_ref }}  # Push to the PR branch
+          git push origin HEAD:${{ github.head_ref }}  # Push to PR source branch (non-main branches)
 
 
   spell-check:
