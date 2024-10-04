@@ -13,9 +13,6 @@ import '../../mocks/user_session_context_repository.dart';
 
 // Mock the necessary providers for the test
 
-
-
-
 void main() {
   group('App', () {
     setUpAll(testSetup);
@@ -37,7 +34,7 @@ void main() {
               MockUserSessionRepository(),
             ), // Mock the session repository
           ],
-          child: const MaterialApp( home: LandingScreen()),
+          child: const MaterialApp(home: LandingScreen()),
         ),
       );
 

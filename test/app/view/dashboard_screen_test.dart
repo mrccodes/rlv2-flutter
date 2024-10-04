@@ -19,7 +19,7 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-            overrides: [
+          overrides: [
             authNotifierProvider.overrideWith((ref) => mockAuthNotifier),
             userSessionRepositoryProvider.overrideWithValue(
               MockUserSessionRepository(),
