@@ -94,15 +94,25 @@ jobs:
           fi
           COVERAGE=$(echo "scale=2; ($COVERED_LINES / $TOTAL_LINES) * 100" | bc)
 
+          # Determine badge color based on coverage percentage
+          if (( $(echo "$COVERAGE < 50" | bc -l) )); then
+            COLOR="red"
+          elif (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            COLOR="yellow"
+          else
+            COLOR="brightgreen"
+          fi
+
+
           echo "Coverage: ${COVERAGE}%"
-          curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen" -o coverage-badge.svg
+          curl "https://img.shields.io/badge/coverage-${COVERAGE}%25-${COLOR}" -o coverage_badge.svg
 
       - name: Commit and Push Badge Update
         if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only allow pushing for non-main branches
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add coverage-badge.svg
+          git add coverage_badge.svg
           git commit -m "Update coverage badge"
           git push origin HEAD:${{ github.head_ref }}  # Push to PR source branch (non-main branches)
 
