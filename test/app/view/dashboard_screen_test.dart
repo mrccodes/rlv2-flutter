@@ -6,8 +6,6 @@ import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart'
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
-import 'package:rlv2_flutter/features/user/models/user_model.dart';
-
 import '../../helpers/test_setup.dart';
 import '../../mocks/auth_notifier.dart';
 import '../../mocks/user_session_context_service.dart';
