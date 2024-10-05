@@ -1,5 +1,5 @@
 import 'package:rlv2_flutter/core/services/api_service.dart';
-import 'package:rlv2_flutter/features/auth/models/user_model.dart';
+import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class AuthRepository {

@@ -1,7 +1,7 @@
 // lib/features/dashboard/dashboard_view_model.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/features/auth/models/user_information_model.dart';
+import 'package:rlv2_flutter/features/user/models/user_information_model.dart';
 
 /// Define the state of the dashboard.
 class DashboardState {

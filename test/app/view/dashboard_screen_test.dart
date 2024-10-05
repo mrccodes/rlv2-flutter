@@ -6,6 +6,7 @@ import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart'
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
+import 'package:rlv2_flutter/features/user/models/user_model.dart';
 
 import '../../helpers/test_setup.dart';
 import '../../mocks/auth_notifier.dart';
@@ -16,6 +17,8 @@ void main() {
     setUpAll(testSetup);
     testWidgets('renders primary nav components', (tester) async {
       final mockAuthNotifier = MockAuthNotifier();
+
+      await mockAuthNotifier.login('test', 'test');
 
       await tester.pumpWidget(
         ProviderScope(
@@ -30,7 +33,7 @@ void main() {
           ),
         ),
       );
-
+      await tester.pumpAndSettle();
       // Check for presence of CustomAppBar and CustomBottomNavigationBar
       expect(find.byType(CustomAppBar), findsOneWidget);
       expect(find.byType(CustomBottomNavigationBar), findsOneWidget);
