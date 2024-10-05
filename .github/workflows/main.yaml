@@ -100,19 +100,22 @@ jobs:
           fi
 
 
+          # Extract current coverage percentage from README.md using regex
+          CURRENT_COVERAGE=$(grep -Po '(?<=coverage-)\d+(\.\d+)?(?=%)' README.md)
+
+          # Compare the current coverage with the new coverage
+          if [ "$CURRENT_COVERAGE" = "$COVERAGE" ]; then
+            echo "Coverage percentage has not changed. No need to update the badge."
+            exit 0
+          else
+            echo "Coverage percentage has changed. Updating the badge."
+          fi
+
           # Cache bust using GitHub run ID to ensure freshness
           CACHE_BUSTER=${{ github.run_id }}
 
           # Update README with new Shields.io badge URL with cache busting
           sed -i "s|!\[coverage\](.*)|![coverage](https://img.shields.io/badge/coverage-${COVERAGE}%25-${COLOR}?cacheBust=${CACHE_BUSTER})|g" README.md
-
-          # Check if there are changes in the README.md
-          if git diff --quiet README.md; then
-            echo "No changes to README.md, skipping commit."
-            exit 0
-          else
-            echo "README.md updated with new coverage badge."
-          fi
 
       - name: Commit and Push Badge Update
         if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only allow pushing for non-main branches
@@ -120,7 +123,7 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add README.md
-          git commit -m "Update readme with new cover badge"
+          git commit -m "Update readme with new coverage badge: ${COVERAGE}%"
           git push origin HEAD:${{ github.head_ref }}
 
   spell-check:
