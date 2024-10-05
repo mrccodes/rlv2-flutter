@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -57,12 +59,32 @@ class ApiService {
     );
   }
 
-  Future<ApiResponse<T>> getRequest<T>(
-    String endpoint,
-    T Function(Map<String, dynamic>) fromJson, // Make sure this takes a Map
+  Future<Response<Map<String, dynamic>>> _handleSetCookie(
+    Response<Map<String, dynamic>> response,
+    ) async {
+    final cookies = response.headers['set-cookie'];
+    if (cookies != null && cookies.isNotEmpty) {
+      // Assuming your token is prefixed by 'Authorization='
+      final cookieString = cookies[0];
+      final token = RegExp(
+        'Authorization=([^;]+)',
+      ).firstMatch(cookieString)?.group(1);
+
+      if (token != null) {
+        // Store just the token securely
+        await storage.write(key: 'auth_token', value: token);
+      }
+    }
+    return response; // Make sure to return the response here
+  }
+
+
+  Future<ApiResponse<T>> _handleRequest<T>(
+    Future<Response<Map<String, dynamic>>> Function() requestFunc,
+    T Function(Map<String, dynamic>) fromJson,
   ) async {
     try {
-      final response = await dio.get<Map<String, dynamic>>(endpoint);
+      final response = await requestFunc();
 
       final responseData = response.data!;
 
@@ -87,6 +109,40 @@ class ApiService {
         'Exception: $e',
         500,
         ['An unknown error occurred'],
+      );
+    }
+  }
+
+  Future<ApiResponse<T>> getRequest<T>(
+    String endpoint,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    return _handleRequest(
+      () => dio.get<Map<String, dynamic>>(endpoint),
+      fromJson,
+    );
+  }
+
+  Future<ApiResponse<T>> postRequest<T>(
+    String endpoint,
+    Map<String, dynamic> data,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    if (endpoint == '/login') {
+      return _handleRequest(
+        () => dio.post<Map<String, dynamic>>(
+          endpoint,
+          data: data,
+        ).then(_handleSetCookie),
+        fromJson,
+      );
+    } else {
+      return _handleRequest(
+        () => dio.post<Map<String, dynamic>>(
+          endpoint,
+          data: data,
+        ),
+        fromJson,
       );
     }
   }

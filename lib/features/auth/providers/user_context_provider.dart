@@ -6,10 +6,10 @@ import 'package:rlv2_flutter/features/auth/services/user_session_context_service
 import 'package:rlv2_flutter/features/auth/view_models/auth_view_model.dart';
 import 'package:rlv2_flutter/features/auth/view_models/user_context_view_model.dart';
 
-// UserSessionContextService provider
-final userSessionContextServiceProvider = Provider<UserSessionContextService>(
+// UserSessionContextRepository provider
+final userSessionContextRepositoryProvider = Provider<UserSessionContextRepository>(
   (ref) {
-    return UserSessionContextService();
+    return UserSessionContextRepository();
   },
 );
 
@@ -18,33 +18,31 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
   (ref) => const FlutterSecureStorage(),
 );
 
-// UserSessionRepository provider
-final userSessionRepositoryProvider = Provider<UserSessionRepository>((ref) {
+// UserSessionService provider
+final userSessionServiceProvider = Provider<UserSessionService>((ref) {
   final storage = ref.watch(secureStorageProvider);
-  final userSessionContextService =
-      ref.watch(userSessionContextServiceProvider);
-  return UserSessionRepository(
+  final userSessionRepository = ref.watch(userSessionContextRepositoryProvider);
+
+  return UserSessionService(
     storage: storage,
-    userSessionContextService: userSessionContextService,
+    userSessionContextRepository: userSessionRepository,
   );
 });
 
-// Update the UserContextSessionNotifier provider to use the repository
+// UserSessionNotifier provider
 final userContextSessionNotifierProvider =
     StateNotifierProvider<UserSessionNotifier, UserSessionState>((ref) {
-  final userSessionRepository = ref.watch(userSessionRepositoryProvider);
-  return UserSessionNotifier(repository: userSessionRepository);
+  final userSessionService = ref.watch(userSessionServiceProvider);
+  return UserSessionNotifier(service: userSessionService);
 });
 
 // Listen to AuthState and trigger loadUserSession on userId change
 final userSessionListenerProvider = Provider<void>((ref) {
-  // Listen for changes in AuthState
   ref.listen<AuthState>(authNotifierProvider, (previous, next) {
     final previousUserId = previous?.user?.id;
     final nextUserId = next.user?.id;
-    // Check if userId has changed
+
     if (previousUserId != nextUserId && nextUserId != null) {
-      // Call loadUserSession with the new userId
       ref
           .read(userContextSessionNotifierProvider.notifier)
           .loadUserSession(nextUserId);

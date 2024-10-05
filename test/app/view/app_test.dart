@@ -10,6 +10,7 @@ import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 import '../../helpers/test_setup.dart';
 import '../../mocks/auth_notifier.dart';
 import '../../mocks/user_session_context_repository.dart';
+import '../../mocks/user_session_context_service.dart';
 
 // Mock the necessary providers for the test
 
@@ -30,8 +31,8 @@ void main() {
         ProviderScope(
           overrides: [
             authNotifierProvider.overrideWith((ref) => mockAuthNotifier),
-            userSessionRepositoryProvider.overrideWithValue(
-              MockUserSessionRepository(),
+            userSessionServiceProvider.overrideWithValue(
+              MockUserSessionService(),
             ), // Mock the session repository
           ],
           child: const MaterialApp(home: LandingScreen()),

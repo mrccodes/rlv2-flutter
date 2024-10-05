@@ -3,10 +3,7 @@ import 'package:rlv2_flutter/features/auth/repositories/user_session_context_rep
 
 import 'user_session_context_service.dart';
 
-class MockUserSessionRepository extends UserSessionRepository {
-  MockUserSessionRepository()
-      : super(
-          storage: const FlutterSecureStorage(),
-          userSessionContextService: MockUserSessionContextService(),
-        );
+
+class MockUserSessionContextRepository extends UserSessionContextRepository {
+  MockUserSessionContextRepository() : super();
 }
