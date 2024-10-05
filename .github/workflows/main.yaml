@@ -66,15 +66,7 @@ jobs:
       - name: 🧪 Run Tests
         run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
 
-      - name: Set Write Permissions for Non-Main Branches
-        if: github.ref != 'refs/heads/main'  # Only allow write for non-main branches
-        run: echo "Setting write permissions for non-main branches"
-
-      - name: 🧪 Run Tests with Coverage (Only for PRs)
-        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
-        run: very_good test -j 4 --no-optimization --coverage --test-randomize-ordering-seed random
-
-      - name: Parse Coverage and Generate Badge
+      - name: Parse Coverage and Generate Badge (Only for PRs)
         if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only run for PRs not targeting main
         run: |
           if [ ! -f coverage/lcov.info ]; then
@@ -100,22 +92,33 @@ jobs:
           fi
 
 
+          # Extract current coverage percentage from README.md using regex
+          CURRENT_COVERAGE=$(grep -Po '(?<=coverage-)\d+(\.\d+)?(?=%)' README.md)
+
+          # Compare the current coverage with the new coverage
+          if [ "$CURRENT_COVERAGE" = "$COVERAGE" ]; then
+            echo "Coverage percentage has not changed. No need to update the badge."
+            echo "SHOULD_COMMIT=false" >> $GITHUB_ENV
+            exit 0
+          else
+            echo "Coverage percentage has changed. Updating the badge."
+            echo "SHOULD_COMMIT=true" >> $GITHUB_ENV
+          fi
+
           # Cache bust using GitHub run ID to ensure freshness
           CACHE_BUSTER=${{ github.run_id }}
 
           # Update README with new Shields.io badge URL with cache busting
           sed -i "s|!\[coverage\](.*)|![coverage](https://img.shields.io/badge/coverage-${COVERAGE}%25-${COLOR}?cacheBust=${CACHE_BUSTER})|g" README.md
 
-
-      - name: Commit and Push Badge Update
-        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}  # Only allow pushing for non-main branches
+      - name: Commit and Push Badge Update if Coverage Changed (Only for PRs)
+        if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main'  && env.SHOULD_COMMIT == 'true' }}  # Only allow pushing for non-main branches
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add README.md
-          git commit -m "Update readme with new cover badge"
-          git push origin HEAD:${{ github.head_ref }}  
-
+          git commit -m "Update readme with new coverage badge: ${COVERAGE}%"
+          git push origin HEAD:${{ github.head_ref }}
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
