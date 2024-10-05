@@ -69,7 +69,7 @@ class CustomDrawer extends ConsumerWidget {
               );
             },
           ),
-          const ThemeToggleWidget()
+          const ThemeToggleWidget(),
         ],
       ),
     );

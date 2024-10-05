@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/core/providers/navigation_provider.dart';
 import 'package:rlv2_flutter/core/widgets/circular_button.dart';
+import 'package:rlv2_flutter/features/navigation/navigation_provider.dart';
 
 class CustomBottomNavigationBar extends ConsumerWidget {
   const CustomBottomNavigationBar({super.key});

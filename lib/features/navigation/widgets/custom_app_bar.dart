@@ -7,14 +7,18 @@ import 'package:rlv2_flutter/core/providers/scaffold_provider.dart';
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const CustomAppBar({
     required this.title,
+    required this.scaffoldKey,
+    this.showMenuButton = false,
     super.key,
   });
 
   final String title;
+  final bool showMenuButton;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scaffoldKey = ref.watch(scaffoldKeyProvider);
+    // final scaffoldKey = ref.watch(scaffoldKeyProvider);
     final navButtonShowing = Navigator.of(context).canPop();
     final isLandingPage = ModalRoute.of(context)?.settings.name == '/';
 
@@ -38,7 +42,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: [
+      actions: showMenuButton ? [
         IconButton(
           icon: const Icon(Icons.menu),
           color: Theme.of(context).colorScheme.primary,
@@ -46,7 +50,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             scaffoldKey.currentState?.openEndDrawer();
           },
         ),
-      ],
+      ] : null,
     );
   }
 
