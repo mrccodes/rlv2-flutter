@@ -6,7 +6,7 @@ import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
-class UserSessionContextService extends ApiService {
+class UserSessionContextRepository extends ApiService {
   Future<UserSessionContext?> getUserSessionContext({
     required String userId,
   }) async {
