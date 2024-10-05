@@ -8,8 +8,8 @@ import 'package:rlv2_flutter/features/auth/view_models/auth_view_model.dart';
 import 'package:rlv2_flutter/features/auth/view_models/user_context_view_model.dart';
 
 // UserSessionContextRepository provider
-final userSessionContextRepositoryProvider = 
-  Provider<UserSessionContextRepository>(
+final userSessionContextRepositoryProvider =
+    Provider<UserSessionContextRepository>(
   (ref) {
     return UserSessionContextRepository(
       apiService: ref.watch(apiServiceProvider),

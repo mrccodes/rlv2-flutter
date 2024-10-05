@@ -14,7 +14,10 @@ class AuthRepository {
     try {
       // ignore: inference_failure_on_function_invocation
       final response = await apiService.postRequest<User>(
-          endpoint, {'email': email, 'password': password}, User.fromJson);
+        endpoint,
+        {'email': email, 'password': password},
+        User.fromJson,
+      );
 
       return response.data!;
     } catch (e) {

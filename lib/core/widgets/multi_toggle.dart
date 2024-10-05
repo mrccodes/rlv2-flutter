@@ -3,7 +3,7 @@ import 'package:rlv2_flutter/utils/capitalize_string.dart';
 
 class ToggleOption<T> {
   ToggleOption({required this.label, this.color});
-  final T label;  // Enum or other type
+  final T label; // Enum or other type
   final Color? color;
 }
 
@@ -16,10 +16,10 @@ class MultiToggle<T> extends StatefulWidget {
     super.key,
   });
 
-  final List<ToggleOption<T>> options;  
-  final ToggleOption<T> initialOption;  
+  final List<ToggleOption<T>> options;
+  final ToggleOption<T> initialOption;
   final String? label;
-  final void Function(T) onToggle;  
+  final void Function(T) onToggle;
 
   @override
   MultiToggleState<T> createState() => MultiToggleState<T>();
@@ -31,7 +31,7 @@ class MultiToggleState<T> extends State<MultiToggle<T>> {
   @override
   void initState() {
     super.initState();
-    selectedOption = widget.initialOption.label;  
+    selectedOption = widget.initialOption.label;
   }
 
   @override
@@ -52,9 +52,11 @@ class MultiToggleState<T> extends State<MultiToggle<T>> {
           ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.options.map(
-            _buildToggleOption,
-            ).toList(),
+          children: widget.options
+              .map(
+                _buildToggleOption,
+              )
+              .toList(),
         ),
       ],
     );
@@ -70,19 +72,18 @@ class MultiToggleState<T> extends State<MultiToggle<T>> {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         margin: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
-          color: isSelected ? 
-            defaultColor : 
-            Theme.of(context).colorScheme.primary,
+          color:
+              isSelected ? defaultColor : Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
           capitalize(
-            option.label.toString().split('.').last, 
+            option.label.toString().split('.').last,
           ),
           style: TextStyle(
-            color: isSelected ? 
-              Theme.of(context).colorScheme.primary : 
-              defaultColor,
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary
+                : defaultColor,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -92,8 +93,8 @@ class MultiToggleState<T> extends State<MultiToggle<T>> {
 
   void _onPressed(T option) {
     setState(() {
-      selectedOption = option;  // Update selected option
+      selectedOption = option; // Update selected option
     });
-    widget.onToggle(option);  // Notify parent widget of the change
+    widget.onToggle(option); // Notify parent widget of the change
   }
 }

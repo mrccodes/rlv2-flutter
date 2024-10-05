@@ -80,13 +80,14 @@ class CustomDrawer extends ConsumerWidget {
             },
           ),
           MultiToggle(
-              options: [lightModeOption, darkModeOption, systemModeOption],
-              label: 'Theme Mode',
-              initialOption: systemModeOption,
-              onToggle: (option) {
-                final str = option.toString();
-                AppLogger.info('Toggle changed to option $str');
-              }),
+            options: [lightModeOption, darkModeOption, systemModeOption],
+            label: 'Theme Mode',
+            initialOption: systemModeOption,
+            onToggle: (option) {
+              final str = option.toString();
+              AppLogger.info('Toggle changed to option $str');
+            },
+          ),
         ],
       ),
     );

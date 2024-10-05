@@ -6,10 +6,8 @@ import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
-
 import '../../helpers/test_setup.dart';
 import '../../mocks/auth_notifier.dart';
-import '../../mocks/user_session_context_repository.dart';
 import '../../mocks/user_session_context_service.dart';
 
 // Mock the necessary providers for the test

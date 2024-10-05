@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/theme/theme_model.dart';
 
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeModeType>((ref) {
+final themeProvider =
+    StateNotifierProvider<ThemeNotifier, ThemeModeType>((ref) {
   return ThemeNotifier();
 });
 

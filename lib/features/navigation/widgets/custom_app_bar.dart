@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/core/providers/scaffold_provider.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -42,15 +41,17 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: showMenuButton ? [
-        IconButton(
-          icon: const Icon(Icons.menu),
-          color: Theme.of(context).colorScheme.primary,
-          onPressed: () {
-            scaffoldKey.currentState?.openEndDrawer();
-          },
-        ),
-      ] : null,
+      actions: showMenuButton
+          ? [
+              IconButton(
+                icon: const Icon(Icons.menu),
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: () {
+                  scaffoldKey.currentState?.openEndDrawer();
+                },
+              ),
+            ]
+          : null,
     );
   }
 

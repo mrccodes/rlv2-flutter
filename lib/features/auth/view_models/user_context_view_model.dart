@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
-import 'package:rlv2_flutter/features/auth/repositories/user_session_context_repository.dart';
 import 'package:rlv2_flutter/features/auth/services/user_session_context_service.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
@@ -29,8 +28,7 @@ class UserSessionNotifier extends StateNotifier<UserSessionState> {
       AppLogger.info('Loading user session for user: $userId');
       state = UserSessionState(isLoading: true);
 
-      final userSessionContext =
-          await service.fetchUserSessionContext(userId);
+      final userSessionContext = await service.fetchUserSessionContext(userId);
 
       state = UserSessionState(userSessionContext: userSessionContext);
       AppLogger.info(

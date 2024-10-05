@@ -1,1 +1,2 @@
-String capitalize(String s) => s.isNotEmpty ? '${s[0].toUpperCase()}${s.substring(1)}' : s;
+String capitalize(String s) =>
+    s.isNotEmpty ? '${s[0].toUpperCase()}${s.substring(1)}' : s;

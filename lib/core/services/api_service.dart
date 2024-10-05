@@ -61,7 +61,7 @@ class ApiService {
 
   Future<Response<Map<String, dynamic>>> _handleSetCookie(
     Response<Map<String, dynamic>> response,
-    ) async {
+  ) async {
     final cookies = response.headers['set-cookie'];
     if (cookies != null && cookies.isNotEmpty) {
       // Assuming your token is prefixed by 'Authorization='
@@ -77,7 +77,6 @@ class ApiService {
     }
     return response; // Make sure to return the response here
   }
-
 
   Future<ApiResponse<T>> _handleRequest<T>(
     Future<Response<Map<String, dynamic>>> Function() requestFunc,
@@ -130,10 +129,12 @@ class ApiService {
   ) async {
     if (endpoint == '/login') {
       return _handleRequest(
-        () => dio.post<Map<String, dynamic>>(
-          endpoint,
-          data: data,
-        ).then(_handleSetCookie),
+        () => dio
+            .post<Map<String, dynamic>>(
+              endpoint,
+              data: data,
+            )
+            .then(_handleSetCookie),
         fromJson,
       );
     } else {

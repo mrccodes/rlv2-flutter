@@ -14,9 +14,8 @@ class UserSessionService {
 
   Future<UserSessionContext> fetchUserSessionContext(String userId) async {
     try {
-      final userSessionContext =
-          await userSessionContextRepository
-            .getUserSessionContext(userId: userId);
+      final userSessionContext = await userSessionContextRepository
+          .getUserSessionContext(userId: userId);
       return userSessionContext!;
     } catch (e) {
       throw Exception('Error fetching user session: $e');

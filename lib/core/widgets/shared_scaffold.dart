@@ -21,23 +21,21 @@ class SharedScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // listen to authstate
     final authState = ref.watch(authNotifierProvider);
-    final scaffoldKey = GlobalKey<ScaffoldState>();  // Unique scaffold key for this screen
+    final scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
-        title: appBarTitle, 
+        title: appBarTitle,
         showMenuButton: authState.isAuthenticated,
-        scaffoldKey: scaffoldKey,  // Pass the key to CustomAppBar
+        scaffoldKey: scaffoldKey,
       ),
-      endDrawer: showDrawer && authState.isAuthenticated ? 
-        const CustomDrawer() : 
-        null, 
-      bottomNavigationBar: showBottomNav && authState.isAuthenticated ? 
-        const CustomBottomNavigationBar() : 
-        null,
+      endDrawer:
+          showDrawer && authState.isAuthenticated ? const CustomDrawer() : null,
+      bottomNavigationBar: showBottomNav && authState.isAuthenticated
+          ? const CustomBottomNavigationBar()
+          : null,
       body: body,
     );
   }

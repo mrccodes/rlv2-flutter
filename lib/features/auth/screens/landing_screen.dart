@@ -8,7 +8,6 @@ class LandingScreen extends ConsumerWidget {
   const LandingScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return SharedScaffold(
       appBarTitle: 'RecipeLab',
       body: Center(

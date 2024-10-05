@@ -4,11 +4,12 @@ import 'package:rlv2_flutter/features/auth/repositories/auth_repository.dart';
 import 'package:rlv2_flutter/features/auth/view_models/auth_view_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 
-class MockAuthNotifier extends StateNotifier<AuthState> implements AuthNotifier {
-  MockAuthNotifier({User? user}) 
+class MockAuthNotifier extends StateNotifier<AuthState>
+    implements AuthNotifier {
+  MockAuthNotifier({User? user})
       : super(
           AuthState(
-            user: user,  // Optional user, can be null
+            user: user, // Optional user, can be null
           ),
         );
 

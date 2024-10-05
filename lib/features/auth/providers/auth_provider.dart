@@ -6,7 +6,7 @@ import 'package:rlv2_flutter/features/auth/view_models/auth_view_model.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final apiService = ref.watch(apiServiceProvider);
-  return AuthRepository(apiService: apiService); 
+  return AuthRepository(apiService: apiService);
 });
 
 final authNotifierProvider =

@@ -30,11 +30,12 @@ void main() {
     );
 
     // Simulate a successful API response
-    when(() => mockApiService.getRequest<UserSessionContext>(
-          any(),
-          any(),
-        ),
-        ).thenAnswer(
+    when(
+      () => mockApiService.getRequest<UserSessionContext>(
+        any(),
+        any(),
+      ),
+    ).thenAnswer(
       (_) async => ApiResponse.success(
         mockUserSessionContext,
         'Success',
@@ -45,10 +46,11 @@ void main() {
     final result = await repository.getUserSessionContext(userId: 'user123');
 
     expect(result, equals(mockUserSessionContext));
-    verify(() => mockApiService.getRequest<UserSessionContext>(
-          '/user-session/user123',
-          UserSessionContext.fromJson,
-        )).called(1);
+    verify(
+      () => mockApiService.getRequest<UserSessionContext>(
+        '/user-session/user123',
+        UserSessionContext.fromJson,
+      ),
+    ).called(1);
   });
-
 }
