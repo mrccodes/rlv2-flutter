@@ -52,12 +52,9 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
       final userSettings = ref.read(userSettingsProvider);
 
       if (userSettings.data != null) {
-        await ref.read(userSettingsProvider.notifier).updateUserSettings(
+        await ref.read(userSettingsProvider.notifier).patchUserSettings(
               userId,
-              ref
-                  .read(userSettingsProvider)
-                  .data!
-                  .copyWith(preferredMode: mode.name),
+              {'preferredMode': mode.name},
             );
       }
 
