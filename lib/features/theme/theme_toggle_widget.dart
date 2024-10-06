@@ -38,11 +38,6 @@ class ThemeToggleWidget extends ConsumerWidget {
         orElse: () => systemModeOption,
       ),
       onToggle: (option) async {
-        if (authState.user == null) {
-          AppLogger.error('User is not authenticated');
-          return;
-        }
-
         await ref
             .read(themeProvider.notifier)
             .toggleTheme(authState.user!.id, option);

@@ -9,7 +9,7 @@ class UserSettings {
     required this.showTipsAndTricks,
     required this.createdAt,
     required this.updatedAt,
-    this.preferredMode,
+    required this.preferredMode,
     this.preferredVolumeUnit,
     this.preferredMassUnit,
     this.preferredLengthUnit,
@@ -20,7 +20,7 @@ class UserSettings {
   factory UserSettings.fromJson(Map<String, dynamic> json) {
     return UserSettings(
       userId: json['userId'] as String,
-      preferredMode: json['preferredMode'] as String?,
+      preferredMode: json['preferredMode'] as String,
       preferredVolumeUnit: json['preferredVolumeUnit'] as String?,
       preferredMassUnit: json['preferredMassUnit'] as String?,
       preferredLengthUnit: json['preferredLengthUnit'] as String?,
@@ -36,11 +36,11 @@ class UserSettings {
     );
   }
   final String userId;
-  final String? preferredMode;
   final String? preferredVolumeUnit;
   final String? preferredMassUnit;
   final String? preferredLengthUnit;
   final String? preferredTemperatureUnit;
+  final String preferredMode;
   final bool notifications;
   final bool pushNotifications;
   final bool emailNotifications;
@@ -91,7 +91,6 @@ class UserSettings {
 
   UserSettings copyWith({
     String? userId,
-    String? preferredMode,
     String? preferredVolumeUnit,
     String? preferredMassUnit,
     String? preferredLengthUnit,
@@ -102,6 +101,7 @@ class UserSettings {
     bool? newsletter,
     bool? dataSharingConsent,
     bool? showTipsAndTricks,
+    String? preferredMode,
     String? createdAt,
     String? updatedAt,
   }) {

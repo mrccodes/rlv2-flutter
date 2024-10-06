@@ -42,6 +42,14 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
   final UserSettingsService userSettingsService;
   final Ref ref;
 
+  bool get isLoading {
+    return state.isLoading == true;
+  }
+
+  ThemeMode get mode {
+    return state.mode;
+  }
+
   void toggleThemeLocal(ThemeMode mode) {
     state = state.copyWith(mode: mode);
   }
@@ -53,15 +61,17 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
 
       if (userSettings.data != null) {
         await ref.read(userSettingsProvider.notifier).patchUserSettings(
-              userId,
-              {'preferredMode': mode.name},
-            );
+          userId,
+          {'preferredMode': mode.name},
+        );
+      state = state.copyWith(
+        mode: mode,
+        isLoading: false,
+      );
+      } else {
+        AppLogger.error('User settings not found');
       }
 
-      state = state.copyWith(
-        isLoading: false,
-        mode: mode,
-      );
     } catch (e) {
       AppLogger.error('Error updating theme: $e');
       if (mounted) {

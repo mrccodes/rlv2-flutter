@@ -53,9 +53,22 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     return SharedScaffold(
       appBarTitle: 'RecipeLab',
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: LoginForm(
-          onSubmit: handleLogin,
+        padding: const EdgeInsets.all(24),
+        child: Padding( 
+          padding: const EdgeInsets.only(top: 150),
+          child: Column(
+          children: [ const Text('Login to RecipeLab',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                ), 
+              ),
+              const SizedBox(height: 16),
+              LoginForm(
+                onSubmit: handleLogin,
+              ),
+            ],
+          ),
         ),
       ),
     );
