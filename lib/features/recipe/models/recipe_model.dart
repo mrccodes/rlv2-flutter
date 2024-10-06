@@ -8,14 +8,14 @@ class Recipe {
     this.updatedAt,
   });
 
-  factory Recipe.fromJson(Map<String, String> json) {
+  factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
-      id: json['id']!,
-      name: json['name']!,
-      author: json['author']!,
-      organizationId: json['organizationId'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      id: json['id'] as String,
+      name: json['name'] as String,
+      author: json['author'] as String,
+      organizationId: json['organizationId'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
   }
   final String id;

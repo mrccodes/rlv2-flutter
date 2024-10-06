@@ -1,112 +1,69 @@
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
-// import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
-// import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
-// import 'package:rlv2_flutter/features/auth/services/user_session_context_service.dart';
-// import 'package:rlv2_flutter/features/user/providers/user_settings_provider.dart';
-// import 'package:rlv2_flutter/utils/app_logger.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
+import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
+import 'package:rlv2_flutter/features/user/providers/user_favorite_recipe_provider.dart';
+import 'package:rlv2_flutter/features/user/providers/user_information_provider.dart';
+import 'package:rlv2_flutter/features/user/providers/user_provider.dart';
+import 'package:rlv2_flutter/features/user/providers/user_recipes_provider.dart';
+import 'package:rlv2_flutter/features/user/providers/user_settings_provider.dart';
 
-// // UserSessionNotifier provider
-// final userSessionContextProvider =
-//     StateNotifierProvider<UserSessionContextNotifier, UserSessionContextState>(
-//         (ref) {
-//   final userSessionService = ref.watch(userSessionContextServiceProvider);
-//   return UserSessionContextNotifier(
-//     service: userSessionService,
-//     ref: ref,
-//   );
-// });
+final userSessionListenerProvider = Provider<void>((ref) {
+  ref.listen<AuthState>(authProvider, (previous, next) async {
+    final previousUserId = previous?.user?.id;
+    final nextUserId = next.user?.id;
+    final userContextService = ref.read(userSessionContextServiceProvider);
 
-// // Listen to AuthState and trigger loadUserSession on userId change
-// final userSessionListenerProvider = Provider<void>((ref) {
-//   ref..listen<AuthState>(authProvider, (previous, next) {
-//     final previousUserId = previous?.user?.id;
-//     final nextUserId = next.user?.id;
+    if (previousUserId != nextUserId && nextUserId != null) {
+      // Set loading to true using methods
+      ref.read(userProvider.notifier).isLoading = true;
+      ref.read(userInformationProvider.notifier).isLoading = true;
+      ref.read(userSettingsProvider.notifier).isLoading = true;
+      ref.read(userFavoriteRecipeProvider.notifier).isLoading = true;
+      ref.read(userOrganizationsProvider.notifier).isLoading = true;
+      ref.read(userRecipesProvider.notifier).isLoading = true;
 
-//     if (previousUserId != nextUserId && nextUserId != null) {
-//       ref.read(userSessionContextProvider.notifier).loadUserSession(nextUserId);
-//     }
-//   })
+      try {
+        final context =
+            await userContextService.fetchUserSessionContext(nextUserId);
 
-//   ..listen<UserSettingsState>(userSettingsProvider, (previous, next) {
-//     final previousUserId = previous?.userSettings;
-//     final nextUserId = next.userSettings;
+        // Update data using methods
+        ref.read(userProvider.notifier).updateUserLocal(context.user);
+        ref
+            .read(userSettingsProvider.notifier)
+            .updateUserSettingsLocal(context.userSettings);
+        ref
+            .read(userFavoriteRecipeProvider.notifier)
+            .updateUserFavoriteRecipesLocal(context.userFavoriteRecipes);
+        ref
+            .read(userOrganizationsProvider.notifier)
+            .updateUserOrganzationsLocal(context.organizationUsers);
+        ref
+            .read(userRecipesProvider.notifier)
+            .updateUserRecipesLocal(context.userRecipes);
 
-//     if (previousUserId != nextUserId && nextUserId != null) {
-//       ref.read(userSessionContextProvider.notifier).loadUserSession(nextUserId);
-//     }
-//   });
-// });
-
-// // UserSessionContextState holds the state of UserSessionContext
-// class UserSessionContextState {
-//   UserSessionContextState({
-//     this.userSessionContext,
-//     this.isLoading = false,
-//     this.error,
-//   });
-
-//   final UserSessionContext? userSessionContext;
-//   final bool isLoading;
-//   final String? error;
-
-//   @override
-//   String toString() {
-//     return 'UserSessionContextState(userSessionContext: '
-//         '$userSessionContext, isLoading: $isLoading, error: $error)';
-//   }
-
-//   UserSessionContextState copyWith({
-//     UserSessionContext? userSessionContext,
-//     bool? isLoading,
-//     String? error,
-//   }) {
-//     return UserSessionContextState(
-//       userSessionContext: userSessionContext ?? this.userSessionContext,
-//       isLoading: isLoading ?? this.isLoading,
-//       error: error ?? this.error,
-//     );
-
-//   }
-// }
-
-// class UserSessionContextNotifier
-//     extends StateNotifier<UserSessionContextState> {
-//   UserSessionContextNotifier({
-//     required this.service,
-//     required this.ref,
-//   }) : super(UserSessionContextState());
-
-//   final UserSessionContextService service;
-//   final Ref ref;
-
-//   Future<void> loadUserSession(String userId) async {
-//     try {
-//       AppLogger.info('Loading user session for user: $userId');
-//       state = UserSessionContextState(isLoading: true);
-
-//       final userSessionContext = await service.fetchUserSessionContext(userId);
-
-//       await ref
-//           .read(userSettingsProvider.notifier)
-//           .updateUserSettings(userId, userSessionContext.userSettings);
-
-//       state = UserSessionContextState(userSessionContext: userSessionContext);
-//       AppLogger.info(
-//         'State updated with user session data $userSessionContext',
-//       );
-//     } catch (e, stackTrace) {
-//       AppLogger.error('Error loading user session: $e');
-//       AppLogger.error('Stack trace: $stackTrace');
-//       state = UserSessionContextState(error: e.toString());
-//     }
-//   }
-
-//   Future<void> clearUserSession() async {
-//     state = UserSessionContextState();
-//   }
-
-//   Future<void> updateUserSession(UserSessionContext userSessionContext) async {
-//     state = UserSessionContextState(userSessionContext: userSessionContext);
-//   }
-// }
+        if (context.userInformation != null) {
+          ref
+              .read(userInformationProvider.notifier)
+              .updateUserInformationLocal(context.userInformation!);
+        }
+      } catch (e) {
+        // Set loading to false using methods
+        ref.read(userProvider.notifier).isLoading = false;
+        ref.read(userInformationProvider.notifier).isLoading = false;
+        ref.read(userSettingsProvider.notifier).isLoading = false;
+        ref.read(userFavoriteRecipeProvider.notifier).isLoading = false;
+        ref.read(userOrganizationsProvider.notifier).isLoading = false;
+        ref.read(userRecipesProvider.notifier).isLoading = false;
+      }
+    } else if (nextUserId == null) {
+      // Clear data using methods
+      ref.read(userProvider.notifier).clearUser();
+      ref.read(userInformationProvider.notifier).clearUserInformation();
+      ref.read(userSettingsProvider.notifier).clearUserSettings();
+      ref.read(userFavoriteRecipeProvider.notifier).clearUserFavoriteRecipes();
+      ref.read(userOrganizationsProvider.notifier).clearUserOrganizations();
+      ref.read(userRecipesProvider.notifier).clearUserRecipes();
+    }
+  });
+});

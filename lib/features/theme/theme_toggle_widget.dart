@@ -34,8 +34,7 @@ class ThemeToggleWidget extends ConsumerWidget {
       options: options,
       label: 'Theme Mode',
       initialOption: options.firstWhere(
-        (option) => 
-          option.label.name == userSettings.userSettings?.preferredMode,
+        (option) => option.label.name == userSettings.data?.preferredMode,
         orElse: () => systemModeOption,
       ),
       onToggle: (option) async {

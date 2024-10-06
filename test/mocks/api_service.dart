@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rlv2_flutter/core/models/api_model.dart';
 import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
 import 'package:rlv2_flutter/features/auth/repositories/user_session_context_repository.dart';
@@ -36,11 +35,7 @@ void main() {
         any(),
       ),
     ).thenAnswer(
-      (_) async => ApiResponse.success(
-        mockUserSessionContext,
-        'Success',
-        200,
-      ),
+      (_) async => mockUserSessionContext,
     );
 
     final result = await repository.getUserSessionContext(userId: 'user123');

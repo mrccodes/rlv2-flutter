@@ -1,73 +1,140 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/features/user/providers/user_serice_provider.dart';
+import 'package:rlv2_flutter/features/user/services/user_service.dart';
 
 class UserState {
   UserState({
-    required this.user,
-    required this.isLoading,
+    this.data,
+    this.isLoading = false,
     this.error,
   });
 
   factory UserState.initial() {
-    return UserState(
-      user: null,
-      isLoading: false,
-    );
+    return UserState();
   }
 
-  final User? user;
+  final User? data;
   final bool isLoading;
   final String? error;
 
   UserState copyWith({
-    User? user,
+    User? data,
     bool? isLoading,
     String? error,
   }) {
     return UserState(
-      user: user ?? this.user,
+      data: data ?? this.data,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
     );
   }
 }
 
-final userProvider = NotifierProvider<UserNotifier, UserState?>(
-  UserNotifier.new,
+final userProvider = StateNotifierProvider<UserNotifier, UserState>(
+  (ref) {
+    return UserNotifier(ref.watch(userServiceProvider));
+  },
 );
 
-class UserNotifier extends Notifier<UserState?> {
-  @override
-  UserState? build() {
-    return UserState.initial();
+class UserNotifier extends StateNotifier<UserState> {
+  UserNotifier(
+    this._userService,
+  ) : super(UserState());
+  final UserService _userService;
+
+  bool get isAuthenticated {
+    return state.data != null && state.data!.id.isNotEmpty;
   }
 
-  set user(User newUser) {
-    state = state!.copyWith(user: newUser);
+  bool get isLoading {
+    return state.isLoading == true;
   }
 
-  User get user {
-    return state!.user!;
+  set isLoading(bool value) {
+    state = state.copyWith(isLoading: value);
+  }
+
+  set user(User? newUser) {
+    state = state.copyWith(data: newUser);
+  }
+
+  User? get user {
+    return state.data;
   }
 
   void clearUser() {
     // ignore: avoid_redundant_argument_values
-    state = state!.copyWith(user: null);
+    state = state.copyWith(data: null);
   }
 
-  void updateName(String newUsername) {
-    if (state != null && state!.user != null) {
-      // Update user name deeply and update the state
-      final updatedUser = state!.user!.copyWith(username: newUsername);
-      state = state!.copyWith(user: updatedUser);
+  void updateUserLocal(User user) {
+    state = state.copyWith(data: user);
+  }
+
+  Future<void> fetchUser(String userId) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final user = await _userService.fetchUser(userId);
+      state = state.copyWith(data: user);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 
-  void updateEmail(String newEmail) {
-    if (state != null && state!.user != null) {
-      // Update email deeply and update the state
-      final updatedUser = state!.user!.copyWith(email: newEmail);
-      state = state!.copyWith(user: updatedUser);
+  Future<void> updateUsername({
+    required String userId,
+    required String username,
+  }) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final response = await _userService.updateUsername(
+        userId: userId,
+        username: username,
+      );
+      state = state.copyWith(data: response);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<void> updateEmail({
+    required String userId,
+    required String email,
+  }) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final response = await _userService.updateEmail(
+        userId: userId,
+        email: email,
+      );
+      state = state.copyWith(data: response);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<void> updatePassword({
+    required String userId,
+    required String password,
+  }) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final response = await _userService.updatePassword(
+        userId: userId,
+        password: password,
+      );
+      state = state.copyWith(data: response);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 }

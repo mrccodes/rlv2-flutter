@@ -6,11 +6,11 @@ import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class UserSettingsState {
   UserSettingsState({
-    this.userSettings,
+    this.data,
     this.isLoading = false,
     this.error,
   });
-  final UserSettings? userSettings;
+  final UserSettings? data;
   final bool isLoading;
   final String? error;
   UserSettingsState Function() initial = UserSettingsState.new;
@@ -18,24 +18,23 @@ class UserSettingsState {
   @override
   String toString() {
     return 'UserSettingsState('
-        'userSettings: $userSettings, '
+        'userSettings: $data, '
         'isLoading: $isLoading, error: $error)';
   }
 
   UserSettingsState copyWith({
-    UserSettings? userSettings,
+    UserSettings? data,
     bool? isLoading,
     String? error,
   }) {
     return UserSettingsState(
-      userSettings: userSettings ?? this.userSettings,
+      data: data ?? this.data,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
     );
   }
 }
 
-// Updated to accept initial data
 final userSettingsProvider =
     StateNotifierProvider<UserSettingsNotifier, UserSettingsState>((ref) {
   return UserSettingsNotifier(
@@ -47,21 +46,81 @@ class UserSettingsNotifier extends StateNotifier<UserSettingsState> {
   UserSettingsNotifier(this._userSettingsService) : super(UserSettingsState());
   final UserSettingsService _userSettingsService;
 
-  // Accept initial data in the constructor
+  bool get isLoading => state.isLoading == true;
+  set isLoading(bool value) {
+    state = state.copyWith(isLoading: value);
+  }
+
+  Future<void> loadUserSettings(String userId) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final userSettings = await _userSettingsService.fetchUserSettings(userId);
+      state = state.copyWith(data: userSettings);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<void> createUserSettings(
+    String userId,
+    UserSettings userSettings,
+  ) async {
+    try {
+      state = state.copyWith(isLoading: true);
+      await _userSettingsService.createUserSettings(
+        userId,
+        userSettings,
+      );
+      state = UserSettingsState(data: userSettings);
+    } catch (e) {
+      // Handle errors as needed
+      AppLogger.error('Error creating settings: $e');
+    }
+  }
+
+  Future<UserSettings> patchUserSettings(
+    String userId,
+    Map<String, dynamic> data,
+  ) async {
+    try {
+      state = state.copyWith(isLoading: true);
+      final userSettings = await _userSettingsService.patchUserSettings(
+        userId,
+        data,
+      );
+      state = UserSettingsState(data: userSettings);
+      return userSettings;
+    } catch (e) {
+      // Handle errors as needed
+      AppLogger.error('Error patching settings: $e');
+      rethrow;
+    }
+  }
 
   Future<void> updateUserSettings(
-      String userId, 
-      UserSettings updatedSettings,
-      ) async {
+    String userId,
+    UserSettings updatedSettings,
+  ) async {
     try {
+      state = state.copyWith(isLoading: true);
       final newSettings = await _userSettingsService.updateUserSettings(
         userId,
         updatedSettings,
       );
-      state = UserSettingsState(userSettings: newSettings);
+      state = UserSettingsState(data: newSettings);
     } catch (e) {
       // Handle errors as needed
       AppLogger.error('Error updating settings: $e');
     }
+  }
+
+  void updateUserSettingsLocal(UserSettings userSettings) {
+    state = state.copyWith(data: userSettings);
+  }
+
+  void clearUserSettings() {
+    state = UserSettingsState();
   }
 }

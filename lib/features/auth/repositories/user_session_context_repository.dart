@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
-import 'package:rlv2_flutter/utils/app_logger.dart';
+import 'package:rlv2_flutter/utils/handle_error.dart';
 
 class UserSessionContextRepository {
   UserSessionContextRepository({required this.apiService});
@@ -18,10 +18,10 @@ class UserSessionContextRepository {
         UserSessionContext.fromJson,
       );
 
-      return response.data!;
+      return response;
     } catch (e) {
-      AppLogger.error('Error fetching user session context data: $e');
-      throw Exception('Failed to fetch user session context data: $e');
+      handleError(e, 'Failed to fetch user session context data');
+      rethrow;
     }
   }
 }

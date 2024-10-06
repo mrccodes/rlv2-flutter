@@ -33,37 +33,41 @@ class UserSettingsService {
     }
   }
 
-  Future<void> createUserSettings(
+  Future<UserSettings> createUserSettings(
     String userId,
     UserSettings userSettings,
   ) async {
     try {
-      await userSettingsRepository.createUserSettings(
+      final response = await userSettingsRepository.createUserSettings(
         userId: userId,
         userSettings: userSettings,
       );
+      return response;
     } catch (e) {
       throw Exception('Error creating user settings: $e');
     }
   }
 
-  Future<void> deleteUserSettings(String userId) async {
+  Future<UserSettings> deleteUserSettings(String userId) async {
     try {
-      await userSettingsRepository.deleteUserSettings(userId: userId);
+      final response =
+          await userSettingsRepository.deleteUserSettings(userId: userId);
+      return response;
     } catch (e) {
       throw Exception('Error deleting user settings: $e');
     }
   }
 
-  Future<void> patchUserSettings(
+  Future<UserSettings> patchUserSettings(
     String userId,
     Map<String, dynamic> data,
   ) async {
     try {
-      await userSettingsRepository.patchUserSettings(
+      final response = await userSettingsRepository.patchUserSettings(
         userId: userId,
         data: data,
       );
+      return response;
     } catch (e) {
       throw Exception('Error patching user settings: $e');
     }

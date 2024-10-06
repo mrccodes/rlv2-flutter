@@ -24,6 +24,7 @@ class UserFavoriteRecipe {
       username: json['username'] as String,
     );
   }
+
   final String id;
   final String recipeVersionId;
   final String userId;
