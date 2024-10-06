@@ -88,4 +88,39 @@ class UserSettings {
         'createdAt: $createdAt, '
         'updatedAt: $updatedAt}';
   }
+
+  UserSettings copyWith({
+    String? userId,
+    String? preferredMode,
+    String? preferredVolumeUnit,
+    String? preferredMassUnit,
+    String? preferredLengthUnit,
+    String? preferredTemperatureUnit,
+    bool? notifications,
+    bool? pushNotifications,
+    bool? emailNotifications,
+    bool? newsletter,
+    bool? dataSharingConsent,
+    bool? showTipsAndTricks,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return UserSettings(
+      userId: userId ?? this.userId,
+      preferredMode: preferredMode ?? this.preferredMode,
+      preferredVolumeUnit: preferredVolumeUnit ?? this.preferredVolumeUnit,
+      preferredMassUnit: preferredMassUnit ?? this.preferredMassUnit,
+      preferredLengthUnit: preferredLengthUnit ?? this.preferredLengthUnit,
+      preferredTemperatureUnit:
+          preferredTemperatureUnit ?? this.preferredTemperatureUnit,
+      notifications: notifications ?? this.notifications,
+      pushNotifications: pushNotifications ?? this.pushNotifications,
+      emailNotifications: emailNotifications ?? this.emailNotifications,
+      newsletter: newsletter ?? this.newsletter,
+      dataSharingConsent: dataSharingConsent ?? this.dataSharingConsent,
+      showTipsAndTricks: showTipsAndTricks ?? this.showTipsAndTricks,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

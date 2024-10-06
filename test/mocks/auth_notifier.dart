@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/repositories/auth_repository.dart';
-import 'package:rlv2_flutter/features/auth/view_models/auth_view_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 
 class MockAuthNotifier extends StateNotifier<AuthState>

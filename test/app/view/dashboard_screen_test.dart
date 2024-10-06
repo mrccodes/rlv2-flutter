@@ -2,7 +2,7 @@ import 'package:flutter/material.dart'; // Ensure you import material
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
-import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
@@ -15,14 +15,13 @@ void main() {
     setUpAll(testSetup);
     testWidgets('renders primary nav components', (tester) async {
       final mockAuthNotifier = MockAuthNotifier();
-
       await mockAuthNotifier.login('test', 'test');
 
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            authNotifierProvider.overrideWith((ref) => mockAuthNotifier),
-            userSessionServiceProvider.overrideWithValue(
+            authProvider.overrideWith((ref) => mockAuthNotifier),
+            userSessionContextServiceProvider.overrideWithValue(
               MockUserSessionService(),
             ), // Mock the session repository
           ],

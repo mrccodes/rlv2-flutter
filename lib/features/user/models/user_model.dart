@@ -50,4 +50,24 @@ class User {
         'createdAt: $createdAt, '
         'updatedAt: $updatedAt}';
   }
+
+  User copyWith({
+    String? id,
+    String? username,
+    String? email,
+    String? password,
+    String? stripeCustomerId,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return User(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      stripeCustomerId: stripeCustomerId ?? this.stripeCustomerId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

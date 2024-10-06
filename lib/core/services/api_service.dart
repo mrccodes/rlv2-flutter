@@ -52,7 +52,7 @@ class ApiService {
           return handler.next(response); // Continue with the response
         },
         onError: (DioException e, handler) {
-          AppLogger.error('Request failed: ${e.message}');
+          AppLogger.error('Request failed: $e');
           return handler.next(e); // Continue with error handling
         },
       ),
@@ -87,7 +87,7 @@ class ApiService {
 
       final responseData = response.data!;
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final data = fromJson(responseData['data'] as Map<String, dynamic>);
         return ApiResponse.success(
           data,
@@ -146,5 +146,43 @@ class ApiService {
         fromJson,
       );
     }
+  }
+
+  Future<ApiResponse<T>> putRequest<T>(
+    String endpoint,
+    Map<String, dynamic> data,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    return _handleRequest(
+      () => dio.put<Map<String, dynamic>>(
+        endpoint,
+        data: data,
+      ),
+      fromJson,
+    );
+  }
+
+  Future<ApiResponse<T>> deleteRequest<T>(
+    String endpoint,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    return _handleRequest(
+      () => dio.delete<Map<String, dynamic>>(endpoint),
+      fromJson,
+    );
+  }
+
+  Future<ApiResponse<T>> patchRequest<T>(
+    String endpoint,
+    Map<String, dynamic> data,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    return _handleRequest(
+      () => dio.patch<Map<String, dynamic>>(
+        endpoint,
+        data: data,
+      ),
+      fromJson,
+    );
   }
 }

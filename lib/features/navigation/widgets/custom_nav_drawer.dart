@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/core/widgets/multi_toggle.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
+import 'package:rlv2_flutter/features/theme/theme_toggle_widget.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
-import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class CustomDrawer extends ConsumerWidget {
   const CustomDrawer({super.key});
@@ -12,15 +11,7 @@ class CustomDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final lightModeOption = ToggleOption(
-      label: ThemeMode.light,
-    );
-    final darkModeOption = ToggleOption(
-      label: ThemeMode.dark,
-    );
-    final systemModeOption = ToggleOption(
-      label: ThemeMode.system,
-    );
+
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.surface,
       child: ListView(
@@ -70,7 +61,7 @@ class CustomDrawer extends ConsumerWidget {
             iconColor: Theme.of(context).primaryColor,
             onTap: () {
               // Navigator.pop(context);
-              ref.read(authNotifierProvider.notifier).logout();
+              ref.read(authProvider.notifier).logout();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute<LandingScreen>(
@@ -79,15 +70,7 @@ class CustomDrawer extends ConsumerWidget {
               );
             },
           ),
-          MultiToggle(
-            options: [lightModeOption, darkModeOption, systemModeOption],
-            label: 'Theme Mode',
-            initialOption: systemModeOption,
-            onToggle: (option) {
-              final str = option.toString();
-              AppLogger.info('Toggle changed to option $str');
-            },
-          ),
+          const ThemeToggleWidget(),
         ],
       ),
     );

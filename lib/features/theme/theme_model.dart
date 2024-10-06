@@ -1,18 +1,18 @@
-enum ThemeModeType { system, light, dark }
+import 'package:flutter/material.dart';
 
 class ThemeModeModel {
   ThemeModeModel({required this.mode});
-  final ThemeModeType mode;
+  final ThemeMode mode;
 
   // Add convenience methods if necessary
-  static ThemeModeType fromString(String mode) {
+  static ThemeMode fromString(String mode) {
     switch (mode.toLowerCase()) {
       case 'light':
-        return ThemeModeType.light;
+        return ThemeMode.light;
       case 'dark':
-        return ThemeModeType.dark;
+        return ThemeMode.dark;
       default:
-        return ThemeModeType.system;
+        return ThemeMode.system;
     }
   }
 }

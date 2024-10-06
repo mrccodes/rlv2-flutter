@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
-import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 import '../../helpers/test_setup.dart';
@@ -28,8 +28,8 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            authNotifierProvider.overrideWith((ref) => mockAuthNotifier),
-            userSessionServiceProvider.overrideWithValue(
+            authProvider.overrideWith((ref) => mockAuthNotifier),
+            userSessionContextServiceProvider.overrideWithValue(
               MockUserSessionService(),
             ), // Mock the session repository
           ],

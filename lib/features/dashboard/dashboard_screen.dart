@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/shared_scaffold.dart';
-import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_session_context_provider.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_provider.dart';
 
 class DashboardScreen extends ConsumerWidget {
@@ -9,9 +9,8 @@ class DashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dashboardState = ref.watch(dashboardViewModelProvider);
-    final userSessionContextState =
-        ref.watch(userContextSessionNotifierProvider);
+    final dashboardState = ref.watch(dashboardProvider);
+    final userSessionContextState = ref.watch(userSessionContextProvider);
     final firstName =
         userSessionContextState.userSessionContext?.userInformation?.firstName;
 

@@ -101,4 +101,25 @@ class UserSessionContext {
       UserRecipes: ${userRecipes.length} recipes
     ''';
   }
+
+  // Method to copy a UserSessionContext object
+  UserSessionContext copyWith({
+    User? user,
+    UserInformation? userInformation,
+    UserSettings? userSettings,
+    List<UserFavoriteRecipe>? userFavoriteRecipes,
+    List<OrganizationUser>? organizationUsers,
+    List<RecipeWithData>? userRecipes,
+    List<Subscription>? subscriptions,
+  }) {
+    return UserSessionContext(
+      user: user ?? this.user,
+      userInformation: userInformation ?? this.userInformation,
+      userSettings: userSettings ?? this.userSettings,
+      userFavoriteRecipes: userFavoriteRecipes ?? this.userFavoriteRecipes,
+      organizationUsers: organizationUsers ?? this.organizationUsers,
+      userRecipes: userRecipes ?? this.userRecipes,
+      subscriptions: subscriptions ?? this.subscriptions,
+    );
+  }
 }

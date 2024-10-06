@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
 import 'package:rlv2_flutter/core/widgets/shared_scaffold.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,7 +13,7 @@ class SplashScreen extends StatelessWidget {
       showDrawer: false,
       // Your splash screen UI
       body: Center(
-        child: CircularProgressIndicator(),
+        child: LoadingWidget(),
       ),
     );
   }
