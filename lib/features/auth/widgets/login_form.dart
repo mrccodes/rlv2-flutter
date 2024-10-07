@@ -32,24 +32,24 @@ class LoginFormState extends ConsumerState<LoginForm> {
     return null;
   }
 
-  String? _passwordValidator(String? value, {bool isCreateAccount = false}) {
+  String? _passwordValidator(String? value) {
     if (value!.isEmpty) {
       return 'Please enter your password';
     }
-    if (isCreateAccount) {
-      if (value.length < 9) {
-        return 'Password must be at least 9 characters';
-      }
-      if (value.length > 20) {
-        return 'Password must be less than 20 characters';
-      }
-      if (!numberRegex.hasMatch(value)) {
-        return 'Password must contain at least one number';
-      }
-      if (!symbolRegex.hasMatch(value)) {
-        return 'Password must contain at least one symbol';
-      }
+  
+    if (value.length < 9) {
+      return 'Password must be at least 9 characters';
     }
+    if (value.length > 20) {
+      return 'Password must be less than 20 characters';
+    }
+    if (!numberRegex.hasMatch(value)) {
+      return 'Password must contain at least one number';
+    }
+    if (!symbolRegex.hasMatch(value)) {
+      return 'Password must contain at least one symbol';
+    }
+  
     return null;
   }
 
@@ -101,7 +101,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
           ),
           const SizedBox(height: 16),
           TextFormField(
-            validator: (val) => _passwordValidator(val, isCreateAccount: true),
+            validator: _passwordValidator,
             obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Password',
