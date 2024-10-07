@@ -52,6 +52,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               return null;
             },
           ),
+          const SizedBox(height: 24),
           ElevatedButton(
             onPressed: submit,
             child: const Text('Submit'),

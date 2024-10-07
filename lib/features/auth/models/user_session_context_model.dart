@@ -1,10 +1,10 @@
-import 'package:rlv2_flutter/core/models/user_favorite_recipe_model.dart';
-import 'package:rlv2_flutter/features/auth/models/user_information_model.dart';
-import 'package:rlv2_flutter/features/auth/models/user_model.dart';
-import 'package:rlv2_flutter/features/auth/models/user_settings_model.dart';
 import 'package:rlv2_flutter/features/organization/models/organization_user_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/stripe/models/subscription_model.dart';
+import 'package:rlv2_flutter/features/user/models/user_favorite_recipe_model.dart';
+import 'package:rlv2_flutter/features/user/models/user_information_model.dart';
+import 'package:rlv2_flutter/features/user/models/user_model.dart';
+import 'package:rlv2_flutter/features/user/models/user_settings_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class UserSessionContext {
@@ -100,5 +100,26 @@ class UserSessionContext {
       UserFavoriteRecipes: ${userFavoriteRecipes.length} favorite recipes,
       UserRecipes: ${userRecipes.length} recipes
     ''';
+  }
+
+  // Method to copy a UserSessionContext object
+  UserSessionContext copyWith({
+    User? user,
+    UserInformation? userInformation,
+    UserSettings? userSettings,
+    List<UserFavoriteRecipe>? userFavoriteRecipes,
+    List<OrganizationUser>? organizationUsers,
+    List<RecipeWithData>? userRecipes,
+    List<Subscription>? subscriptions,
+  }) {
+    return UserSessionContext(
+      user: user ?? this.user,
+      userInformation: userInformation ?? this.userInformation,
+      userSettings: userSettings ?? this.userSettings,
+      userFavoriteRecipes: userFavoriteRecipes ?? this.userFavoriteRecipes,
+      organizationUsers: organizationUsers ?? this.organizationUsers,
+      userRecipes: userRecipes ?? this.userRecipes,
+      subscriptions: subscriptions ?? this.subscriptions,
+    );
   }
 }

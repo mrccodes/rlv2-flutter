@@ -1,33 +1,27 @@
-import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dart:async';
+import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
-import 'package:rlv2_flutter/features/auth/services/user_session_context_service.dart';
+import 'package:rlv2_flutter/utils/handle_error.dart';
 
-class UserSessionRepository {
-  UserSessionRepository({
-    required this.storage,
-    required this.userSessionContextService,
-  });
+class UserSessionContextRepository {
+  UserSessionContextRepository({required this.apiService});
+  final ApiService apiService;
+  Future<UserSessionContext?> getUserSessionContext({
+    required String userId,
+  }) async {
+    final endpoint = '/userSessionContext/$userId';
 
-  final FlutterSecureStorage storage;
-  final UserSessionContextService userSessionContextService;
-
-  Future<UserSessionContext> fetchUserSessionContext(String userId) async {
     try {
-      final userSessionContext =
-          await userSessionContextService.getUserSessionContext(userId: userId);
-      return userSessionContext!;
+      // ignore: inference_failure_on_function_invocation
+      final response = await apiService.getRequest<UserSessionContext>(
+        endpoint,
+        UserSessionContext.fromJson,
+      );
+
+      return response;
     } catch (e) {
-      throw Exception('Error fetching user session: $e');
+      handleError(e, 'Failed to fetch user session context data');
+      rethrow;
     }
-  }
-
-  Future<void> saveUserSessionContext(UserSessionContext context) async {
-    final jsonString = jsonEncode(context.toJson());
-    await storage.write(key: 'userSession', value: jsonString);
-  }
-
-  Future<void> clearUserSessionContext() async {
-    await storage.delete(key: 'userSession');
   }
 }

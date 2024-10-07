@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
-import 'package:rlv2_flutter/features/auth/providers/user_context_provider.dart';
+import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
-
+import 'package:rlv2_flutter/features/user/providers/user_provider.dart';
 import '../../helpers/test_setup.dart';
 import '../../mocks/auth_notifier.dart';
-import '../../mocks/user_session_context_repository.dart';
+import '../../mocks/user_notifier.dart';
+import '../../mocks/user_session_context_service.dart';
 
 // Mock the necessary providers for the test
 
@@ -25,13 +26,15 @@ void main() {
         (tester) async {
       // Mock AuthNotifier
       final mockAuthNotifier = MockAuthNotifier();
+      final mockUserNotifier = MockUserNotifier();
 
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            authNotifierProvider.overrideWith((ref) => mockAuthNotifier),
-            userSessionRepositoryProvider.overrideWithValue(
-              MockUserSessionRepository(),
+            authProvider.overrideWith((ref) => mockAuthNotifier),
+            userProvider.overrideWith((ref) => mockUserNotifier),
+            userSessionContextServiceProvider.overrideWithValue(
+              MockUserSessionService(),
             ), // Mock the session repository
           ],
           child: const MaterialApp(home: LandingScreen()),
