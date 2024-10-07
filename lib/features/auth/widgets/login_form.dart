@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/custom_button.dart';
 import 'package:rlv2_flutter/utils/email_regex.dart';
+import 'package:rlv2_flutter/utils/number_regex.dart';
 import 'package:rlv2_flutter/utils/symbol_regex.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
@@ -40,6 +41,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
     }
     if (value.length > 20) {
       return 'Password must be less than 20 characters';
+    }
+    if (!numberRegex.hasMatch(value)) {
+      return 'Password must contain at least one number';
     }
     if (!symbolRegex.hasMatch(value)) {
       return 'Password must contain at least one symbol';
