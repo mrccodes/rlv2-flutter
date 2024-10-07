@@ -54,24 +54,21 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
     state = state.copyWith(mode: mode);
   }
 
-  Future<void> toggleTheme(String userId, ThemeMode mode) async {
+  Future<void> toggleTheme(String? userId, ThemeMode mode) async {
     try {
       state = ThemeState(isLoading: true);
       final userSettings = ref.read(userSettingsProvider);
 
-      if (userSettings.data != null) {
+      if (userSettings.data != null && userId != null) {
         await ref.read(userSettingsProvider.notifier).patchUserSettings(
           userId,
           {'preferredMode': mode.name},
         );
-      state = state.copyWith(
-        mode: mode,
-        isLoading: false,
-      );
-      } else {
-        AppLogger.error('User settings not found');
+        state = state.copyWith(
+          mode: mode,
+          isLoading: false,
+        );
       }
-
     } catch (e) {
       AppLogger.error('Error updating theme: $e');
       if (mounted) {

@@ -40,7 +40,7 @@ class ThemeToggleWidget extends ConsumerWidget {
       onToggle: (option) async {
         await ref
             .read(themeProvider.notifier)
-            .toggleTheme(authState.user!.id, option);
+            .toggleTheme(authState.user?.id, option);
 
         AppLogger.info('Toggle changed to option ${option.name}');
       },

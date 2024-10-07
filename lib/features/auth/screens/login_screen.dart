@@ -54,14 +54,16 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       appBarTitle: 'RecipeLab',
       body: Padding(
         padding: const EdgeInsets.all(24),
-        child: Padding( 
+        child: Padding(
           padding: const EdgeInsets.only(top: 150),
           child: Column(
-          children: [ const Text('Login to RecipeLab',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                ), 
+            children: [
+              const Text(
+                'Login to RecipeLab',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
               LoginForm(

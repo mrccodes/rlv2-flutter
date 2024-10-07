@@ -5,7 +5,6 @@ import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 import 'package:rlv2_flutter/features/theme/theme_model.dart';
-import 'package:rlv2_flutter/features/theme/theme_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_settings_provider.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
@@ -18,13 +17,12 @@ class App extends ConsumerWidget {
         ref.watch(userSettingsProvider.select((state) => state.data));
     AppLogger.info('ThemeMode: ${userSettings?.preferredMode}');
 
-
     return MaterialApp(
       theme: MyAppTheme.lightTheme,
       darkTheme: MyAppTheme.darkTheme,
-      themeMode: userSettings != null ? 
-        ThemeModeModel.fromString(userSettings.preferredMode)  : 
-        ThemeMode.system,
+      themeMode: userSettings != null
+          ? ThemeModeModel.fromString(userSettings.preferredMode)
+          : ThemeMode.system,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const LandingScreen(),
