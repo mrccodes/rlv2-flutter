@@ -7,21 +7,66 @@ class MyAppTheme {
       primaryColor: const Color(0xFFBC5F04),
 
       // Secondary color used for widgets like FABs, text selection, etc.
-      colorScheme: const ColorScheme(
+      colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: Colors.white, // Primary color
-        secondary: Color(0xFF35302D), // Secondary color
-        surface: Color(0xFFF0E6DC), // Surface color (cards, modals)
-        error: Color.fromARGB(255, 167, 21, 21), // Error color
-        onPrimary: Color(0xFF140700), // Text/icons on primary color
+        secondary: const Color(0xFF35302D), // Secondary color
+        surface: const Color(0xFFF0E6DC), // Surface color (cards, modals)
+        error: const Color.fromARGB(255, 167, 21, 21), // Error color
+        onPrimary: const Color(0xFF140700), // Text/icons on primary color
         onSecondary: Colors.white, // Text/icons on secondary color
-        onSurface: Color(0xFF140700), // Text/icons on surfaces
+        onSurface: const Color(0xFF140700), // Text/icons on surfaces
         onError: Colors.white, // Text/icons on error
         brightness: Brightness.light, // Light theme
-        inversePrimary: Color(0xFF5FA2FF), // Inverse Primary color
       ),
 
       // Background settings
       scaffoldBackgroundColor: const Color(0xFFF0E6DC), // Background color
+
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: Color(0xFF35302D),
+        selectionColor: Color(0xFFBC5F04),
+        selectionHandleColor: Color(0xFFBC5F04),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        
+        focusedBorder: const  OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFFBC5F04),
+          ),
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF35302D),
+          ),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF35302D),
+          ),
+        ),
+        floatingLabelStyle: WidgetStateTextStyle.resolveWith(
+          (Set<WidgetState> states) {
+          if (states.contains(WidgetState.error)) {
+            return TextStyle(color: lightTheme.colorScheme.error);
+          } 
+          return TextStyle(color: lightTheme.colorScheme.secondary);
+        }),
+        labelStyle: WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
+          if (states.contains(WidgetState.error)) {
+            return TextStyle(color: lightTheme.colorScheme.error);
+          }
+          return TextStyle(color: lightTheme.colorScheme.secondary);
+        }),
+        hintStyle: WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
+          if (states.contains(WidgetState.error)) {
+            return TextStyle(color: lightTheme.colorScheme.error);
+          }
+          return TextStyle(color: lightTheme.colorScheme.secondary);
+        }),
+        // set border to inverse primary when focused
+
+      ),
+
 
       // App bar settings
       appBarTheme: const AppBarTheme(

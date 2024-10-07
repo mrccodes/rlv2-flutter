@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/custom_button.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key, this.onSubmit});
@@ -27,13 +28,16 @@ class LoginFormState extends ConsumerState<LoginForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {;
     return Form(
       key: formKey,
       child: Column(
         children: [
           TextFormField(
-            decoration: const InputDecoration(labelText: 'Email'),
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              border: OutlineInputBorder(),
+              ),
             onSaved: (value) => email = value!,
             validator: (value) {
               if (value!.isEmpty) {
@@ -42,8 +46,12 @@ class LoginFormState extends ConsumerState<LoginForm> {
               return null;
             },
           ),
+          const SizedBox(height: 16),
           TextFormField(
-            decoration: const InputDecoration(labelText: 'Password'),
+            decoration: const InputDecoration(
+              labelText: 'Password',
+              border: OutlineInputBorder(),
+              ),
             onSaved: (value) => password = value!,
             validator: (value) {
               if (value!.isEmpty) {
@@ -53,9 +61,26 @@ class LoginFormState extends ConsumerState<LoginForm> {
             },
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: submit,
-            child: const Text('Submit'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right:8 ),
+                child: CustomButton(
+                  onPressed: submit,
+                  text: 'Login',
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child:CustomButton(
+                onPressed: submit,
+                text: 'Create Account',
+                buttonType: ButtonType.secondary,
+              ),
+              ),
+            ],
           ),
         ],
       ),
