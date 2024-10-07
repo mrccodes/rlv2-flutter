@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/features/user/providers/user_provider.dart';
 
-
 class MockUserNotifier extends StateNotifier<UserState>
     implements UserNotifier {
   MockUserNotifier({User? user, this.isLoading = false})
@@ -38,8 +37,10 @@ class MockUserNotifier extends StateNotifier<UserState>
   }
 
   @override
-  Future<void> updatePassword(
-      {required String userId, required String password}) {
+  Future<void> updatePassword({
+    required String userId,
+    required String password,
+  }) {
     return Future.value();
   }
 
@@ -49,8 +50,10 @@ class MockUserNotifier extends StateNotifier<UserState>
   }
 
   @override
-  Future<void> updateUsername(
-      {required String userId, required String username}) {
+  Future<void> updateUsername({
+    required String userId,
+    required String username,
+  }) {
     return Future.value();
   }
 

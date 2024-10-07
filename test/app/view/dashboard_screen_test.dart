@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart'; // Ensure you import material
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
-import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
-import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/user/providers/user_provider.dart';
