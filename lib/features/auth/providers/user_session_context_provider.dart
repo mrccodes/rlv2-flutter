@@ -15,7 +15,7 @@ final userSessionListenerProvider = Provider<void>((ref) {
     final userContextService = ref.read(userSessionContextServiceProvider);
 
     if (previousUserId != nextUserId && nextUserId != null) {
-      // Set loading to true using methods
+      // Set loading to true using setters
       ref.read(userProvider.notifier).isLoading = true;
       ref.read(userInformationProvider.notifier).isLoading = true;
       ref.read(userSettingsProvider.notifier).isLoading = true;
