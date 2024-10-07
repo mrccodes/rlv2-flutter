@@ -36,7 +36,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
     if (value!.isEmpty) {
       return 'Please enter your password';
     }
-  
+
     if (value.length < 9) {
       return 'Password must be at least 9 characters';
     }
@@ -49,7 +49,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
     if (!symbolRegex.hasMatch(value)) {
       return 'Password must contain at least one symbol';
     }
-  
+
     return null;
   }
 
