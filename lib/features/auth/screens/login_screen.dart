@@ -40,7 +40,10 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       // Use WidgetsBinding to show error after build completes
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(authState.error!)),
+          SnackBar(
+            content: Text(authState.error!),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
         );
       });
     }
@@ -67,7 +70,11 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               const SizedBox(height: 16),
               LoginForm(
-                onSubmit: handleLogin,
+                onLogin: handleLogin,
+                onCreateAccount: (email, password) async {
+                  await Navigator.pushNamed(context, '/register');
+                  return Future.value();
+                },
               ),
             ],
           ),
