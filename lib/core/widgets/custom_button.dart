@@ -16,12 +16,10 @@ class CustomButton extends StatelessWidget {
   final String text;
   final ButtonType buttonType;
 
-
   @override
   Widget build(BuildContext context) {
     // Define styles for primary and secondary buttons
     final primaryStyle = ElevatedButton.styleFrom(
-      
       elevation: 3,
       backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Theme.of(context).colorScheme.primary,
@@ -33,7 +31,7 @@ class CustomButton extends StatelessWidget {
       foregroundColor: Theme.of(context).primaryColor,
       side: BorderSide(
         color: Theme.of(context).primaryColor,
-      ),   
+      ),
     );
 
     // Choose the style based on buttonType
