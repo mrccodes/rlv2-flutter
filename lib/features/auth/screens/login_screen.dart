@@ -40,7 +40,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       // Use WidgetsBinding to show error after build completes
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(authState.error!),
+          SnackBar(
+            content: Text(authState.error!),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

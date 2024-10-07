@@ -49,7 +49,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
       if (!symbolRegex.hasMatch(value)) {
         return 'Password must contain at least one symbol';
       }
-
     }
     return null;
   }
