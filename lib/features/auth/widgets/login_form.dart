@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/models/api_exception_model.dart';
 import 'package:rlv2_flutter/core/widgets/custom_button.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
@@ -22,13 +23,20 @@ class LoginFormState extends ConsumerState<LoginForm> {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
-      // Safely call onSubmit if provided
-      await widget.onSubmit?.call(email, password);
+      try {
+        await widget.onSubmit?.call(email, password);
+      }  catch (err) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(err.toString())),
+          );
+        }
+      }
     }
   }
 
   @override
-  Widget build(BuildContext context) {;
+  Widget build(BuildContext context) {
     return Form(
       key: formKey,
       child: Column(
@@ -37,7 +45,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
             decoration: const InputDecoration(
               labelText: 'Email',
               border: OutlineInputBorder(),
-              ),
+            ),
             onSaved: (value) => email = value!,
             validator: (value) {
               if (value!.isEmpty) {
@@ -48,10 +56,11 @@ class LoginFormState extends ConsumerState<LoginForm> {
           ),
           const SizedBox(height: 16),
           TextFormField(
+            obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Password',
               border: OutlineInputBorder(),
-              ),
+            ),
             onSaved: (value) => password = value!,
             validator: (value) {
               if (value!.isEmpty) {
@@ -63,22 +72,21 @@ class LoginFormState extends ConsumerState<LoginForm> {
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            
             children: [
               Padding(
-                padding: const EdgeInsets.only(right:8 ),
+                padding: const EdgeInsets.only(right: 8),
                 child: CustomButton(
                   onPressed: submit,
                   text: 'Login',
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child:CustomButton(
-                onPressed: submit,
-                text: 'Create Account',
-                buttonType: ButtonType.secondary,
-              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: CustomButton(
+                  onPressed: submit,
+                  text: 'Create Account',
+                  buttonType: ButtonType.secondary,
+                ),
               ),
             ],
           ),

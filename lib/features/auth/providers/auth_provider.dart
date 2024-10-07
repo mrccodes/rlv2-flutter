@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rlv2_flutter/core/models/api_exception_model.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_repository_provider.dart';
 import 'package:rlv2_flutter/features/auth/repositories/auth_repository.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
@@ -38,7 +39,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = AuthState(user: user);
       final newStateId = state.user!.id;
       AppLogger.info('writing user_id to storage: $newStateId');
-    } catch (e) {
+    } on ApiException catch (err) {
+        if (err.statusCode == 401) {
+          state = AuthState(error: 'Invalid email or password');
+        } else if (err.statusCode == 404) {
+          state = AuthState(error: 'User does not exist');  
+        } else if (err.statusCode == 400) {
+          state = AuthState(error: 'Invalid password');
+        }
+      } catch (e) {
       state = AuthState(error: e.toString());
     }
   }
