@@ -5,16 +5,16 @@ import 'package:rlv2_flutter/core/widgets/shared_scaffold.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
-import 'package:rlv2_flutter/features/auth/widgets/login_form.dart';
+import 'package:rlv2_flutter/features/auth/widgets/create_account_form.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class CreateAccountScreen extends ConsumerStatefulWidget {
+  const CreateAccountScreen({super.key});
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  CreateAccountScreenState createState() => CreateAccountScreenState();
 }
 
-class LoginScreenState extends ConsumerState<LoginScreen> {
+class CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     ref.watch(userSessionListenerProvider);
@@ -25,10 +25,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       return const SplashScreen();
     }
 
-    // Handle successful login
+    // Handle successful account creation
     if (authState.user != null) {
-      // Use WidgetsBinding to delay the
-      // navigation until after the build is done
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/dashboard');
       });
@@ -37,7 +35,6 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
     // Handle login error
     if (authState.error != null) {
-      // Use WidgetsBinding to show error after build completes
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -49,31 +46,41 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     }
 
     // Handle form login
-    Future<void> handleLogin(String email, String password) async {
-      await ref.read(authProvider.notifier).login(email, password);
+    Future<void> handleCreateAccount({
+      required bool isOrganizationAccount,
+      required String email,
+      required String password,
+      required String firstName,
+      required String lastName,
+      required String username,
+      required String organizationName,
+      required String organizationDescription,
+      required String organizationImage,
+    }) async {
+      // await ref.read(authProvider.notifier).createAccount(email, password);
     }
 
     return SharedScaffold(
       appBarTitle: 'RecipeLab',
       body: Padding(
         padding: const EdgeInsets.all(24),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 150),
-          child: Column(
-            children: [
-              const Text(
-                'Login to RecipeLab',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 48), // Adjust as needed
+            const Text(
+              'Welcome to RecipeLab!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 16),
-              LoginForm(
-                onLogin: handleLogin,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+            // Wrap the form in the scrollable view
+            CreateAccountForm(
+              onCreateAccount: handleCreateAccount,
+            ),
+          ],
         ),
       ),
     );

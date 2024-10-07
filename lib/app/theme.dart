@@ -84,6 +84,25 @@ class MyAppTheme {
         // set border to inverse primary when focused
       ),
 
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return primarySwatch.shade500;
+            }
+            return primarySwatch.shade500.withOpacity(.6);
+          },
+        ),
+        trackColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return primarySwatch.shade200;
+            }
+            return primarySwatch.shade100;
+          },
+        ),
+      ),
+
       // App bar settings
       appBarTheme: AppBarTheme(
         color: primarySwatch.shade900, // Dark color for the AppBar

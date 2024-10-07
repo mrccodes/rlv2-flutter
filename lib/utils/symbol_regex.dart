@@ -1,3 +1,3 @@
-String input = 'Your input string here';
-
-RegExp symbolRegex = RegExp(r'[!@#\$%\^&\*\(\)]');
+RegExp symbolRegex = RegExp(r'{[!@#\$%\^&\*\(\)]}-_+=\|:;,.?/<>');
+RegExp symbolRegexAllowUnderscore =
+    RegExp(r'[!@#\$%\^&\*\(\)\-\+=\|:;,.?/<>\[\]{}]');

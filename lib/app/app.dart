@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/app/theme.dart';
+import 'package:rlv2_flutter/features/auth/screens/create_account_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_screen.dart';
@@ -29,6 +30,7 @@ class App extends ConsumerWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/dashboard': (context) => const DashboardScreen(),
+        '/register': (context) => const CreateAccountScreen(),
       },
     );
   }
