@@ -6,6 +6,7 @@ import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_provider.dart';
 import 'package:rlv2_flutter/features/auth/screens/splash_screen.dart';
 import 'package:rlv2_flutter/features/auth/widgets/create_account_form.dart';
+import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class CreateAccountScreen extends ConsumerStatefulWidget {
   const CreateAccountScreen({super.key});
@@ -17,6 +18,8 @@ class CreateAccountScreen extends ConsumerStatefulWidget {
 class CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     ref.watch(userSessionListenerProvider);
     final authState = ref.watch(authProvider);
 
@@ -68,10 +71,9 @@ class CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 48), // Adjust as needed
-            const Text(
-              'Welcome to RecipeLab!',
-              style: TextStyle(
+            Text(
+              l10n.createAccountScreenTitle,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),

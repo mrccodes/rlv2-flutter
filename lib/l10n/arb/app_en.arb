@@ -33,6 +33,80 @@
     "logoutButton": "Logout",
     "@logoutButton": {
       "description": "Text for logout button"
+    },
+
+    "submitButtonLabel": "Submit",
+    "@submitButtonLabel": {
+      "description": "Text for submit button"
+    },
+
+    "createAccountScreenTitle": "Welcome to RecipeLab!",
+    "@createAccountScreenTitle": {
+      "description": "Title text for create account screen"
+    },
+
+    "usernameHelperText": "Automatically generated if left blank",
+    "@usernameHelperText": {
+      "description": "Helper text for username field"
+    },
+
+    "emailFieldLabel": "Email",
+    "@emailFieldLabel": {
+      "description": "Email form field placeholder/label"
+    },
+    "passwordFieldLabel": "Password",
+    "@passwordFieldLabel": {
+      "description": "Password form field placeholder/label"
+    },
+    "firstNameFieldLabel": "First Name",
+    "@firstNameFieldLabel": {
+      "description": "First Name form field placeholder/label"
+    },
+    "lastNameFieldLabel": "Last Name",
+    "@lastNameFieldLabel": {
+      "description": "Last Name form field placeholder/label"
+    },
+    "usernameFieldLabel": "Username",
+    "@usernameFieldLabel": {
+      "description": "Username form field placeholder/label"
+    },
+
+    "userImageFieldLabel": "User Image",
+    "@userImageFieldLabel": {
+      "description": "Label for user image upload form field"
+    },
+    "orgImageFieldLabel": "Organization Image",
+    "@orgImageFieldLabel": {
+      "description": "Label for organization image upload form field"
+    },
+
+    "chooseImageFromGalleryButtonLabel": "Choose from gallery",
+    "@chooseImageFromGalleryButtonLabel": {
+      "description": "Text for upload image from gallery button"
+    },
+    "takeImageButtonLabel": "Take new image",
+    "@takeImageButtonLabel": {
+      "description": "Text for upload new image button"
+    },
+    "removeImageButtonLabel": "Remove image",
+    "@removeImageButtonLabel": {
+      "description": "Text remove image button"
+    },
+
+    "orgToggleButton": "Create account for organization?",
+    "@orgToggleButton": {
+      "description": "Label text for organization account toggle"
+    },
+
+    "orgNameFieldLabel": "Organization Name",
+    "@orgNameFieldLabel": {
+      "description": "Organization Name form field label/placeholder"
+    },
+    "orgDescriptionFieldLabel": "Organization Description",
+    "@orgDescriptionFieldLabel": {
+      "description": "Organization description form field label/placeholder"
     }
+
+
 
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rlv2_flutter/core/widgets/custom_button.dart';
+import 'package:rlv2_flutter/l10n/l10n.dart';
 import 'package:rlv2_flutter/utils/validators.dart';
 
 class CreateAccountForm extends ConsumerStatefulWidget {
@@ -30,6 +31,7 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
   final formKey = GlobalKey<FormState>();
   final validators = StringValidators();
   final ImagePicker _picker = ImagePicker();
+
   String email = '';
   String password = '';
   String username = '';
@@ -242,6 +244,8 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Form(
       key: formKey,
       child: Expanded(
@@ -249,9 +253,9 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
         children: [
           TextFormField(
             validator: _emailValidator,
-            decoration: const InputDecoration(
-              labelText: 'Email *',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: '${l10n.emailFieldLabel} *',
+              border: const OutlineInputBorder(),
             ),
             onSaved: (value) => email = value!,
           ),
@@ -259,37 +263,37 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           TextFormField(
             validator: _passwordValidator,
             obscureText: true,
-            decoration: const InputDecoration(
-              labelText: 'Password *',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: '${l10n.passwordFieldLabel} *',
+              border: const OutlineInputBorder(),
             ),
             onSaved: (value) => password = value!,
           ),
           const SizedBox(height: 16),
           TextFormField(
             validator: _firstNameValidator,
-            decoration: const InputDecoration(
-              labelText: 'First Name',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.firstNameFieldLabel,
+              border: const OutlineInputBorder(),
             ),
             onSaved: (value) => firstName = value!,
           ),
           const SizedBox(height: 16),
           TextFormField(
             validator: _lastNameValidator,
-            decoration: const InputDecoration(
-              labelText: 'Last Name',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.lastNameFieldLabel,
+              border: const OutlineInputBorder(),
             ),
             onSaved: (value) => lastName = value!,
           ),
           const SizedBox(height: 16),
           TextFormField(
             validator: _usernameValidator,
-            decoration: const InputDecoration(
-              labelText: 'Username',
-              helperText: 'Automatically generated if left blank',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.usernameFieldLabel,
+              helperText: l10n.usernameHelperText,
+              border: const OutlineInputBorder(),
             ),
             onSaved: (value) => username = value!,
           ),
@@ -303,24 +307,24 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _removeUserImageFile,
-              child: const Text('Remove Image'),
+              child: Text(l10n.removeImageButtonLabel),
             ),
           ] else ...[            
                 Text(
-                  'User Image', // Label for image
+                  l10n.userImageFieldLabel, // Label for image
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(width: 16), // Spacing between text and button
                 Row(children: [
                 CustomButton(
                   onPressed: () => _pickUserImage(ImageSource.gallery),
-                  text: 'Choose from gallery',
+                  text: l10n.chooseImageFromGalleryButtonLabel,
                   buttonType: ButtonType.secondary,
                 ),
                 const SizedBox(width: 16),
                 CustomButton(
                   onPressed: () => _pickUserImage(ImageSource.camera),
-                  text: 'Take image',
+                  text: l10n.takeImageButtonLabel,
                   buttonType: ButtonType.secondary,
                 ),
 
@@ -328,7 +332,7 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           ],
           const SizedBox(height: 16),
           SwitchListTile(
-            title: const Text('Create account for organization?'),
+            title: Text(l10n.orgImageFieldLabel),
             value: isOrganizationAccount,
             onChanged: (bool value) {
               setState(() {
@@ -338,18 +342,18 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           ),
           if (isOrganizationAccount) ...[
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Organization Name *',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: '${l10n.orgNameFieldLabel} *',
+                border: const OutlineInputBorder(),
               ),
               onSaved: (value) => organizationName = value!,
               validator: _organizationNameValidator,
             ),
             const SizedBox(height: 16),
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Organization Description',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.orgDescriptionFieldLabel,
+                border: const OutlineInputBorder(),
               ),
               onSaved: (value) => organizationDescription = value!,
               validator: _organizationDescriptionValidator,
@@ -365,11 +369,11 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _removeOrganizationImageFile,
-                child: const Text('Remove Image'),
+                child: Text(l10n.removeImageButtonLabel),
               ),
             ] else ...[
                   Text(
-                    'Organization Image', // Label for image
+                    l10n.orgImageFieldLabel, 
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16), // Spacing between text and button
@@ -378,14 +382,14 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                       CustomButton(
                     onPressed: () =>
                         _pickOrganizationImage(ImageSource.gallery),
-                    text: 'Choose From Gallery',
+                    text: l10n.chooseImageFromGalleryButtonLabel,
                     buttonType: ButtonType.secondary,
                   ),
                   const SizedBox(width: 16),
                   CustomButton(
                     onPressed: () =>
                         _pickOrganizationImage(ImageSource.camera),
-                    text: 'Take Image',
+                    text: l10n.takeImageButtonLabel,
                     buttonType: ButtonType.secondary,
                   ),
                     ],
@@ -397,10 +401,8 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           SizedBox(
               width: double.infinity, // Make the button full width
               child: ElevatedButton(
-                onPressed: () {
-                  // Handle form submission
-                },
-                child: Text('Submit'),
+                onPressed: createAccount,
+                child: Text(l10n.submitButtonLabel), // Button text
               ),
             ),
         ],
