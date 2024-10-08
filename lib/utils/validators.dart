@@ -15,8 +15,9 @@
 
 // validator.dart
 
+import 'package:flutter/material.dart';
 import 'package:rlv2_flutter/utils/email_regex.dart';
-import 'package:rlv2_flutter/utils/number_regex.dart';
+import 'package:rlv2_flutter/utils/regex.dart';
 import 'package:rlv2_flutter/utils/symbol_regex.dart';
 
 class Validator {
@@ -27,8 +28,13 @@ class Validator {
   final bool Function(String) validate;
   final String error;
 }
-
+  
 class StringValidators {
+  final l10n = context.l10n;
+  final isValidName = Validator(
+    validate: (String val) => nameRegExp.hasMatch(val),
+    error: l10n.invalidName,
+  );
   final passwordLengthShort = Validator(
     validate: (String val) => val.length >= 9,
     error: 'Password must be at least 9 characters',
@@ -64,6 +70,11 @@ class StringValidators {
     error: 'Username must only contain letters, numbers, and underscores',
   );
 
+  final usernameNoSpace = Validator(
+    validate: (String val) => !val.contains(' '),
+    error: 'Username must not contain spaces',
+  );
+
   final emailIsValid = Validator(
     validate: (String val) => emailRegex.hasMatch(val),
     error: 'Email address is invalid',
@@ -76,7 +87,7 @@ class StringValidators {
 
   final passwordNotEmpty = Validator(
     validate: (String val) => val.isNotEmpty,
-    error: 'Please enter your password',
+    error: '',
   );
 
   final firstNameLengthLong = Validator(
@@ -90,13 +101,15 @@ class StringValidators {
   );
 
   final firstNameSymbol = Validator(
-    validate: (String val) => !symbolRegex.hasMatch(val),
-    error: 'First name must only contain letters',
+    validate: (String val) => !nameRegExp.hasMatch(val),
+    error: 'First name must only contain letters, '
+    'spaces, hyphens, and apostrophes',
   );
 
   final lastNameSymbol = Validator(
     validate: (String val) => !symbolRegex.hasMatch(val),
-    error: 'Last name must only contain letters',
+    error: 'Last name must only contain letters, '
+    'spaces, hyphens, and apostrophes',
   );
 
   final firstNameNumber = Validator(
@@ -109,15 +122,6 @@ class StringValidators {
     error: 'Last name must not contain numbers',
   );
 
-  final firstNameSpace = Validator(
-    validate: (String val) => !val.contains(' '),
-    error: 'First name must not contain spaces',
-  );
-
-  final lastNameSpace = Validator(
-    validate: (String val) => !val.contains(' '),
-    error: 'Last name must not contain spaces',
-  );
 
   final organizationNameLengthLong = Validator(
     validate: (String val) => val.length <= 30,

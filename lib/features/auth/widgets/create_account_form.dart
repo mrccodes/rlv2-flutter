@@ -51,7 +51,6 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
         validators.firstNameLengthLong,
         validators.firstNameNumber,
         validators.firstNameSymbol,
-        validators.firstNameSpace,
       ];
 
       for (final validator in firstNameValidators) {
@@ -69,7 +68,6 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
         validators.lastNameLengthLong,
         validators.lastNameNumber,
         validators.lastNameSymbol,
-        validators.lastNameSpace,
       ];
 
       for (final validator in lastNameValidators) {
@@ -87,6 +85,7 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
         validators.usernameLengthLong,
         validators.usernameLengthShort,
         validators.usernameSymbol,
+        validators.usernameSpace,
       ];
 
       for (final validator in usernameValidators) {
@@ -162,6 +161,13 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     return null;
   }
 
+  String? _confirmPasswordValidator(String? value) {
+    if (value != password) {
+      return context.l10n.passwordsDoNotMatchError;
+    }
+    return null;
+  }
+
   Future<void> _pickOrganizationImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
 
@@ -174,13 +180,14 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('No image selected'),
+            content: Text(context.l10n.noImageSelectedError),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       }
     }
   }
+
   Future<void> _pickUserImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
 
@@ -265,6 +272,16 @@ class CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             obscureText: true,
             decoration: InputDecoration(
               labelText: '${l10n.passwordFieldLabel} *',
+              border: const OutlineInputBorder(),
+            ),
+            onSaved: (value) => password = value!,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            validator: _confirmPasswordValidator,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: '${l10n.confirmPasswordFieldLabel} *',
               border: const OutlineInputBorder(),
             ),
             onSaved: (value) => password = value!,

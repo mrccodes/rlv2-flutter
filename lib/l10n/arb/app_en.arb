@@ -58,6 +58,10 @@
     "@passwordFieldLabel": {
       "description": "Password form field placeholder/label"
     },
+    "confirmPasswordFieldLabel": "Confirm Password",
+    "@confirmPasswordFieldLabel": {
+      "description": "Password confirmation form field placeholder/label"
+    },
     "firstNameFieldLabel": "First Name",
     "@firstNameFieldLabel": {
       "description": "First Name form field placeholder/label"
@@ -78,6 +82,11 @@
     "orgImageFieldLabel": "Organization Image",
     "@orgImageFieldLabel": {
       "description": "Label for organization image upload form field"
+    },
+
+    "noImageSelectedError": "No image selected",
+    "@noImageSelectedError": {
+      "description": ""
     },
 
     "chooseImageFromGalleryButtonLabel": "Choose from gallery",
@@ -105,8 +114,122 @@
     "orgDescriptionFieldLabel": "Organization Description",
     "@orgDescriptionFieldLabel": {
       "description": "Organization description form field label/placeholder"
+    },
+
+
+    "passwordsDoNotMatchError": "Passwords are not matching",
+    "@passwordsDoNotMatchError": {
+      "description": "Error to render when confirm password does not match original password"
+    },
+
+    "passwordLengthShortError": "Password must be at least 9 characters",
+    "@passwordLengthShortError": {
+      "description": "Error to render when password is too short"
+    },
+    
+    "passwordLengthLongError": "Password must be less than 20 characters",
+    "@passwordLengthLongError": {
+      "description":""
+    },
+
+    "passwordNumberError": "Password must contain at least one number",
+    "@passwordNumberError": {
+      "description":""
+
+    },
+
+    "passwordSymbol": "Password must contain at least one symbol",
+    "@passwordSymbol": {
+      "description":""
+    },
+
+    "usernameLengthShort": "Username must be at least 3 characters",
+    "@usernameLengthShort": {
+      "description":""
+    },
+
+    "usernameLengthLong": "Username must be less than 12 characters",
+    "@usernameLengthLong": {
+      "description":""
+    },
+
+    "usernameSymbol": "Username must only contain letters, numbers, and underscores",
+    "@usernameSymbol": {
+      "description":""
+    },
+
+    "usernameSpace": "Username cannot contain spaces",
+    "@usernameSpace": {
+      "description":""
+    },
+
+    "emailIsValid": "Email address is invalid",
+    "@emailIsValid": {
+      "description":""
+    },
+
+    "emailNotEmpty": "Please enter your email",
+    "@emailNotEmpty": {
+      "description":""
+    },
+
+    "passwordNotEmpty": "Please enter your password",
+    "@passwordNotEmpty": {
+      "description":""
+    },
+
+    "firstNameLengthLong": "First name must be 20 or fewer characters",
+    "@firstNameLengthLong": {
+      "description":""
+    },
+
+    "lastNameLengthLong": "Last name must be 20 or fewer characters",
+    "@lastNameLengthLong": {
+      "description":""
+    },
+
+    "firstNameSymbol": "First name must only contain letters, spaces, hyphens, and apostrophes",
+    "@firstNameSymbol": {
+      "description":""
+    },
+
+    "lastNameSymbol": "Last name must only contain letters, spaces, hyphens, and apostrophes",
+    "@lastNameSymbol": {
+      "description":""
+    },
+
+    "firstNameNumber": "First name must not contain numbers",
+    "@firstNameNumber": {
+      "description":""
+    },
+
+    "lastNameNumber": "Last name must not contain numbers",
+    "@lastNameNumber": {
+      "description":""
+    },
+
+    "organizationNameLengthLong": "Organization name must be 30 or fewer characters",
+    "@organizationNameLengthLong": {
+      "description":""
+    },
+
+    "organziationNameNotEmpty": "Please enter an organization name",
+    "@organziationNameNotEmpty": {
+      "description":""
+    },
+
+    "organizationNameSymbol": "Organization name must only contain letters and numbers and spaces",
+    "@organizationNameSymbol": {
+      "description":""
+    },
+
+    "organizationDescriptionLengthLong": "Organization description must be 100 or fewer characters",
+    "@organizationDescriptionLengthLong": {
+      "description":""
+    },
+
+    "organizationDescriptionSymbol": "Organization description must only contain letters and numbers and spaces",
+    "@organizationDescriptionSymbol": {
+      "description":""
     }
-
-
-
 }
