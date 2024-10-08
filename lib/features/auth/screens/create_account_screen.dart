@@ -53,6 +53,7 @@ class CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
       required String firstName,
       required String lastName,
       required String username,
+      required String userImage,
       required String organizationName,
       required String organizationDescription,
       required String organizationImage,
