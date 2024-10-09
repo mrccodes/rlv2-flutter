@@ -27,6 +27,7 @@ UserSettings testUserSettings = UserSettings(
 );
 
 UserInformation testUserInformation = UserInformation(
+  userId: 'test-id',
   createdAt: '1111111',
   updatedAt: '111111',
   firstName: 'matt',

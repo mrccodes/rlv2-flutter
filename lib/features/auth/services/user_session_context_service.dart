@@ -17,4 +17,5 @@ class UserSessionContextService {
       throw Exception('Error fetching user session: $e');
     }
   }
+
 }

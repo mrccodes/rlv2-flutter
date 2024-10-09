@@ -51,6 +51,8 @@ class UserSettingsNotifier extends StateNotifier<UserSettingsState> {
     state = state.copyWith(isLoading: value);
   }
 
+  UserSettings? get loggedInUserSettings => state.data;
+
   Future<void> loadUserSettings(String userId) async {
     state = state.copyWith(isLoading: true);
     try {

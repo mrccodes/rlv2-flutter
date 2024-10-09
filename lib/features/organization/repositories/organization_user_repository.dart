@@ -1,4 +1,5 @@
 import 'package:rlv2_flutter/core/services/api_service.dart';
+import 'package:rlv2_flutter/features/organization/models/create_organization_user_model.dart';
 import 'package:rlv2_flutter/features/organization/models/organization_user_model.dart';
 import 'package:rlv2_flutter/utils/handle_error.dart';
 
@@ -71,7 +72,7 @@ class OrganizationUserRepository {
 
   Future<OrganizationUser> createOrganizationUser({
     required String organizationId,
-    required OrganizationUser organizationUser,
+    required CreateOrganizationUser organizationUser,
   }) async {
     final endpoint = '/organizations/$organizationId/users';
 

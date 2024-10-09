@@ -1,24 +1,6 @@
-// class ValidationMessages {
-//   String passwordLengthShort = 'Password must be at least 9 characters';
-//   String passwordLengthLong = 'Password must be less than 20 characters';
-//   String passwordNumber = 'Password must contain at least one number';
-//   String passwordSymbol = 'Password must contain at least one symbol';
-//   String usernameLengthShort = 'Username must be at least 3 characters';
-//   String usernameLengthLong = 'Username must be less than 12 characters';
-//   String usernameSymbol =
-//     'Username must contain only letters, numbers and underscores';
-//   String invalidEmail = 'Email address is invalid';
-//   String emptyEmail = 'Please enter your email';
-//   String emptyPassword = 'Please enter your password';
-
-// }
-
-// validator.dart
-
 import 'package:flutter/material.dart';
-import 'package:rlv2_flutter/utils/email_regex.dart';
+import 'package:rlv2_flutter/l10n/l10n.dart';
 import 'package:rlv2_flutter/utils/regex.dart';
-import 'package:rlv2_flutter/utils/symbol_regex.dart';
 
 class Validator {
   Validator({required this.validate, required this.error});
@@ -30,122 +12,149 @@ class Validator {
 }
   
 class StringValidators {
-  final l10n = context.l10n;
-  final isValidName = Validator(
-    validate: (String val) => nameRegExp.hasMatch(val),
-    error: l10n.invalidName,
-  );
-  final passwordLengthShort = Validator(
-    validate: (String val) => val.length >= 9,
-    error: 'Password must be at least 9 characters',
-  );
+  StringValidators(this.context) {
+    l10n = context.l10n;
 
-  final passwordLengthLong = Validator(
-    validate: (String val) => val.length <= 20,
-    error: 'Password must be less than 20 characters',
-  );
+    isValidName = Validator(
+      validate: (String val) => nameRegExp.hasMatch(val),
+      error: l10n.usernameSymbolError,
+    );
+    passwordLengthShort = Validator(
+      validate: (String val) => val.length >= 9,
+      error: l10n.passwordLengthShortError,
+    );
 
-  final passwordNumber = Validator(
-    validate: (String val) => numberRegex.hasMatch(val),
-    error: 'Password must contain at least one number',
-  );
+    passwordLengthLong = Validator(
+      validate: (String val) => val.length <= 20,
+      error: l10n.passwordLengthLongError,
+    );
 
-  final passwordSymbol = Validator(
-    validate: (String val) => symbolRegex.hasMatch(val),
-    error: 'Password must contain at least one symbol',
-  );
+    passwordNumber = Validator(
+      validate: (String val) => numberRegex.hasMatch(val),
+      error: l10n.passwordNumberError,
+    );
 
-  final usernameLengthShort = Validator(
-    validate: (String val) => val.length >= 3,
-    error: 'Username must be at least 3 characters',
-  );
+    passwordSymbol = Validator(
+      validate: (String val) => passwordSymbolRegex.hasMatch(val),
+      error: l10n.passwordSymbolError,
+    );
 
-  final usernameLengthLong = Validator(
-    validate: (String val) => val.length <= 12,
-    error: 'Username must be less than 12 characters',
-  );
+    usernameLengthShort = Validator(
+      validate: (String val) => val.length >= 3,
+      error: l10n.usernameLengthShortError,
+    );
 
-  final usernameSymbol = Validator(
-    validate: (String val) => symbolRegexAllowUnderscore.hasMatch(val),
-    error: 'Username must only contain letters, numbers, and underscores',
-  );
+    usernameLengthLong = Validator(
+      validate: (String val) => val.length <= 12,
+      error: l10n.usernameLengthLongError,
+    );
 
-  final usernameNoSpace = Validator(
-    validate: (String val) => !val.contains(' '),
-    error: 'Username must not contain spaces',
-  );
+    usernameSymbol = Validator(
+      validate: (String val) => !symbolRegexAllowUnderscore.hasMatch(val),
+      error: l10n.usernameSymbolError,
+    );
 
-  final emailIsValid = Validator(
-    validate: (String val) => emailRegex.hasMatch(val),
-    error: 'Email address is invalid',
-  );
+    usernameNoSpace = Validator(
+      validate: (String val) => !val.contains(' '),
+      error: l10n.usernameSpaceError,
+    );
 
-  final emailNotEmpty = Validator(
-    validate: (String val) => val.isNotEmpty,
-    error: 'Please enter your email',
-  );
+    emailIsValid = Validator(
+      validate: (String val) => emailRegex.hasMatch(val),
+      error: l10n.emailIsValidError,
+    );
 
-  final passwordNotEmpty = Validator(
-    validate: (String val) => val.isNotEmpty,
-    error: '',
-  );
+    emailNotEmpty = Validator(
+      validate: (String val) => val.isNotEmpty,
+      error: l10n.emailNotEmptyError,
+    );
 
-  final firstNameLengthLong = Validator(
-    validate: (String val) => val.length <= 20,
-    error: 'First name must be 20 or fewer characters',
-  );
+    passwordNotEmpty = Validator(
+      validate: (String val) => val.isNotEmpty,
+      error: l10n.passwordNotEmptyError,
+    );
 
-  final lastNameLengthLong = Validator(
-    validate: (String val) => val.length <= 20,
-    error: 'Last name must be 20 or fewer characters',
-  );
+    firstNameLengthLong = Validator(
+      validate: (String val) => val.length <= 20,
+      error: l10n.firstNameLengthLongError,
+    );
 
-  final firstNameSymbol = Validator(
-    validate: (String val) => !nameRegExp.hasMatch(val),
-    error: 'First name must only contain letters, '
-    'spaces, hyphens, and apostrophes',
-  );
+    lastNameLengthLong = Validator(
+      validate: (String val) => val.length <= 20,
+      error: l10n.lastNameLengthLongError,
+    );
 
-  final lastNameSymbol = Validator(
-    validate: (String val) => !symbolRegex.hasMatch(val),
-    error: 'Last name must only contain letters, '
-    'spaces, hyphens, and apostrophes',
-  );
+    firstNameSymbol = Validator(
+      validate: (String val) => isValidName.validate(val),
+      error: l10n.firstNameSymbolError,
+    );
 
-  final firstNameNumber = Validator(
-    validate: (String val) => !numberRegex.hasMatch(val),
-    error: 'First name must not contain numbers',
-  );
+    lastNameSymbol = Validator(
+      validate: (String val) => isValidName.validate(val),
+      error: l10n.lastNameSymbolError,
+    );
 
-  final lastNameNumber = Validator(
-    validate: (String val) => !numberRegex.hasMatch(val),
-    error: 'Last name must not contain numbers',
-  );
+    firstNameNumber = Validator(
+      validate: (String val) => !numberRegex.hasMatch(val),
+      error: l10n.firstNameNumberError,
+    );
 
+    lastNameNumber = Validator(
+      validate: (String val) => !numberRegex.hasMatch(val),
+      error: l10n.lastNameNumberError,
+    );
 
-  final organizationNameLengthLong = Validator(
-    validate: (String val) => val.length <= 30,
-    error: 'Organization name must be 30 or fewer characters',
-  );
+    organizationNameLengthLong = Validator(
+      validate: (String val) => val.length <= 30,
+      error: l10n.organizationNameLengthLongError,
+    );
 
-  final organziationNameNotEmpty = Validator(
-    validate: (String val) => val.isNotEmpty,
-    error: 'Please enter an organization name',
-  );
+    organziationNameNotEmpty = Validator(
+      validate: (String val) => val.isNotEmpty,
+      error: l10n.organziationNameNotEmptyError,
+    );
 
-  final organizationNameSymbol = Validator(
-    validate: (String val) => !symbolRegex.hasMatch(val),
-    error: 'Organization name must only contain letters and numbers and spaces',
-  );
+    organizationNameSymbol = Validator(
+      validate: organizationNameRegex.hasMatch,
+      error: l10n.organizationNameSymbolError,
+    );
 
-  final organizationDescriptionLengthLong = Validator(
-    validate: (String val) => val.length <= 100,
-    error: 'Organization description must be 100 or fewer characters',
-  );
+    organizationDescriptionLengthLong = Validator(
+      validate: (String val) => val.length <= 100,
+      error: l10n.organizationNameLengthLongError,
+    );
 
-  final organizationDescriptionSymbol = Validator(
-    validate: (String val) => !symbolRegex.hasMatch(val),
-    error:
-        'Organization description must only contain letters and numbers and spaces',
-  );
+    organizationDescriptionSymbol = Validator(
+      validate: organizationNameRegex.hasMatch,
+      error:
+          l10n.organizationDescriptionSymbolError,
+    );
+  }
+
+  final BuildContext context;
+  late final AppLocalizations l10n;
+
+  late final Validator isValidName;
+  late final Validator passwordLengthShort;
+  late final Validator passwordLengthLong;
+  late final Validator passwordNumber;
+  late final Validator passwordSymbol;
+  late final Validator usernameLengthShort;
+  late final Validator usernameLengthLong;
+  late final Validator usernameSymbol;
+  late final Validator usernameNoSpace;
+  late final Validator emailIsValid;
+  late final Validator emailNotEmpty;
+  late final Validator passwordNotEmpty;
+  late final Validator firstNameLengthLong;
+  late final Validator lastNameLengthLong;
+  late final Validator firstNameSymbol;
+  late final Validator lastNameSymbol;
+  late final Validator firstNameNumber;
+  late final Validator lastNameNumber;
+  late final Validator organizationNameLengthLong;
+  late final Validator organziationNameNotEmpty;
+  late final Validator organizationNameSymbol;
+  late final Validator organizationDescriptionLengthLong;
+  late final Validator organizationDescriptionSymbol;
 }

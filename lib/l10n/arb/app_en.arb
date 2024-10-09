@@ -138,98 +138,98 @@
 
     },
 
-    "passwordSymbol": "Password must contain at least one symbol",
-    "@passwordSymbol": {
+    "passwordSymbolError": "Password must contain at least one symbol",
+    "@passwordSymbolError": {
       "description":""
     },
 
-    "usernameLengthShort": "Username must be at least 3 characters",
-    "@usernameLengthShort": {
+    "usernameLengthShortError": "Username must be at least 3 characters",
+    "@usernameLengthShortError": {
       "description":""
     },
 
-    "usernameLengthLong": "Username must be less than 12 characters",
-    "@usernameLengthLong": {
+    "usernameLengthLongError": "Username must be less than 12 characters",
+    "@usernameLengthLongError": {
       "description":""
     },
 
-    "usernameSymbol": "Username must only contain letters, numbers, and underscores",
-    "@usernameSymbol": {
+    "usernameSymbolError": "Username must only contain letters, numbers, and underscores",
+    "@usernameSymbolError": {
       "description":""
     },
 
-    "usernameSpace": "Username cannot contain spaces",
-    "@usernameSpace": {
+    "usernameSpaceError": "Username cannot contain spaces",
+    "@usernameSpaceError": {
       "description":""
     },
 
-    "emailIsValid": "Email address is invalid",
-    "@emailIsValid": {
+    "emailIsValidError": "Email address is invalid",
+    "@emailIsValidError": {
       "description":""
     },
 
-    "emailNotEmpty": "Please enter your email",
-    "@emailNotEmpty": {
+    "emailNotEmptyError": "Please enter your email",
+    "@emailNotEmptyError": {
       "description":""
     },
 
-    "passwordNotEmpty": "Please enter your password",
-    "@passwordNotEmpty": {
+    "passwordNotEmptyError": "Please enter your password",
+    "@passwordNotEmptyError": {
       "description":""
     },
 
-    "firstNameLengthLong": "First name must be 20 or fewer characters",
-    "@firstNameLengthLong": {
+    "firstNameLengthLongError": "First name must be 20 or fewer characters",
+    "@firstNameLengthLongError": {
       "description":""
     },
 
-    "lastNameLengthLong": "Last name must be 20 or fewer characters",
-    "@lastNameLengthLong": {
+    "lastNameLengthLongError": "Last name must be 20 or fewer characters",
+    "@lastNameLengthLongError": {
       "description":""
     },
 
-    "firstNameSymbol": "First name must only contain letters, spaces, hyphens, and apostrophes",
-    "@firstNameSymbol": {
+    "firstNameSymbolError": "First name must only contain letters, spaces, hyphens, and apostrophes",
+    "@firstNameSymbolError": {
       "description":""
     },
 
-    "lastNameSymbol": "Last name must only contain letters, spaces, hyphens, and apostrophes",
-    "@lastNameSymbol": {
+    "lastNameSymbolError": "Last name must only contain letters, spaces, hyphens, and apostrophes",
+    "@lastNameSymbolError": {
       "description":""
     },
 
-    "firstNameNumber": "First name must not contain numbers",
-    "@firstNameNumber": {
+    "firstNameNumberError": "First name must not contain numbers",
+    "@firstNameNumberError": {
       "description":""
     },
 
-    "lastNameNumber": "Last name must not contain numbers",
-    "@lastNameNumber": {
+    "lastNameNumberError": "Last name must not contain numbers",
+    "@lastNameNumberError": {
       "description":""
     },
 
-    "organizationNameLengthLong": "Organization name must be 30 or fewer characters",
-    "@organizationNameLengthLong": {
+    "organizationNameLengthLongError": "Organization name must be 30 or fewer characters",
+    "@organizationNameLengthLongError": {
       "description":""
     },
 
-    "organziationNameNotEmpty": "Please enter an organization name",
-    "@organziationNameNotEmpty": {
+    "organziationNameNotEmptyError": "Please enter an organization name",
+    "@organziationNameNotEmptyError": {
       "description":""
     },
 
-    "organizationNameSymbol": "Organization name must only contain letters and numbers and spaces",
-    "@organizationNameSymbol": {
+    "organizationNameSymbolError": "Organization name must only contain letters and numbers and spaces",
+    "@organizationNameSymbolError": {
       "description":""
     },
 
-    "organizationDescriptionLengthLong": "Organization description must be 100 or fewer characters",
-    "@organizationDescriptionLengthLong": {
+    "organizationDescriptionLengthLongError": "Organization description must be 100 or fewer characters",
+    "@organizationDescriptionLengthLongError": {
       "description":""
     },
 
-    "organizationDescriptionSymbol": "Organization description must only contain letters and numbers and spaces",
-    "@organizationDescriptionSymbol": {
+    "organizationDescriptionSymbolError": "Organization description must only contain letters and numbers and spaces",
+    "@organizationDescriptionSymbolError": {
       "description":""
     }
 }

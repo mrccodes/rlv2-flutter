@@ -1,15 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rlv2_flutter/core/models/api_exception_model.dart';
-import 'package:rlv2_flutter/features/auth/providers/auth_repository_provider.dart';
-import 'package:rlv2_flutter/features/auth/repositories/auth_repository.dart';
+import 'package:rlv2_flutter/features/auth/models/register_model.dart';
+import 'package:rlv2_flutter/features/auth/providers/auth_service_provider.dart';
+import 'package:rlv2_flutter/features/auth/services/auth_service.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  final authRepository = ref.watch(authRepositoryProvider);
+  final authService = ref.watch(authServiceProvider);
   const storage = FlutterSecureStorage();
-  return AuthNotifier(authRepository: authRepository, storage: storage);
+  return AuthNotifier(
+    authService: authService, 
+    storage: storage, 
+  );
 });
 
 class AuthState {
@@ -22,17 +26,23 @@ class AuthState {
 }
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier({required this.authRepository, required this.storage})
+  AuthNotifier({
+    required this.authService, 
+    required this.storage,
+  })
       : super(AuthState());
-  final AuthRepository authRepository;
+
+  final AuthService authService;
   final FlutterSecureStorage storage;
+
+  User get loggedInUser => state.user!;
 
   Future<void> login(String email, String password) async {
     try {
       final existingId = state.user?.id;
       AppLogger.info('checking for existing id: $existingId');
       state = AuthState(isLoading: true);
-      final user = await authRepository.login(email: email, password: password);
+      final user = await authService.login(email, password);
       final userId = user.id;
       AppLogger.info('updating AuthState User: $userId');
 
@@ -55,5 +65,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> logout() async {
     await storage.delete(key: 'user_id');
     state = AuthState();
+  }
+
+  Future<void> register(Register data) async  {
+    try {
+      state = AuthState(isLoading: true);  
+      final userSessionContext = await authService.register(data);    
+      final user = userSessionContext.user;
+      state = AuthState(user: user);
+    } catch (e) {
+      state = AuthState(error: e.toString());
+    }
   }
 }

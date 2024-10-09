@@ -1,4 +1,5 @@
 import 'package:rlv2_flutter/core/services/api_service.dart';
+import 'package:rlv2_flutter/features/user/models/create_user_information_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_information_model.dart';
 import 'package:rlv2_flutter/utils/handle_error.dart';
 
@@ -11,6 +12,22 @@ class UserInformationRepository {
 
   static String makePath(String userId) {
     return '/users/$userId/information';
+  }
+
+  Future<UserInformation> createUserInformation({
+    required CreateUserInformation data,
+  }) async {
+    try {
+      final response = await apiService.postRequest(
+        makePath(data.userId),
+        data.toJson(),
+        UserInformation.fromJson,
+      );
+      return response;
+    } catch (e) {
+      handleError(e, 'Failed to create user information data');
+      rethrow;
+    }
   }
 
   Future<UserInformation> updateUserInformation({
