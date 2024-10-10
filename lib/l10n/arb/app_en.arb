@@ -40,8 +40,8 @@
       "description": "Text for submit button"
     },
 
-    "createAccountScreenTitle": "Welcome to RecipeLab!",
-    "@createAccountScreenTitle": {
+    "registerScreenTitle": "Welcome to RecipeLab!",
+    "@registerScreenTitle": {
       "description": "Title text for create account screen"
     },
 

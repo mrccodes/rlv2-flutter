@@ -41,7 +41,7 @@ class Register {
 
   @override
   String toString() {
-    return 'CreateAccount{user: $user, '
+    return 'Register{user: $user, '
         'userInformation: $userInformation, '
         'organization: $organization}';
   }
