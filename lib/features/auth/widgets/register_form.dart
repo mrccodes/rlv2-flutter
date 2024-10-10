@@ -357,7 +357,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
             ],
             const SizedBox(height: 16),
             SwitchListTile(
-              title: Text(l10n.orgImageFieldLabel),
+              title: Text(l10n.orgToggleButton),
               value: isOrganizationAccount,
               onChanged: (bool value) {
                 setState(() {

@@ -6,6 +6,7 @@ import 'package:rlv2_flutter/features/user/providers/user_favorite_recipe_provid
 import 'package:rlv2_flutter/features/user/providers/user_information_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_recipes_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_settings_provider.dart';
+import 'package:rlv2_flutter/utils/app_logger.dart';
 
 final userSessionListenerProvider = Provider<void>((ref) {
 
@@ -58,13 +59,17 @@ final userSessionListenerProvider = Provider<void>((ref) {
               .updateUserInformationLocal(context.userInformation!);
         }
       } catch (e) {
-        // Set loading to false using methods
+        AppLogger.error('Error loading user session context: $e');
+        throw Exception('Error loading user session context: $e');
+      } finally {
+        // Set loading to false using setters
         ref.read(userInformationProvider.notifier).isLoading = false;
         ref.read(userSettingsProvider.notifier).isLoading = false;
         ref.read(userFavoriteRecipeProvider.notifier).isLoading = false;
         ref.read(userOrganizationsProvider.notifier).isLoading = false;
         ref.read(userRecipesProvider.notifier).isLoading = false;
       }
+
     } else if (nextUserId == null) {
       // Clear data using methods
       ref.read(userInformationProvider.notifier).clearUserInformation();

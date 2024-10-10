@@ -11,8 +11,8 @@ final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   final authService = ref.watch(authServiceProvider);
   const storage = FlutterSecureStorage();
   return AuthNotifier(
-    authService: authService, 
-    storage: storage, 
+    authService: authService,
+    storage: storage,
   );
 });
 
@@ -27,10 +27,9 @@ class AuthState {
 
 class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier({
-    required this.authService, 
+    required this.authService,
     required this.storage,
-  })
-      : super(AuthState());
+  }) : super(AuthState());
 
   final AuthService authService;
   final FlutterSecureStorage storage;
@@ -63,16 +62,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> logout() async {
-    await storage.delete(key: 'user_id');
     state = AuthState();
+    await authService.logout();
   }
 
-  Future<void> register(Register data) async  {
+  Future<void> register(Register data) async {
     try {
-      state = AuthState(isLoading: true);  
-      final userSessionContext = await authService.register(data);    
-      final user = userSessionContext.user;
-      state = AuthState(user: user);
+      state = AuthState(isLoading: true);
+      final userSessionContext = await authService.register(data);
+      authService.loadUser(userSessionContext);
+      state = AuthState(user: userSessionContext.user);
     } catch (e) {
       state = AuthState(error: e.toString());
     }

@@ -13,14 +13,14 @@ import 'package:rlv2_flutter/features/user/models/create_user_model.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
-class RegisterScreen extends ConsumerStatefulWidget {
-  const RegisterScreen({super.key});
+class CreateAccountScreen extends ConsumerStatefulWidget {
+  const CreateAccountScreen({super.key});
 
   @override
-  RegisterScreenState createState() => RegisterScreenState();
+  CreateAccountScreenState createState() => CreateAccountScreenState();
 }
 
-class RegisterScreenState extends ConsumerState<RegisterScreen> {
+class CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -74,23 +74,30 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
           password: password,
           username: username,
         );
+        AppLogger.info('User: ${user.toJson()}');
         final userInformation = CreateUserInformationBase(
           firstName: firstName,
           lastName: lastName,
           image: userImage,
         );
-        final organization = CreateOrganizationBase(
-          name: organizationName,
-          description: organizationDescription,
-          image: organizationImage,
-        );
+        AppLogger.info('User Information: ${userInformation.toJson()}');
+        CreateOrganizationBase? organization;
+        if (isOrganizationAccount) {
+          organization = CreateOrganizationBase(
+            name: organizationName,
+            description: organizationDescription,
+            image: organizationImage,
+          );
+
+        AppLogger.info('Organization: ${organization.toJson()}');
+        }
 
         final registerData = Register(
-          user: user, 
-          userInformation: userInformation, 
+          user: user,
+          userInformation: userInformation,
           organization: organization,
         );
-
+        AppLogger.info('Register Data: ${registerData.toJson()}');
 
         await ref.read(authProvider.notifier).register(registerData);
       } catch (e) {
@@ -98,15 +105,14 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
-                'An error occurred while creating your account. ' 
-                'Please try again.'),
+              content:
+                  const Text('An error occurred while creating your account. '
+                      'Please try again.'),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
         }
-      }
-      finally {
+      } finally {
         formLoading = false;
       }
     }
@@ -127,12 +133,15 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
             const SizedBox(height: 16),
             // Wrap the form in the scrollable view
-            if (formLoading) Container(
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            ) else RegisterForm(
-              onRegister: handleRegister,
-            ),
+            if (formLoading)
+              Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              )
+            else
+              RegisterForm(
+                onRegister: handleRegister,
+              ),
           ],
         ),
       ),

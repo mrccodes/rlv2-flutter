@@ -2,11 +2,11 @@ import 'package:rlv2_flutter/features/organization/models/create_organization_mo
 import 'package:rlv2_flutter/features/user/models/create_user_information_model.dart';
 import 'package:rlv2_flutter/features/user/models/create_user_model.dart';
 
-class Register  {
+class Register {
   Register({
     required this.user,
     required this.userInformation,
-    required this.organization,
+    this.organization,
   });
 
   factory Register.fromJson(dynamic json) {
@@ -23,28 +23,26 @@ class Register  {
       ),
       organization: CreateOrganization.fromJson(
         json['organization'] as Map<String, dynamic>,
-        ),
+      ),
     );
   }
 
   final CreateUser user;
   final CreateUserInformationBase userInformation;
-  final CreateOrganizationBase organization;
+  final CreateOrganizationBase? organization;
 
-Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'user': user.toJson(),
       'userInformation': userInformation.toJson(),
-      'organization': organization.toJson(),
+      'organization': organization?.toJson(),
     };
   }
 
   @override
   String toString() {
     return 'CreateAccount{user: $user, '
-    'userInformation: $userInformation, '
-    'organization: $organization}';
+        'userInformation: $userInformation, '
+        'organization: $organization}';
   }
-
-
 }

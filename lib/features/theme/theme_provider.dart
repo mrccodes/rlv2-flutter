@@ -68,6 +68,8 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
           mode: mode,
           isLoading: false,
         );
+      } else {
+        toggleThemeLocal(mode);
       }
     } catch (e) {
       AppLogger.error('Error updating theme: $e');

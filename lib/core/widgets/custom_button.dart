@@ -41,7 +41,7 @@ class CustomButton extends StatelessWidget {
         buttonType == ButtonType.secondary ? secondaryStyle : primaryStyle;
 
     return fullWidth
-        ? Container(
+        ? SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: onPressed,
