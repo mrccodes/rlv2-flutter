@@ -22,7 +22,7 @@ class UserInformationService {
   }
 
   Future<UserInformation> createUserInformation(
-      CreateUserInformation userInformation,
+    CreateUserInformation userInformation,
   ) async {
     try {
       final newUserInformation = await userInformationRepository
