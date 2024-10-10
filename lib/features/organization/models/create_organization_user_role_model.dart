@@ -20,6 +20,8 @@ class CreateOrganizationUserRole {
 
   @override
   String toString() {
-    return 'CreateOrganizationUserRole(organizationUserId: $organizationUserId, roleId: $roleId)';
+    return 
+      'CreateOrganizationUserRole(organizationUserId: $organizationUserId, '
+      'roleId: $roleId)';
   }
 }

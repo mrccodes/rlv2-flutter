@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
 import 'package:rlv2_flutter/utils/validators.dart';
 
-// @TODO: Implement the image picker once s3 or similar is set up 
+// @TODO: Implement the image picker once s3 or similar is set up
 
 class RegisterForm extends ConsumerStatefulWidget {
   const RegisterForm({super.key, this.onRegister});
@@ -387,41 +387,41 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
               ),
               const SizedBox(height: 16),
               // Display image or show the button to pick an image
-            //   if (_organizationImageFile != null) ...[
-            //     Image.file(
-            //       _organizationImageFile!,
-            //       height: 100,
-            //       width: 100,
-            //     ),
-            //     const SizedBox(height: 16),
-            //     ElevatedButton(
-            //       onPressed: _removeOrganizationImageFile,
-            //       child: Text(l10n.removeImageButtonLabel),
-            //     ),
-            //   ] else ...[
-            //     Text(
-            //       l10n.orgImageFieldLabel,
-            //       style: Theme.of(context).textTheme.bodyLarge,
-            //     ),
-            //     const SizedBox(width: 16), // Spacing between text and button
-            //     Row(
-            //       children: [
-            //         CustomButton(
-            //           onPressed: () =>
-            //               _pickOrganizationImage(ImageSource.gallery),
-            //           text: l10n.chooseImageFromGalleryButtonLabel,
-            //           buttonType: ButtonType.secondary,
-            //         ),
-            //         const SizedBox(width: 16),
-            //         CustomButton(
-            //           onPressed: () =>
-            //               _pickOrganizationImage(ImageSource.camera),
-            //           text: l10n.takeImageButtonLabel,
-            //           buttonType: ButtonType.secondary,
-            //         ),
-            //       ],
-            //     ),
-            //   ],
+              //   if (_organizationImageFile != null) ...[
+              //     Image.file(
+              //       _organizationImageFile!,
+              //       height: 100,
+              //       width: 100,
+              //     ),
+              //     const SizedBox(height: 16),
+              //     ElevatedButton(
+              //       onPressed: _removeOrganizationImageFile,
+              //       child: Text(l10n.removeImageButtonLabel),
+              //     ),
+              //   ] else ...[
+              //     Text(
+              //       l10n.orgImageFieldLabel,
+              //       style: Theme.of(context).textTheme.bodyLarge,
+              //     ),
+              //     const SizedBox(width: 16), // Spacing between text and button
+              //     Row(
+              //       children: [
+              //         CustomButton(
+              //           onPressed: () =>
+              //               _pickOrganizationImage(ImageSource.gallery),
+              //           text: l10n.chooseImageFromGalleryButtonLabel,
+              //           buttonType: ButtonType.secondary,
+              //         ),
+              //         const SizedBox(width: 16),
+              //         CustomButton(
+              //           onPressed: () =>
+              //               _pickOrganizationImage(ImageSource.camera),
+              //           text: l10n.takeImageButtonLabel,
+              //           buttonType: ButtonType.secondary,
+              //         ),
+              //       ],
+              //     ),
+              //   ],
             ],
             const SizedBox(height: 16),
             SizedBox(
