@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/features/user/models/create_user_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/features/user/providers/user_serice_provider.dart';
 import 'package:rlv2_flutter/features/user/services/user_service.dart';
 
 class UserState {
   UserState({
-    this.data,
     this.isLoading = false,
     this.error,
   });
@@ -14,7 +14,6 @@ class UserState {
     return UserState();
   }
 
-  final User? data;
   final bool isLoading;
   final String? error;
 
@@ -24,7 +23,6 @@ class UserState {
     String? error,
   }) {
     return UserState(
-      data: data ?? this.data,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
     );
@@ -43,10 +41,6 @@ class UserNotifier extends StateNotifier<UserState> {
   ) : super(UserState());
   final UserService _userService;
 
-  bool get isAuthenticated {
-    return state.data != null && state.data!.id.isNotEmpty;
-  }
-
   bool get isLoading {
     return state.isLoading == true;
   }
@@ -55,84 +49,90 @@ class UserNotifier extends StateNotifier<UserState> {
     state = state.copyWith(isLoading: value);
   }
 
-  set user(User? newUser) {
-    state = state.copyWith(data: newUser);
-  }
-
-  User? get user {
-    return state.data;
-  }
-
-  void clearUser() {
-    // ignore: avoid_redundant_argument_values
-    state = state.copyWith(data: null);
-  }
-
-  void updateUserLocal(User user) {
-    state = state.copyWith(data: user);
-  }
-
-  Future<void> fetchUser(String userId) async {
+  Future<User> fetchUser(String userId) async {
     state = state.copyWith(isLoading: true);
     try {
-      final user = await _userService.fetchUser(userId);
-      state = state.copyWith(data: user);
+      return await _userService.fetchUser(userId);
     } catch (e) {
       state = state.copyWith(error: e.toString());
+      rethrow;
     } finally {
       state = state.copyWith(isLoading: false);
     }
   }
 
-  Future<void> updateUsername({
+  Future<User> createUser({
+    required String email,
+    required String password,
+    required String username,
+  }) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final user = await _userService.createUser(
+        data: CreateUser(
+          email: email,
+          password: password,
+          username: username,
+        ),
+      );
+      return user;
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      rethrow;
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<User> updateUsername({
     required String userId,
     required String username,
   }) async {
     state = state.copyWith(isLoading: true);
     try {
-      final response = await _userService.updateUsername(
+      return await _userService.updateUsername(
         userId: userId,
         username: username,
       );
-      state = state.copyWith(data: response);
     } catch (e) {
       state = state.copyWith(error: e.toString());
+      rethrow;
     } finally {
       state = state.copyWith(isLoading: false);
     }
   }
 
-  Future<void> updateEmail({
+  Future<User> updateEmail({
     required String userId,
     required String email,
   }) async {
     state = state.copyWith(isLoading: true);
     try {
-      final response = await _userService.updateEmail(
+      return await _userService.updateEmail(
         userId: userId,
         email: email,
       );
-      state = state.copyWith(data: response);
     } catch (e) {
       state = state.copyWith(error: e.toString());
+      rethrow;
     } finally {
       state = state.copyWith(isLoading: false);
     }
   }
 
-  Future<void> updatePassword({
+  Future<User> updatePassword({
     required String userId,
     required String password,
   }) async {
     state = state.copyWith(isLoading: true);
     try {
-      final response = await _userService.updatePassword(
+      return await _userService.updatePassword(
         userId: userId,
         password: password,
       );
-      state = state.copyWith(data: response);
     } catch (e) {
       state = state.copyWith(error: e.toString());
+      rethrow;
     } finally {
       state = state.copyWith(isLoading: false);
     }

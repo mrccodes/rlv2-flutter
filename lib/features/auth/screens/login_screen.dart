@@ -71,10 +71,6 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               const SizedBox(height: 16),
               LoginForm(
                 onLogin: handleLogin,
-                onCreateAccount: (email, password) async {
-                  await Navigator.pushNamed(context, '/register');
-                  return Future.value();
-                },
               ),
             ],
           ),

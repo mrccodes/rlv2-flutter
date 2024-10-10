@@ -9,11 +9,13 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.onPressed,
     required this.text,
+    this.fullWidth = false,
     super.key,
     this.buttonType = ButtonType.primary,
   });
   final VoidCallback? onPressed;
   final String text;
+  final bool fullWidth;
   final ButtonType buttonType;
 
   @override
@@ -38,10 +40,19 @@ class CustomButton extends StatelessWidget {
     final buttonStyle =
         buttonType == ButtonType.secondary ? secondaryStyle : primaryStyle;
 
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: buttonStyle,
-      child: Text(text),
-    );
+    return fullWidth
+        ? SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onPressed,
+              style: buttonStyle,
+              child: Text(text),
+            ),
+          )
+        : ElevatedButton(
+            onPressed: onPressed,
+            style: buttonStyle,
+            child: Text(text),
+          );
   }
 }

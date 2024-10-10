@@ -33,6 +33,203 @@
     "logoutButton": "Logout",
     "@logoutButton": {
       "description": "Text for logout button"
-    }
+    },
 
+    "submitButtonLabel": "Submit",
+    "@submitButtonLabel": {
+      "description": "Text for submit button"
+    },
+
+    "registerScreenTitle": "Welcome to RecipeLab!",
+    "@registerScreenTitle": {
+      "description": "Title text for create account screen"
+    },
+
+    "usernameHelperText": "Automatically generated if left blank",
+    "@usernameHelperText": {
+      "description": "Helper text for username field"
+    },
+
+    "emailFieldLabel": "Email",
+    "@emailFieldLabel": {
+      "description": "Email form field placeholder/label"
+    },
+    "passwordFieldLabel": "Password",
+    "@passwordFieldLabel": {
+      "description": "Password form field placeholder/label"
+    },
+    "confirmPasswordFieldLabel": "Confirm Password",
+    "@confirmPasswordFieldLabel": {
+      "description": "Password confirmation form field placeholder/label"
+    },
+    "firstNameFieldLabel": "First Name",
+    "@firstNameFieldLabel": {
+      "description": "First Name form field placeholder/label"
+    },
+    "lastNameFieldLabel": "Last Name",
+    "@lastNameFieldLabel": {
+      "description": "Last Name form field placeholder/label"
+    },
+    "usernameFieldLabel": "Username",
+    "@usernameFieldLabel": {
+      "description": "Username form field placeholder/label"
+    },
+
+    "userImageFieldLabel": "User Image",
+    "@userImageFieldLabel": {
+      "description": "Label for user image upload form field"
+    },
+    "orgImageFieldLabel": "Organization Image",
+    "@orgImageFieldLabel": {
+      "description": "Label for organization image upload form field"
+    },
+
+    "noImageSelectedError": "No image selected",
+    "@noImageSelectedError": {
+      "description": ""
+    },
+
+    "chooseImageFromGalleryButtonLabel": "Choose from gallery",
+    "@chooseImageFromGalleryButtonLabel": {
+      "description": "Text for upload image from gallery button"
+    },
+    "takeImageButtonLabel": "Take new image",
+    "@takeImageButtonLabel": {
+      "description": "Text for upload new image button"
+    },
+    "removeImageButtonLabel": "Remove image",
+    "@removeImageButtonLabel": {
+      "description": "Text remove image button"
+    },
+
+    "orgToggleButton": "Create account for organization?",
+    "@orgToggleButton": {
+      "description": "Label text for organization account toggle"
+    },
+
+    "orgNameFieldLabel": "Organization Name",
+    "@orgNameFieldLabel": {
+      "description": "Organization Name form field label/placeholder"
+    },
+    "orgDescriptionFieldLabel": "Organization Description",
+    "@orgDescriptionFieldLabel": {
+      "description": "Organization description form field label/placeholder"
+    },
+
+
+    "passwordsDoNotMatchError": "Passwords are not matching",
+    "@passwordsDoNotMatchError": {
+      "description": "Error to render when confirm password does not match original password"
+    },
+
+    "passwordLengthShortError": "Password must be at least 9 characters",
+    "@passwordLengthShortError": {
+      "description": "Error to render when password is too short"
+    },
+    
+    "passwordLengthLongError": "Password must be less than 20 characters",
+    "@passwordLengthLongError": {
+      "description":""
+    },
+
+    "passwordNumberError": "Password must contain at least one number",
+    "@passwordNumberError": {
+      "description":""
+
+    },
+
+    "passwordSymbolError": "Password must contain at least one symbol",
+    "@passwordSymbolError": {
+      "description":""
+    },
+
+    "usernameLengthShortError": "Username must be at least 3 characters",
+    "@usernameLengthShortError": {
+      "description":""
+    },
+
+    "usernameLengthLongError": "Username must be less than 12 characters",
+    "@usernameLengthLongError": {
+      "description":""
+    },
+
+    "usernameSymbolError": "Username must only contain letters, numbers, and underscores",
+    "@usernameSymbolError": {
+      "description":""
+    },
+
+    "usernameSpaceError": "Username cannot contain spaces",
+    "@usernameSpaceError": {
+      "description":""
+    },
+
+    "emailIsValidError": "Email address is invalid",
+    "@emailIsValidError": {
+      "description":""
+    },
+
+    "emailNotEmptyError": "Please enter your email",
+    "@emailNotEmptyError": {
+      "description":""
+    },
+
+    "passwordNotEmptyError": "Please enter your password",
+    "@passwordNotEmptyError": {
+      "description":""
+    },
+
+    "firstNameLengthLongError": "First name must be 20 or fewer characters",
+    "@firstNameLengthLongError": {
+      "description":""
+    },
+
+    "lastNameLengthLongError": "Last name must be 20 or fewer characters",
+    "@lastNameLengthLongError": {
+      "description":""
+    },
+
+    "firstNameSymbolError": "First name must only contain letters, spaces, hyphens, and apostrophes",
+    "@firstNameSymbolError": {
+      "description":""
+    },
+
+    "lastNameSymbolError": "Last name must only contain letters, spaces, hyphens, and apostrophes",
+    "@lastNameSymbolError": {
+      "description":""
+    },
+
+    "firstNameNumberError": "First name must not contain numbers",
+    "@firstNameNumberError": {
+      "description":""
+    },
+
+    "lastNameNumberError": "Last name must not contain numbers",
+    "@lastNameNumberError": {
+      "description":""
+    },
+
+    "organizationNameLengthLongError": "Organization name must be 30 or fewer characters",
+    "@organizationNameLengthLongError": {
+      "description":""
+    },
+
+    "organziationNameNotEmptyError": "Please enter an organization name",
+    "@organziationNameNotEmptyError": {
+      "description":""
+    },
+
+    "organizationNameSymbolError": "Organization name must only contain letters and numbers and spaces",
+    "@organizationNameSymbolError": {
+      "description":""
+    },
+
+    "organizationDescriptionLengthLongError": "Organization description must be 100 or fewer characters",
+    "@organizationDescriptionLengthLongError": {
+      "description":""
+    },
+
+    "organizationDescriptionSymbolError": "Organization description must only contain letters and numbers and spaces",
+    "@organizationDescriptionSymbolError": {
+      "description":""
+    }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/features/user/models/create_user_information_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_information_model.dart';
 import 'package:rlv2_flutter/features/user/providers/user_information_service_provider.dart';
 import 'package:rlv2_flutter/features/user/services/user_information_service.dart';
@@ -57,6 +58,8 @@ class UserInformationNotifier extends StateNotifier<UserInformationState> {
     state = state.copyWith(isLoading: value);
   }
 
+  UserInformation? get loggedInUserInformation => state.data;
+
   void updateUserInformationLocal(UserInformation userInformation) {
     state = state.copyWith(data: userInformation);
   }
@@ -72,6 +75,22 @@ class UserInformationNotifier extends StateNotifier<UserInformationState> {
       state = state.copyWith(data: userInformation);
     } catch (e) {
       state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<UserInformation> createUserInformation(
+    CreateUserInformation data,
+  ) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final userInformation = await service.createUserInformation(data);
+      state = state.copyWith(data: userInformation);
+      return userInformation;
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      rethrow;
     } finally {
       state = state.copyWith(isLoading: false);
     }

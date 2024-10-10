@@ -1,12 +1,14 @@
-class OrganizationUser {
+import 'package:rlv2_flutter/features/organization/models/create_organization_user_model.dart';
+
+class OrganizationUser extends CreateOrganizationUser {
   OrganizationUser({
     required this.id,
-    required this.organizationId,
-    required this.userId,
     required this.isOwner,
     required this.username,
     required this.organizationName,
     required this.createdAt,
+    required super.userId,
+    required super.organizationId,
   });
 
   factory OrganizationUser.fromJson(Map<String, dynamic> json) {
@@ -20,23 +22,32 @@ class OrganizationUser {
       createdAt: json['createdAt'] as String,
     );
   }
+
   final String id;
-  final String organizationId;
-  final String userId;
   final String isOwner;
   final String username;
   final String organizationName;
   final String createdAt;
 
+  @override
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'organizationId': organizationId,
-      'userId': userId,
-      'isOwner': isOwner,
-      'username': username,
-      'organizationName': organizationName,
-      'createdAt': createdAt,
-    };
+    final data = super.toJson();
+    data['id'] = id;
+    data['isOwner'] = isOwner;
+    data['username'] = username;
+    data['organizationName'] = organizationName;
+    data['createdAt'] = createdAt;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return 'OrganizationUser{id: $id, '
+        'isOwner: $isOwner, '
+        'username: $username, '
+        'organizationId: $organizationId, '
+        'userId: $userId, '
+        'organizationName: $organizationName, '
+        'createdAt: $createdAt}';
   }
 }
