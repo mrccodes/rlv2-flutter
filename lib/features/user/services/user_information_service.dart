@@ -24,9 +24,8 @@ class UserInformationService {
   Future<UserInformation> createUserInformation(
       CreateUserInformation userInformation) async {
     try {
-      final newUserInformation =
-          await userInformationRepository
-            .createUserInformation(data: userInformation);
+      final newUserInformation = await userInformationRepository
+          .createUserInformation(data: userInformation);
       return newUserInformation;
     } catch (e) {
       handleError(e, 'Error creating user information');

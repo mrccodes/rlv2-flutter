@@ -17,6 +17,6 @@ final authServiceProvider = Provider((ref) {
     userOrganizationsNotifier: ref.watch(userOrganizationsProvider.notifier),
     userFavoriteRecipesNotifier: ref.watch(
       userFavoriteRecipeProvider.notifier,
-      ),  
-    );
+    ),
+  );
 });

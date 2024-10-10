@@ -1,6 +1,6 @@
 import 'package:rlv2_flutter/features/organization/models/create_organization_user_model.dart';
 
-class OrganizationUser extends CreateOrganizationUser{
+class OrganizationUser extends CreateOrganizationUser {
   OrganizationUser({
     required this.id,
     required this.isOwner,

@@ -82,11 +82,10 @@ class UserInformationNotifier extends StateNotifier<UserInformationState> {
 
   Future<UserInformation> createUserInformation(
     CreateUserInformation data,
-    ) async {
+  ) async {
     state = state.copyWith(isLoading: true);
     try {
-      final userInformation = 
-        await service.createUserInformation(data);
+      final userInformation = await service.createUserInformation(data);
       state = state.copyWith(data: userInformation);
       return userInformation;
     } catch (e) {

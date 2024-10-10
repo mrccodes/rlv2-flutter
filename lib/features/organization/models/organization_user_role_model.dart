@@ -16,10 +16,9 @@ class OrganizationUserRole extends CreateOrganizationUserRole {
       roleId: json['role_id'] as String,
     );
   }
-  
+
   final DateTime createdAt;
   final DateTime updatedAt;
-
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,8 +33,8 @@ class OrganizationUserRole extends CreateOrganizationUserRole {
   @override
   String toString() {
     return 'OrganizationUserRole(createdAt: $createdAt, '
-    'updatedAt: $updatedAt, '
-    'organizationUserId: $organizationUserId, '
-    'roleId: $roleId)';
+        'updatedAt: $updatedAt, '
+        'organizationUserId: $organizationUserId, '
+        'roleId: $roleId)';
   }
 }

@@ -13,15 +13,13 @@ class CreateOrganizationUserRole {
   String organizationUserId;
   String roleId;
 
-
   Map<String, dynamic> toJson() => {
         'organizationUserId': organizationUserId,
         'roleId': roleId,
       };
 
-    @override
+  @override
   String toString() {
     return 'CreateOrganizationUserRole(organizationUserId: $organizationUserId, roleId: $roleId)';
   }
-
 }

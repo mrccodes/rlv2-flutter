@@ -19,7 +19,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
   String password = '';
 
   String? emailValidator(String? value) {
-  final validators = StringValidators(context);
+    final validators = StringValidators(context);
     if (!validators.emailIsValid.validate(value!)) {
       return validators.emailIsValid.error;
     }
@@ -27,7 +27,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
   }
 
   String? _passwordValidator(String? value) {
-  final validators = StringValidators(context);
+    final validators = StringValidators(context);
     if (!validators.passwordNotEmpty.validate(value!)) {
       return validators.passwordNotEmpty.error;
     }

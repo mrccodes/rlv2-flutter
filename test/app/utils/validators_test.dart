@@ -34,7 +34,6 @@ Widget makeTestableWidget(Widget child) {
 //       stringValidators = StringValidators(context);
 //     });
 
-    
 //   });
 // }
 
@@ -61,8 +60,6 @@ void main() {
         ),
       );
     }
-
-    
 
     testWidgets('isValidName validator', (WidgetTester tester) async {
       await pumpTestWidget(tester);
@@ -254,7 +251,8 @@ void main() {
       expect(validator.validate('asd1'), false);
     });
 
-    testWidgets('organizationNameLengthLong Validator', (WidgetTester tester) async {
+    testWidgets('organizationNameLengthLong Validator',
+        (WidgetTester tester) async {
       await pumpTestWidget(tester);
       stringValidators = StringValidators(context);
       final validator = stringValidators.organizationNameLengthLong;
@@ -263,7 +261,8 @@ void main() {
       expect(validator.validate('asdasdasdasdasdasdasdasdasdasasd'), false);
     });
 
-    testWidgets('organziationNameNotEmpty Validator', (WidgetTester tester) async {
+    testWidgets('organziationNameNotEmpty Validator',
+        (WidgetTester tester) async {
       await pumpTestWidget(tester);
       stringValidators = StringValidators(context);
       final validator = stringValidators.organziationNameNotEmpty;
@@ -272,7 +271,8 @@ void main() {
       expect(validator.validate('asdasd'), true);
     });
 
-    testWidgets('organizationNameSymbol Validator', (WidgetTester tester) async {
+    testWidgets('organizationNameSymbol Validator',
+        (WidgetTester tester) async {
       await pumpTestWidget(tester);
       stringValidators = StringValidators(context);
       final validator = stringValidators.organizationNameSymbol;
@@ -297,7 +297,8 @@ void main() {
       expect(validator.validate('Angle<Brackets>'), false);
     });
 
-    testWidgets('organizationDescriptionLengthLong Validator', (WidgetTester tester) async {
+    testWidgets('organizationDescriptionLengthLong Validator',
+        (WidgetTester tester) async {
       await pumpTestWidget(tester);
       stringValidators = StringValidators(context);
       final validator = stringValidators.organizationDescriptionLengthLong;
@@ -320,7 +321,8 @@ void main() {
       expect(validator.validate(longDescriptionFail), false);
     });
 
-    testWidgets('organizationDescriptionSymbol Validator', (WidgetTester tester) async {
+    testWidgets('organizationDescriptionSymbol Validator',
+        (WidgetTester tester) async {
       await pumpTestWidget(tester);
       stringValidators = StringValidators(context);
       final validator = stringValidators.organizationDescriptionSymbol;

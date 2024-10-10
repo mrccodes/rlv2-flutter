@@ -86,11 +86,10 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
         );
 
         final registerData = Register(
-          user: user, 
-          userInformation: userInformation, 
+          user: user,
+          userInformation: userInformation,
           organization: organization,
         );
-
 
         await ref.read(authProvider.notifier).register(registerData);
       } catch (e) {
@@ -98,15 +97,14 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
-                'An error occurred while creating your account. ' 
-                'Please try again.'),
+              content:
+                  const Text('An error occurred while creating your account. '
+                      'Please try again.'),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
         }
-      }
-      finally {
+      } finally {
         formLoading = false;
       }
     }
@@ -127,12 +125,15 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
             const SizedBox(height: 16),
             // Wrap the form in the scrollable view
-            if (formLoading) Container(
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            ) else RegisterForm(
-              onRegister: handleRegister,
-            ),
+            if (formLoading)
+              Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              )
+            else
+              RegisterForm(
+                onRegister: handleRegister,
+              ),
           ],
         ),
       ),

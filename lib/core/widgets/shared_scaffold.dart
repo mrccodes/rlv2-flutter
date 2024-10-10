@@ -7,7 +7,6 @@ import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
 
-
 class SharedScaffold extends ConsumerStatefulWidget {
   const SharedScaffold({
     required this.body,
@@ -32,7 +31,6 @@ class _SharedScaffoldState extends ConsumerState<SharedScaffold> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override

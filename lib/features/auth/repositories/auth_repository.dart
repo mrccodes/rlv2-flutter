@@ -37,7 +37,7 @@ class AuthRepository {
     }
   }
 
-    Future<UserSessionContext> register(Register data) async {
+  Future<UserSessionContext> register(Register data) async {
     try {
       final response = await apiService.postRequest(
         '/register',

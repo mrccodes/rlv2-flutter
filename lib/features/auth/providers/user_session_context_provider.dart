@@ -9,18 +9,18 @@ import 'package:rlv2_flutter/features/user/providers/user_settings_provider.dart
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 final userSessionListenerProvider = Provider<void>((ref) {
-
   ref.listen<AuthState>(authProvider, (previous, next) async {
     final previousUserId = previous?.user?.id;
     final nextUserId = next.user?.id;
     final userContextService = ref.read(userSessionContextServiceProvider);
 
-    if (
-      ref.read(userSettingsProvider.notifier)
-        .loggedInUserSettings?.userId != null &&
-      ref.read(userInformationProvider.notifier)
-        .loggedInUserInformation?.userId != null
-    ) {
+    if (ref.read(userSettingsProvider.notifier).loggedInUserSettings?.userId !=
+            null &&
+        ref
+                .read(userInformationProvider.notifier)
+                .loggedInUserInformation
+                ?.userId !=
+            null) {
       // If the user id already exists the user just registered
       // so app is loaded with fresh account already
       return;
@@ -33,7 +33,6 @@ final userSessionListenerProvider = Provider<void>((ref) {
       ref.read(userFavoriteRecipeProvider.notifier).isLoading = true;
       ref.read(userOrganizationsProvider.notifier).isLoading = true;
       ref.read(userRecipesProvider.notifier).isLoading = true;
-
 
       try {
         final context =
@@ -69,7 +68,6 @@ final userSessionListenerProvider = Provider<void>((ref) {
         ref.read(userOrganizationsProvider.notifier).isLoading = false;
         ref.read(userRecipesProvider.notifier).isLoading = false;
       }
-
     } else if (nextUserId == null) {
       // Clear data using methods
       ref.read(userInformationProvider.notifier).clearUserInformation();

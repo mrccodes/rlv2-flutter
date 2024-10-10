@@ -10,14 +10,13 @@ class OrganizationUserRoleRepository {
 
   final ApiService apiService;
 
-
-
   Future<OrganizationUserRole> fetchOrganizationUserRoleById({
     required String organizationId,
     required String organizationUserId,
     required String organizationUserRoleId,
   }) async {
-    final endpoint = '/organizations/$organizationId/user/$organizationUserId/roles/$organizationUserRoleId';
+    final endpoint =
+        '/organizations/$organizationId/user/$organizationUserId/roles/$organizationUserRoleId';
 
     try {
       final response = await apiService.getRequest<OrganizationUserRole>(
@@ -35,7 +34,8 @@ class OrganizationUserRoleRepository {
     required String organizationId,
     required String organizationUserId,
   }) async {
-    final endpoint = '/organizations/$organizationId/user/$organizationUserId/roles';
+    final endpoint =
+        '/organizations/$organizationId/user/$organizationUserId/roles';
 
     try {
       final response = await apiService.getRequest<List<OrganizationUserRole>>(
@@ -58,7 +58,8 @@ class OrganizationUserRoleRepository {
     required String organizationUserId,
     required OrganizationUserRoles roleId,
   }) async {
-    final endpoint = '/organizations/$organizationId/user/$organizationUserId/roles/${roleId.name}';
+    final endpoint =
+        '/organizations/$organizationId/user/$organizationUserId/roles/${roleId.name}';
 
     try {
       final response = await apiService.putRequest<List<OrganizationUserRole>>(
@@ -74,8 +75,6 @@ class OrganizationUserRoleRepository {
     } catch (e) {
       handleError(e, 'Failed to update organization user roles');
       rethrow;
-    } 
-  } 
-
-
+    }
+  }
 }

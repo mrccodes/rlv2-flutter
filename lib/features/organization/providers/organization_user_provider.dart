@@ -35,8 +35,8 @@ class OrganizationUserState {
   }
 }
 
-final organizationUserProvider = 
-  StateNotifierProvider<OrganizationUserNotifier, OrganizationUserState>(
+final organizationUserProvider =
+    StateNotifierProvider<OrganizationUserNotifier, OrganizationUserState>(
   (ref) {
     return OrganizationUserNotifier(ref.watch(organizationUserServiceProvider));
   },
@@ -58,7 +58,7 @@ class OrganizationUserNotifier extends StateNotifier<OrganizationUserState> {
   }
 
   Future<OrganizationUser> fetchOrganizationUser(
-    String organizationId, 
+    String organizationId,
     String organizationUserId,
   ) async {
     state = state.copyWith(isLoading: true);
@@ -93,15 +93,15 @@ class OrganizationUserNotifier extends StateNotifier<OrganizationUserState> {
   }
 
   Future<void> deleteOrganizationUser(
-    String organizationId, 
+    String organizationId,
     String organizationUserId,
-    ) async {
+  ) async {
     state = state.copyWith(isLoading: true);
     try {
       await _organizationUserService.deleteOrganizationUser(
         organizationUserId: organizationUserId,
         organizationId: organizationId,
-        );
+      );
     } catch (e) {
       state = state.copyWith(error: e.toString());
       rethrow;

@@ -14,12 +14,8 @@ class MockAuthNotifier extends StateNotifier<AuthState>
           ),
         );
 
-
   @override
   User get loggedInUser => state.user!;
-
-
-
 
   @override
   Future<void> register(Register data) async {

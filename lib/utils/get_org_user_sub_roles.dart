@@ -1,5 +1,3 @@
-
-
 import 'package:rlv2_flutter/utils/constants.dart';
 
 Map<OrganizationUserRoles, List<OrganizationUserRoles>> roleHierarchy = {
@@ -13,7 +11,7 @@ Map<OrganizationUserRoles, List<OrganizationUserRoles>> roleHierarchy = {
 
 Future<List<OrganizationUserRoles>> getOrgUserSubRoleIds(
   OrganizationUserRoles role,
-  ) async {
+) async {
   final subRoles = <OrganizationUserRoles>[];
   void addSubRoles(OrganizationUserRoles currentRole) {
     subRoles.add(currentRole);

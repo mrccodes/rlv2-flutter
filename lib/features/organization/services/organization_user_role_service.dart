@@ -31,7 +31,7 @@ class OrganizationUserRoleService {
   }) async {
     try {
       return await organizationUserRoleRepository
-        .fetchOrganizationUserRolesByUserId(
+          .fetchOrganizationUserRolesByUserId(
         organizationId: organizationId,
         organizationUserId: organizationUserId,
       );

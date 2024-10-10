@@ -10,7 +10,7 @@ class Validator {
   final bool Function(String) validate;
   final String error;
 }
-  
+
 class StringValidators {
   StringValidators(this.context) {
     l10n = context.l10n;
@@ -126,8 +126,7 @@ class StringValidators {
 
     organizationDescriptionSymbol = Validator(
       validate: organizationNameRegex.hasMatch,
-      error:
-          l10n.organizationDescriptionSymbolError,
+      error: l10n.organizationDescriptionSymbolError,
     );
   }
 

@@ -43,7 +43,6 @@ class MockUserNotifier extends StateNotifier<UserState>
     return Future.value(testUser);
   }
 
-
   @override
   Future<User> updateUsername({
     required String userId,
@@ -51,5 +50,4 @@ class MockUserNotifier extends StateNotifier<UserState>
   }) {
     return Future.value(testUser);
   }
-
 }

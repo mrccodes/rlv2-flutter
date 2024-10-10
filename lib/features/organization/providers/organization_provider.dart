@@ -12,7 +12,6 @@ class OrganizationState {
   final bool isLoading;
   final String? error;
 
-
   OrganizationState copyWith({
     bool? isLoading,
     String? error,
@@ -24,14 +23,13 @@ class OrganizationState {
   }
 }
 
-final organizationProvider = 
-  StateNotifierProvider<OrganizationNotifier, OrganizationState>((ref) {
+final organizationProvider =
+    StateNotifierProvider<OrganizationNotifier, OrganizationState>((ref) {
   final organizationService = ref.watch(organizationServiceProvider);
   return OrganizationNotifier(organizationService);
 });
 
-class OrganizationNotifier extends
-StateNotifier<OrganizationState> {
+class OrganizationNotifier extends StateNotifier<OrganizationState> {
   OrganizationNotifier(
     this._organizationService,
   ) : super(OrganizationState());
@@ -114,6 +112,4 @@ StateNotifier<OrganizationState> {
       state = state.copyWith(isLoading: false);
     }
   }
-
-
 }

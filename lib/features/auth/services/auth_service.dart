@@ -16,7 +16,7 @@ class AuthService {
     required this.userOrganizationsNotifier,
     required this.userRecipesNotifier,
     required this.userInformationNotifier,
-    });
+  });
 
   final AuthRepository authRepository;
   final UserSettingsNotifier userSettingsNotifier;
@@ -24,26 +24,19 @@ class AuthService {
   final UserOrganizationsNotifier userOrganizationsNotifier;
   final UserRecipesNotifier userRecipesNotifier;
   final UserInformationNotifier userInformationNotifier;
-  
 
-  
   void loadUser(UserSessionContext data) {
-    userSettingsNotifier
-      .updateUserSettingsLocal(data.userSettings);
+    userSettingsNotifier.updateUserSettingsLocal(data.userSettings);
     userFavoriteRecipesNotifier
-      .updateUserFavoriteRecipesLocal(data.userFavoriteRecipes);
+        .updateUserFavoriteRecipesLocal(data.userFavoriteRecipes);
     userOrganizationsNotifier
-      .updateUserOrganzationsLocal(data.organizationUsers);
-    userRecipesNotifier
-      .updateUserRecipesLocal(data.userRecipes);
+        .updateUserOrganzationsLocal(data.organizationUsers);
+    userRecipesNotifier.updateUserRecipesLocal(data.userRecipes);
 
     if (data.userInformation != null) {
       userInformationNotifier.updateUserInformationLocal(data.userInformation!);
     }
-
   }
-
-
 
   Future<User> login(String email, String password) async {
     try {
@@ -60,8 +53,8 @@ class AuthService {
       userInformationNotifier.clearUserInformation();
       userSettingsNotifier.clearUserSettings();
       userFavoriteRecipesNotifier.clearUserFavoriteRecipes();
-      userOrganizationsNotifier.clearUserOrganizations(); 
-      userRecipesNotifier.clearUserRecipes(); 
+      userOrganizationsNotifier.clearUserOrganizations();
+      userRecipesNotifier.clearUserRecipes();
       return user;
     } catch (e) {
       throw Exception('Error logging out: $e');
