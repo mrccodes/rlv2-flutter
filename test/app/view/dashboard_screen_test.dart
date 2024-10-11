@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/app/app.dart';
@@ -30,9 +31,14 @@ void main() {
           child: const App(),
         ),
       );
+
       await mockAuthNotifier.login('test', 'test');
       await tester.pumpAndSettle();
-      // Check for presence of CustomAppBar and CustomBottomNavigationBar
+
+      await tester.tap(find.byKey(const ValueKey('loginButton')));
+
+      await tester.pumpAndSettle();
+
       expect(find.byType(CustomAppBar), findsOneWidget);
       expect(find.byType(CustomBottomNavigationBar), findsOneWidget);
     });

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rlv2_flutter/features/auth/models/user_session_context_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_information_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_model.dart';
 import 'package:rlv2_flutter/features/user/models/user_settings_model.dart';
@@ -34,4 +35,14 @@ UserInformation testUserInformation = UserInformation(
   lastName: 'matt',
   image: null,
   bio: 'Test bio',
+);
+
+UserSessionContext testUserSessionContext = UserSessionContext(
+  user: testUser,
+  userSettings: testUserSettings,
+  userFavoriteRecipes: [],
+  userInformation: testUserInformation,
+  organizationUsers: [],
+  userRecipes: [],
+  subscriptions: [],
 );

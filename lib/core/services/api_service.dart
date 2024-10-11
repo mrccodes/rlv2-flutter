@@ -138,7 +138,7 @@ class ApiService {
     Map<String, dynamic> data,
     T Function(Map<String, dynamic>) fromJson,
   ) async {
-    if (path == '/login' || path == '/register') {
+    if (path == '/login' || path == '/register' || path == '/logout') {
       return _handleRequest(
         () => dio
             .post<Map<String, dynamic>>(

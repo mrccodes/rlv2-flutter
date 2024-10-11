@@ -34,7 +34,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService authService;
   final FlutterSecureStorage storage;
 
-  User get loggedInUser => state.user!;
+  User? get loggedInUser => state.user;
 
   Future<void> login(String email, String password) async {
     try {
@@ -63,7 +63,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> logout() async {
     state = AuthState();
-    await authService.logout();
+    if (loggedInUser == null) {
+      return;
+    }
+    await authService.logout(loggedInUser!);
   }
 
   Future<void> register(Register data) async {
