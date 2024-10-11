@@ -11,10 +11,14 @@ class ThemeToggleWidget extends ConsumerWidget {
   const ThemeToggleWidget({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(themeProvider);
-    final authState = ref.watch(authProvider);
+    final themeLoading = ref.watch(
+      themeProvider.select((state) => state.isLoading),
+    ); 
+    final userId = ref.watch(authProvider.select((value) => value.user?.id));
 
-    final userSettings = ref.watch(userSettingsProvider);
+    final userPreferredMode = ref.watch(
+      userSettingsProvider.select((value) => value.data?.preferredMode),
+    );
 
     final lightModeOption = ToggleOption(
       label: ThemeMode.light,
@@ -26,7 +30,7 @@ class ThemeToggleWidget extends ConsumerWidget {
       label: ThemeMode.system,
     );
 
-    if (themeState.isLoading) {
+    if (themeLoading) {
       return const LoadingWidget();
     }
     final options = [lightModeOption, darkModeOption, systemModeOption];
@@ -34,13 +38,13 @@ class ThemeToggleWidget extends ConsumerWidget {
       options: options,
       label: 'Theme Mode',
       initialOption: options.firstWhere(
-        (option) => option.label.name == userSettings.data?.preferredMode,
+        (option) => option.label.name == userPreferredMode,
         orElse: () => systemModeOption,
       ),
       onToggle: (option) async {
         await ref
             .read(themeProvider.notifier)
-            .toggleTheme(authState.user?.id, option);
+            .toggleTheme(userId, option);
 
         AppLogger.info('Toggle changed to option ${option.name}');
       },

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/core/widgets/shared_scaffold.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_provider.dart';
+import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
+import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
+import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
 import 'package:rlv2_flutter/features/user/providers/user_information_provider.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
@@ -19,8 +21,12 @@ class DashboardScreen extends ConsumerWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return SharedScaffold(
-      appBarTitle: 'Dashboard',
+    return Scaffold(
+      appBar:  const CustomAppBar(
+        title: 'Dashboard',
+      ),
+      endDrawer: const CustomDrawer(),
+      bottomNavigationBar: const CustomBottomNavigationBar(),
       body: dashboardState.errorMessage.isNotEmpty
           ? Center(
               child: Text(
