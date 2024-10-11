@@ -47,15 +47,14 @@ class AuthService {
     }
   }
 
-  Future<User> logout() async {
+  Future<void> logout(User user) async {
     try {
-      final user = await authRepository.logout();
+      await authRepository.logout(user);
       userInformationNotifier.clearUserInformation();
       userSettingsNotifier.clearUserSettings();
       userFavoriteRecipesNotifier.clearUserFavoriteRecipes();
       userOrganizationsNotifier.clearUserOrganizations();
       userRecipesNotifier.clearUserRecipes();
-      return user;
     } catch (e) {
       throw Exception('Error logging out: $e');
     }
