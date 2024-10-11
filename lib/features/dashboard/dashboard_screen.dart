@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_provider.dart';
+import 'package:rlv2_flutter/features/dashboard/widgets/org_select.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
@@ -37,6 +38,7 @@ class DashboardScreen extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const OrgSelect(),
                   Text(
                     'Hello${firstName != null ? ' $firstName' : ''}!',
                     style: const TextStyle(fontSize: 18),
