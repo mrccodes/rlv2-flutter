@@ -29,7 +29,11 @@ class AuthRepository {
   // Add other authentication methods like logout, register if needed
   Future<User> logout(User user) async {
     try {
-      final response = await apiService.postRequest<User>('/logout', user.toJson(), User.fromJson);
+      final response = await apiService.postRequest<User>(
+        '/logout',
+        user.toJson(),
+        User.fromJson,
+      );
       return response;
     } catch (e) {
       handleError(e, 'Failed to logout');

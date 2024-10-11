@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
-import 'package:rlv2_flutter/features/auth/screens/landing_screen.dart';
+import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/user/providers/user_provider.dart';
 import '../../helpers/test_setup.dart';
@@ -30,15 +31,16 @@ void main() {
           child: const App(),
         ),
       );
-      await mockAuthNotifier.login('test', 'test');
-      await tester.pumpAndSettle(
-        const Duration(seconds: 3),
-      );
-      // Check for presence of CustomAppBar and CustomBottomNavigationBar
-      expect(find.byType(CustomAppBar), findsOneWidget);
-      expect(find.byType(LandingScreen), findsOneWidget);
-      // expect(find.byType(CustomBottomNavigationBar), findsOneWidget);
 
+      await mockAuthNotifier.login('test', 'test');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const ValueKey('loginButton')));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(CustomAppBar), findsOneWidget);
+      expect(find.byType(CustomBottomNavigationBar), findsOneWidget);
     });
   });
 }
