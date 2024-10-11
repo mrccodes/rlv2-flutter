@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: CustomAppBar(title: 'RecipeLab') ,
+      appBar: CustomAppBar(title: 'RecipeLab'),
       body: Center(
         child: LoadingWidget(),
       ),

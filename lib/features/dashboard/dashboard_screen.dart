@@ -22,7 +22,7 @@ class DashboardScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar:  const CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Dashboard',
       ),
       endDrawer: const CustomDrawer(),

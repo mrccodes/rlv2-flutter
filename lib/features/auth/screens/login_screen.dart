@@ -54,7 +54,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     }
 
     return Scaffold(
-      appBar:const CustomAppBar(title: 'RecipeLab'),
+      appBar: const CustomAppBar(title: 'RecipeLab'),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Padding(

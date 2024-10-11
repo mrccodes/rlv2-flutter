@@ -13,7 +13,7 @@ class ThemeToggleWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeLoading = ref.watch(
       themeProvider.select((state) => state.isLoading),
-    ); 
+    );
     final userId = ref.watch(authProvider.select((value) => value.user?.id));
 
     final userPreferredMode = ref.watch(
@@ -42,9 +42,7 @@ class ThemeToggleWidget extends ConsumerWidget {
         orElse: () => systemModeOption,
       ),
       onToggle: (option) async {
-        await ref
-            .read(themeProvider.notifier)
-            .toggleTheme(userId, option);
+        await ref.read(themeProvider.notifier).toggleTheme(userId, option);
 
         AppLogger.info('Toggle changed to option ${option.name}');
       },
