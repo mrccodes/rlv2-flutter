@@ -23,7 +23,7 @@ void main() {
       userSettings: testUserSettings,
       userFavoriteRecipes: [],
       userInformation: testUserInformation,
-      organizationUsers: [],
+      userOrganizations: [],
       userRecipes: [],
       subscriptions: [],
     );

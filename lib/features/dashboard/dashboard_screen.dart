@@ -36,7 +36,6 @@ class DashboardScreen extends ConsumerWidget {
             )
           : Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const OrgSelect(),
                   Text(

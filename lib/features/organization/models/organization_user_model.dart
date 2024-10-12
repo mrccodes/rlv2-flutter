@@ -5,6 +5,7 @@ class OrganizationUser extends CreateOrganizationUser {
     required this.id,
     required this.isOwner,
     required this.username,
+    required this.roles,
     required this.organizationName,
     required this.createdAt,
     required super.userId,
@@ -15,8 +16,9 @@ class OrganizationUser extends CreateOrganizationUser {
     return OrganizationUser(
       id: json['id'] as String,
       organizationId: json['organizationId'] as String,
+      roles: json['roles'] as List<dynamic>,
       userId: json['userId'] as String,
-      isOwner: json['isOwner'] as String,
+      isOwner: json['isOwner'] as bool,
       username: json['username'] as String,
       organizationName: json['organizationName'] as String,
       createdAt: json['createdAt'] as String,
@@ -24,10 +26,11 @@ class OrganizationUser extends CreateOrganizationUser {
   }
 
   final String id;
-  final String isOwner;
+  final bool isOwner;
   final String username;
   final String organizationName;
   final String createdAt;
+  final List<dynamic> roles;
 
   @override
   Map<String, dynamic> toJson() {
@@ -36,6 +39,7 @@ class OrganizationUser extends CreateOrganizationUser {
     data['isOwner'] = isOwner;
     data['username'] = username;
     data['organizationName'] = organizationName;
+    data['roles'] = roles;
     data['createdAt'] = createdAt;
     return data;
   }
@@ -47,6 +51,7 @@ class OrganizationUser extends CreateOrganizationUser {
         'username: $username, '
         'organizationId: $organizationId, '
         'userId: $userId, '
+        'roles: $roles, '
         'organizationName: $organizationName, '
         'createdAt: $createdAt}';
   }

@@ -1,58 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
+import 'package:rlv2_flutter/features/organization/providers/organization_provider.dart';
 import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
-import 'package:rlv2_flutter/utils/app_logger.dart';
 
-class OrgSelect extends ConsumerStatefulWidget {
-  const OrgSelect({super.key});
-
-  @override
-  ConsumerState<OrgSelect> createState() => _OrgSelectState();
-}
-
-class _OrgSelectState extends ConsumerState<OrgSelect> {
-  String? _selectedOrganization;
+class OrgSelect extends ConsumerWidget {
+  const OrgSelect({
+    super.key,
+  });
 
   @override
-  void initState() {
-    super.initState();
-    _selectedOrganization = 'Personal Recipes';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final organizations = ref.watch(userOrganizationsProvider);
-    final orgOptions = organizations.data.map((org) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Define a dropdown menu item for personal recipes
+    const personalRecipes = DropdownMenuItem<String>(
+      value: 'personal_recipes',
+      child: Text('Personal Recipes'),
+    );
+    final userOrganizations = ref.watch(userOrganizationsProvider);
+    final organizations = ref.watch(organizationProvider);
+    final orgNotifier = ref.read(organizationProvider.notifier);
+    final orgOptions = userOrganizations.data.map((org) {
       return DropdownMenuItem<String>(
-        value: org
-            .id, // Assuming organization id is a String or can be converted to one
+        value: org.organizationId,
         child: Text(org.organizationName),
       );
     }).toList();
 
-    if (organizations.isLoading) {
+    if (userOrganizations.isLoading) {
       return const CircularProgressIndicator();
-    } 
-
-    if (organizations.error != null) {
-      return Text(organizations.error!);
     }
 
-    AppLogger.info('OrgSelect: ${organizations.data}');
+    if (userOrganizations.error != null) {
+      return Text(userOrganizations.error!);
+    }
 
+    // If user has no organizations, return an empty SizedBox
     if (orgOptions.isEmpty) {
-      return Text(_selectedOrganization!);
+      return const SizedBox.shrink();
     }
 
-    return DropdownButton<String>(
-      value: _selectedOrganization,
-      items: orgOptions,
-      onChanged: (String? newValue) {
-        setState(() {
-          _selectedOrganization = newValue;
-        });
-      },
-      isExpanded: true,
+    Future<void> updateSelectedOrganization(String orgId) async {
+      // no selected organization === personal recipes
+      // clear selected organization if personal recipes is selected
+      if (orgId == personalRecipes.value) {
+        orgNotifier.clearSelectedOrganization();
+        return;
+      }
+      // fetch and select the organization
+      final selectedOrg = await orgNotifier.fetchOrganization(orgId);
+      orgNotifier.selectOrganization(selectedOrg);
+    }
+
+    // Insert personal recipes at the beginning of the list
+    orgOptions.insert(0, personalRecipes);
+
+    final selectedOrgId =
+        organizations.selectedOrganization?.id ?? personalRecipes.value;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
+        ),
+      ),
+      child: organizations.isLoading
+          ? Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: const LoadingWidget(),
+            )
+          : DropdownButtonFormField<String>(
+              value: selectedOrgId,
+              style: Theme.of(context).textTheme.labelMedium,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+              ),
+              items: orgOptions,
+              onChanged: (String? val) => {
+                if (val != null &&
+                    val != organizations.selectedOrganization?.id)
+                  {
+                    updateSelectedOrganization(val),
+                  },
+              },
+              isExpanded: true, // Ensures the dropdown takes full width
+            ),
     );
   }
 }

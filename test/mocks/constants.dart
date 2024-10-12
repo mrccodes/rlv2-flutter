@@ -42,7 +42,7 @@ UserSessionContext testUserSessionContext = UserSessionContext(
   userSettings: testUserSettings,
   userFavoriteRecipes: [],
   userInformation: testUserInformation,
-  organizationUsers: [],
+  userOrganizations: [],
   userRecipes: [],
   subscriptions: [],
 );
