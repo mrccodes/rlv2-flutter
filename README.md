@@ -1,6 +1,6 @@
 # Rlv2 Flutter
 
-![coverage](https://img.shields.io/badge/coverage-16.00%25-red?cacheBust=11285074866)
+![coverage](https://img.shields.io/badge/coverage-17.00%25-red?cacheBust=11308924159)
 
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]

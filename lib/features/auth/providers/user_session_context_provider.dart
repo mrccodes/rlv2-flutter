@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/models/api_exception_model.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
 import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
@@ -37,6 +38,8 @@ final userSessionListenerProvider = Provider<void>((ref) {
       try {
         final context =
             await userContextService.fetchUserSessionContext(nextUserId);
+        AppLogger.info('TEST TEST TEST TEST\nTEST TEST TEST TEST');
+        AppLogger.info('orgUsers: ${context.userOrganizations}');
 
         // Update data using methods
         ref
@@ -47,7 +50,7 @@ final userSessionListenerProvider = Provider<void>((ref) {
             .updateUserFavoriteRecipesLocal(context.userFavoriteRecipes);
         ref
             .read(userOrganizationsProvider.notifier)
-            .updateUserOrganzationsLocal(context.organizationUsers);
+            .updateUserOrganzationsLocal(context.userOrganizations);
         ref
             .read(userRecipesProvider.notifier)
             .updateUserRecipesLocal(context.userRecipes);
@@ -57,6 +60,10 @@ final userSessionListenerProvider = Provider<void>((ref) {
               .read(userInformationProvider.notifier)
               .updateUserInformationLocal(context.userInformation!);
         }
+      } on ApiException catch (e) {
+        AppLogger.error('Error loading user session context: $e');
+        AppLogger.error('Errors: ${e.errors.join(', ')}');
+        rethrow;
       } catch (e) {
         AppLogger.error('Error loading user session context: $e');
         throw Exception('Error loading user session context: $e');

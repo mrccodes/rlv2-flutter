@@ -30,7 +30,7 @@ class AuthService {
     userFavoriteRecipesNotifier
         .updateUserFavoriteRecipesLocal(data.userFavoriteRecipes);
     userOrganizationsNotifier
-        .updateUserOrganzationsLocal(data.organizationUsers);
+        .updateUserOrganzationsLocal(data.userOrganizations);
     userRecipesNotifier.updateUserRecipesLocal(data.userRecipes);
 
     if (data.userInformation != null) {

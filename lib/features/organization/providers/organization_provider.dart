@@ -7,18 +7,22 @@ import 'package:rlv2_flutter/features/organization/services/organization_service
 class OrganizationState {
   OrganizationState({
     this.isLoading = false,
+    this.selectedOrganization,
     this.error,
   });
   final bool isLoading;
   final String? error;
+  final Organization? selectedOrganization;
 
   OrganizationState copyWith({
     bool? isLoading,
     String? error,
+    Organization? selectedOrganization,
   }) {
     return OrganizationState(
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
+      selectedOrganization: selectedOrganization ?? this.selectedOrganization,
     );
   }
 }
@@ -55,6 +59,16 @@ class OrganizationNotifier extends StateNotifier<OrganizationState> {
     } finally {
       state = state.copyWith(isLoading: false);
     }
+  }
+
+  Organization selectOrganization(Organization organization) {
+    state = state.copyWith(selectedOrganization: organization);
+    return organization;
+  }
+
+  void clearSelectedOrganization() {
+    // ignore: avoid_redundant_argument_values
+    state = state.copyWith(selectedOrganization: null);
   }
 
   Future<List<Organization>> fetchOrganizations() async {

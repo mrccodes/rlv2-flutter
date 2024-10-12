@@ -12,7 +12,7 @@ class UserSessionContext {
     required this.user,
     required this.userSettings,
     required this.userFavoriteRecipes,
-    required this.organizationUsers,
+    required this.userOrganizations,
     required this.userRecipes,
     required this.subscriptions,
     this.userInformation,
@@ -42,7 +42,7 @@ class UserSessionContext {
             (item) => UserFavoriteRecipe.fromJson(item as Map<String, dynamic>),
           )
           .toList(),
-      organizationUsers: (json['organizationUsers'] as List<dynamic>?)
+      userOrganizations: (json['userOrganizations'] as List<dynamic>?)
               ?.map(
                 (item) =>
                     OrganizationUser.fromJson(item as Map<String, dynamic>),
@@ -66,7 +66,7 @@ class UserSessionContext {
   final UserInformation? userInformation;
   final UserSettings userSettings;
   final List<UserFavoriteRecipe> userFavoriteRecipes;
-  final List<OrganizationUser> organizationUsers;
+  final List<OrganizationUser> userOrganizations;
   final List<RecipeWithData> userRecipes;
   final List<Subscription> subscriptions;
 
@@ -78,8 +78,8 @@ class UserSessionContext {
       'userSettings': userSettings.toJson(),
       'userFavoriteRecipes':
           userFavoriteRecipes.map((recipe) => recipe.toJson()).toList(),
-      'organizationUsers':
-          organizationUsers.map((user) => user.toJson()).toList(),
+      'userOrganizations':
+          userOrganizations.map((user) => user.toJson()).toList(),
       'userRecipes': userRecipes.map((recipe) => recipe.toJson()).toList(),
       'subscriptions': subscriptions
           .map(
@@ -96,7 +96,7 @@ class UserSessionContext {
       User: $user,
       UserInformation: $userInformation,
       UserSettings: $userSettings,
-      OrganizationUsers: ${organizationUsers.length} instances,
+      userOrganizations: ${userOrganizations.length} instances,
       UserFavoriteRecipes: ${userFavoriteRecipes.length} favorite recipes,
       UserRecipes: ${userRecipes.length} recipes
     ''';
@@ -108,7 +108,7 @@ class UserSessionContext {
     UserInformation? userInformation,
     UserSettings? userSettings,
     List<UserFavoriteRecipe>? userFavoriteRecipes,
-    List<OrganizationUser>? organizationUsers,
+    List<OrganizationUser>? userOrganizations,
     List<RecipeWithData>? userRecipes,
     List<Subscription>? subscriptions,
   }) {
@@ -117,7 +117,7 @@ class UserSessionContext {
       userInformation: userInformation ?? this.userInformation,
       userSettings: userSettings ?? this.userSettings,
       userFavoriteRecipes: userFavoriteRecipes ?? this.userFavoriteRecipes,
-      organizationUsers: organizationUsers ?? this.organizationUsers,
+      userOrganizations: userOrganizations ?? this.userOrganizations,
       userRecipes: userRecipes ?? this.userRecipes,
       subscriptions: subscriptions ?? this.subscriptions,
     );

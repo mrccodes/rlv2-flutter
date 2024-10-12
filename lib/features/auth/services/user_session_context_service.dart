@@ -14,7 +14,7 @@ class UserSessionContextService {
           .getUserSessionContext(userId: userId);
       return userSessionContext!;
     } catch (e) {
-      throw Exception('Error fetching user session: $e');
+      rethrow;
     }
   }
 }
