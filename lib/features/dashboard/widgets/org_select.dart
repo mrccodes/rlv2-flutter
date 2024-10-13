@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
 import 'package:rlv2_flutter/features/organization/providers/organization_provider.dart';
 import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
+import 'package:rlv2_flutter/features/organization/utils/personal_recipes_dummy_org.dart';
+import 'package:rlv2_flutter/l10n/l10n.dart';
 
 class OrgSelect extends ConsumerWidget {
   const OrgSelect({
@@ -11,10 +13,11 @@ class OrgSelect extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     // Define a dropdown menu item for personal recipes
-    const personalRecipes = DropdownMenuItem<String>(
-      value: 'personal_recipes',
-      child: Text('Personal Recipes'),
+    final personalRecipes = DropdownMenuItem<String>(
+      value: personalRecipesDummyOrg.id,
+      child: Text(l10n.personalRecipesOrgDropdownLabel),
     );
     final userOrganizations = ref.watch(userOrganizationsProvider);
     final organizations = ref.watch(organizationProvider);
@@ -40,10 +43,8 @@ class OrgSelect extends ConsumerWidget {
     }
 
     Future<void> updateSelectedOrganization(String orgId) async {
-      // no selected organization === personal recipes
-      // clear selected organization if personal recipes is selected
-      if (orgId == personalRecipes.value) {
-        orgNotifier.clearSelectedOrganization();
+      if (orgId == personalRecipesDummyOrg.id) {
+        orgNotifier.selectOrganization(personalRecipesDummyOrg);
         return;
       }
       // fetch and select the organization
@@ -70,7 +71,7 @@ class OrgSelect extends ConsumerWidget {
             )
           : DropdownButtonFormField<String>(
               value: selectedOrgId,
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.bodySmall,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 12),
                 border: InputBorder.none,

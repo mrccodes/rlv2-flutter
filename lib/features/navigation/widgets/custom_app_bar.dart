@@ -1,5 +1,3 @@
-// lib/core/widgets/app_bar.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/providers/drawer_state_provider.dart';
@@ -18,6 +16,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final navButtonShowing = Navigator.of(context).canPop();
     final isLandingPage = ModalRoute.of(context)?.settings.name == '/';
+
     return AppBar(
       iconTheme: IconThemeData(
         color: Theme.of(context).colorScheme.primary,
@@ -32,9 +31,16 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             fit: BoxFit.contain,
             height: 48,
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Text(title),
+          const SizedBox(width: 8), // Add some spacing between logo and text
+          Flexible(
+            // Automatically adjusts to available space
+            child: Text(
+              title,
+              style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
+              ),
+              maxLines: 1, // Ensures text remains on one line
+            ),
           ),
         ],
       ),

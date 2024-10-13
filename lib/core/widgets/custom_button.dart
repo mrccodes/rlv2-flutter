@@ -10,9 +10,11 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.fullWidth = false,
+    this.visualDensity = VisualDensity.standard,
     super.key,
     this.buttonType = ButtonType.primary,
   });
+  final VisualDensity? visualDensity;
   final VoidCallback? onPressed;
   final String text;
   final bool fullWidth;
@@ -23,12 +25,14 @@ class CustomButton extends StatelessWidget {
     // Define styles for primary and secondary buttons
     final primaryStyle = ElevatedButton.styleFrom(
       elevation: 3,
+      visualDensity: visualDensity,
       backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Theme.of(context).colorScheme.primary,
     );
 
     final secondaryStyle = ElevatedButton.styleFrom(
       elevation: 3,
+      visualDensity: visualDensity,
       backgroundColor: Theme.of(context).colorScheme.surface,
       foregroundColor: Theme.of(context).primaryColor,
       side: BorderSide(

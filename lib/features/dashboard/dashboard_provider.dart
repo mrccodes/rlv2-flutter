@@ -30,5 +30,10 @@ class DashboardState {
 
 class DashboardNotifier extends StateNotifier<DashboardState> {
   DashboardNotifier(this.ref) : super(DashboardState());
+
+  void toggleIsLoading({required bool value}) {
+    state = state.copyWith(isLoading: value);
+  }
+
   final Ref ref;
 }

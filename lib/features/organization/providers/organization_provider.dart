@@ -3,6 +3,7 @@ import 'package:rlv2_flutter/features/organization/models/create_organization_mo
 import 'package:rlv2_flutter/features/organization/models/organization_model.dart';
 import 'package:rlv2_flutter/features/organization/providers/organization_service_provider.dart';
 import 'package:rlv2_flutter/features/organization/services/organization_service.dart';
+import 'package:rlv2_flutter/features/organization/utils/personal_recipes_dummy_org.dart';
 
 class OrganizationState {
   OrganizationState({
@@ -67,8 +68,7 @@ class OrganizationNotifier extends StateNotifier<OrganizationState> {
   }
 
   void clearSelectedOrganization() {
-    // ignore: avoid_redundant_argument_values
-    state = state.copyWith(selectedOrganization: null);
+    state = state.copyWith(selectedOrganization: personalRecipesDummyOrg);
   }
 
   Future<List<Organization>> fetchOrganizations() async {
