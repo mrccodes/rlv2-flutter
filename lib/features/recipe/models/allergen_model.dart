@@ -3,25 +3,22 @@ class Allergen {
     required this.id,
     required this.label,
     required this.value,
-    required this.versionId,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Allergen.fromJson(Map<String, String> json) {
+  factory Allergen.fromJson(Map<String, dynamic> json) {
     return Allergen(
-      id: json['id']!,
-      label: json['label']!,
-      value: json['value']!,
-      versionId: json['versionId']!,
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      id: json['id'] as String,
+      label: json['label'] as String,
+      value: json['value'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
   final String id;
   final String label;
   final String value;
-  final String versionId;
   final String createdAt;
   final String updatedAt;
 
@@ -30,7 +27,6 @@ class Allergen {
       'id': id,
       'label': label,
       'value': value,
-      'versionId': versionId,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };

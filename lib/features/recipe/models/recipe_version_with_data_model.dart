@@ -5,6 +5,7 @@ import 'package:rlv2_flutter/features/recipe/models/recipe_version_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/simple_ingredient_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/tip_model.dart';
+import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class RecipeVersionWithData extends RecipeVersion {
   RecipeVersionWithData({
@@ -42,6 +43,7 @@ class RecipeVersionWithData extends RecipeVersion {
 
   // Adjust fromJson to correctly parse lists from json strings or objects
   factory RecipeVersionWithData.fromJson(Map<String, dynamic> json) {
+    AppLogger.info('RecipeVersionWithData.fromJson: ${json['allergens']}');
     return RecipeVersionWithData(
       simpleIngredients: (json['simpleIngredients'] as List)
           .map(
@@ -59,13 +61,13 @@ class RecipeVersionWithData extends RecipeVersion {
           .map((item) => Step.fromJson(item as Map<String, dynamic>))
           .toList(),
       tips: (json['tips'] as List)
-          .map((item) => Tip.fromJson(item as Map<String, String>))
+          .map((item) => Tip.fromJson(item as Map<String, dynamic>))
           .toList(),
       categories: (json['categories'] as List)
-          .map((item) => Category.fromJson(item as Map<String, String>))
+          .map((item) => Category.fromJson(item as Map<String, dynamic>))
           .toList(),
       allergens: (json['allergens'] as List)
-          .map((item) => Allergen.fromJson(item as Map<String, String>))
+          .map((item) => Allergen.fromJson(item as Map<String, dynamic>))
           .toList(),
 
       // Handle parent class constructor fields

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_provider.dart';
+import 'package:rlv2_flutter/features/dashboard/utils/get_category_list_from_user_recipes_with_data.dart';
+import 'package:rlv2_flutter/features/dashboard/widgets/category_select.dart';
 import 'package:rlv2_flutter/features/dashboard/widgets/org_select.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
 import 'package:rlv2_flutter/features/user/providers/user_information_provider.dart';
+import 'package:rlv2_flutter/features/user/providers/user_recipes_provider.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class DashboardScreen extends ConsumerWidget {
@@ -16,11 +19,17 @@ class DashboardScreen extends ConsumerWidget {
     final dashboardState = ref.watch(dashboardProvider);
     final userInformation = ref.watch(userInformationProvider);
     final firstName = userInformation.data?.firstName;
+    final userRecipes = ref.watch(
+      userRecipesProvider.select((state) => state.data),
+    );
 
     if (userInformation.isLoading) {
       AppLogger.info('DashboardScreen waiting: Loading user information');
       return const Center(child: CircularProgressIndicator());
     }
+    final categories = getCategoryListFromUserRecipesWithData(
+      userRecipes,
+    );
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -38,6 +47,10 @@ class DashboardScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   const OrgSelect(),
+                  const SizedBox(height: 20),
+                  CategorySelector(
+                    categories: categories,
+                  ),
                   Text(
                     'Hello${firstName != null ? ' $firstName' : ''}!',
                     style: const TextStyle(fontSize: 18),

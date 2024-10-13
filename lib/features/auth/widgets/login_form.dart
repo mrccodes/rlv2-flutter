@@ -49,6 +49,19 @@ class LoginFormState extends ConsumerState<LoginForm> {
       }
     }
   }
+  Future<void> devLogin() async {
+
+      try {
+        await widget.onLogin?.call('Roderick.Schimmel@gmail.com', '1_GxIdxHbBVmFn2');
+      } catch (err) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(err.toString())),
+          );
+        }
+      }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +94,14 @@ class LoginFormState extends ConsumerState<LoginForm> {
               onPressed: login,
               fullWidth: true,
               text: 'Login',
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: CustomButton(
+              onPressed: devLogin,
+              fullWidth: true,
+              text: 'Dev Login',
             ),
           ),
           Padding(

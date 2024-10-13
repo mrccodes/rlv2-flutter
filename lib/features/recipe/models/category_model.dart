@@ -6,12 +6,12 @@ class Category {
     required this.updatedAt,
   });
 
-  factory Category.fromJson(Map<String, String> json) {
+  factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json['id']!,
-      name: json['name']!,
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      id: json['id'] as String,
+      name: json['name'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
   final String id;

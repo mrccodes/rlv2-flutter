@@ -7,13 +7,13 @@ class Tip {
     required this.updatedAt,
   });
 
-  factory Tip.fromJson(Map<String, String> json) {
+  factory Tip.fromJson(Map<String, dynamic> json) {
     return Tip(
-      id: json['id']!,
-      body: json['body']!,
-      versionId: json['versionId']!,
-      createdAt: json['createdAt']!,
-      updatedAt: json['updatedAt']!,
+      id: json['id'] as String,
+      body: json['body'] as String,
+      versionId: json['versionId'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
   final String id;
