@@ -5,7 +5,7 @@ import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart'
 bool categoryIsDuplicate(List<Category> categories, Category category) =>
     categories.any((c) => c.name == category.name);
 
-List<Category> getCategoryListFromUserRecipesWithData(
+List<Category> getCategoryListFromRecipesWithData(
   List<RecipeWithData> recipes,
 ) {
   List<RecipeVersionWithData> sortRecipeVersions(

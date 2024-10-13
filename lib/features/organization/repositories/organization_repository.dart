@@ -37,7 +37,7 @@ class OrganizationRepository {
     try {
       final response = await apiService.getRequest<Organization>(
         endpoint,
-        Organization.fromJson,
+        (val) => Organization.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -53,7 +53,7 @@ class OrganizationRepository {
       final response = await apiService.postRequest(
         '/organizations',
         data.toJson(),
-        Organization.fromJson,
+        (val) => Organization.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -70,7 +70,7 @@ class OrganizationRepository {
       final response = await apiService.patchRequest(
         '/organizations/$organizationId',
         data.toJson(),
-        Organization.fromJson,
+        (val) => Organization.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -85,7 +85,7 @@ class OrganizationRepository {
     try {
       final response = await apiService.deleteRequest(
         '/organizations/$organizationId',
-        Organization.fromJson,
+        (val) => Organization.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -102,7 +102,7 @@ class OrganizationRepository {
       final response = await apiService.patchRequest(
         '/organizations/$organizationId',
         data,
-        Organization.fromJson,
+        (val) => Organization.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {

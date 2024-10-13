@@ -12,7 +12,7 @@ class UserSettingsRepository {
     try {
       final response = await apiService.getRequest<UserSettings>(
         endpoint,
-        UserSettings.fromJson,
+        (val) => UserSettings.fromJson(val as Map<String, dynamic>),
       );
 
       return response;
@@ -32,7 +32,7 @@ class UserSettingsRepository {
       final response = await apiService.putRequest<UserSettings>(
         endpoint,
         userSettings.toJson(),
-        UserSettings.fromJson,
+        (val) => UserSettings.fromJson(val as Map<String, dynamic>),
       );
 
       return response;
@@ -52,7 +52,7 @@ class UserSettingsRepository {
       final response = await apiService.postRequest<UserSettings>(
         endpoint,
         userSettings.toJson(),
-        UserSettings.fromJson,
+        (val) => UserSettings.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -67,7 +67,7 @@ class UserSettingsRepository {
     try {
       final response = await apiService.deleteRequest<UserSettings>(
         endpoint,
-        UserSettings.fromJson,
+        (val) => UserSettings.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -86,7 +86,7 @@ class UserSettingsRepository {
       final response = await apiService.patchRequest<UserSettings>(
         endpoint,
         data,
-        UserSettings.fromJson,
+        (val) => UserSettings.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {

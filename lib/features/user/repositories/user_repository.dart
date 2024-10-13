@@ -15,7 +15,7 @@ class UserRepository {
     try {
       final response = await apiService.getRequest<User>(
         '$endpoint/$userId',
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>),  
       );
       return response;
     } catch (e) {
@@ -31,7 +31,7 @@ class UserRepository {
       final response = await apiService.postRequest<User>(
         endpoint,
         data.toJson(),
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>), 
       );
       return response;
     } catch (e) {
@@ -48,7 +48,7 @@ class UserRepository {
       final response = await apiService.putRequest<User>(
         '$endpoint/$userId',
         data.toJson(),
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>), 
       );
       return response;
     } catch (e) {
@@ -65,7 +65,7 @@ class UserRepository {
       final response = await apiService.patchRequest<User>(
         '$endpoint/$userId',
         {'email': email},
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>), 
       );
       return response;
     } catch (e) {
@@ -82,7 +82,7 @@ class UserRepository {
       final response = await apiService.patchRequest<User>(
         '$endpoint/$userId',
         {'username': username},
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>), 
       );
       return response;
     } catch (e) {
@@ -99,7 +99,7 @@ class UserRepository {
       final response = await apiService.patchRequest<User>(
         '$endpoint/$userId',
         {'password': password},
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>), 
       );
       return response;
     } catch (e) {
@@ -112,7 +112,7 @@ class UserRepository {
     try {
       final response = await apiService.deleteRequest<User>(
         '$endpoint/$userId',
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>), 
       );
       return response;
     } catch (e) {

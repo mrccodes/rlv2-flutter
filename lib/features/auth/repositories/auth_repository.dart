@@ -16,7 +16,7 @@ class AuthRepository {
       final response = await apiService.postRequest<User>(
         endpoint,
         {'email': email, 'password': password},
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>),
       );
 
       return response;
@@ -32,7 +32,7 @@ class AuthRepository {
       final response = await apiService.postRequest<User>(
         '/logout',
         user.toJson(),
-        User.fromJson,
+        (val) => User.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {

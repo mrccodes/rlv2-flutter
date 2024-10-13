@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -78,57 +79,74 @@ class ApiService {
   }
 
   Future<T> _handleRequest<T>(
-    Future<Response<Map<String, dynamic>>> Function() requestFunc,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
-    try {
-      final response = await requestFunc();
-      final responseData = response.data!;
+  Future<Response<Map<String, dynamic>>> Function() requestFunc,
+  T Function(dynamic) fromJson,  // Change this to accept dynamic data
+) async {
+  try {
+    final response = await requestFunc();
+    final responseData = response.data!;
 
-      // Success (HTTP 200 or 201)
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = fromJson(responseData['data'] as Map<String, dynamic>);
-        return data;
-      }
-
-      // If not success, throw an ApiException
-      throw ApiException(
-        statusCode: response.statusCode!,
-        message: responseData['message'] as String,
-        errors: responseData['errors'] != null
-            ? List<String>.from(responseData['errors'] as List<dynamic>)
-            : [],
-      );
-    } catch (e) {
-      // If DioError or unknown error occurs, wrap and throw an ApiException
-      if (e is DioException && e.response != null) {
-        final response = e.response!;
-        final responseData = response.data as Map<String, dynamic>;
-
+    // Success (HTTP 200 or 201)
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // Check if responseData['data'] is a List or Map
+      if (responseData['data'] is List) {
+        final dataList = responseData['data'] as List<dynamic>;
+        return fromJson(dataList);  // Pass the array
+      } else if (responseData['data'] is Map<String, dynamic>) {
+        final data = fromJson(responseData['data']);
+        return data;  // Pass the object
+      } else {
         throw ApiException(
-          statusCode: response.statusCode!,
-          message: response.statusMessage ?? 'Unknown error occurred',
-          errors: responseData['errors'] != null
-              ? List<String>.from(responseData['errors'] as List<dynamic>)
-              : ['An unknown error occurred'],
+          statusCode: 500,
+          message: 'Invalid response format',
+          errors: ['Expected Map or List in response data'],
         );
       }
+    }
 
-      // Catch any other error and throw as ApiException
+    // If not success, throw an ApiException
+    throw ApiException(
+      statusCode: response.statusCode!,
+      message: responseData['message'] as String,
+      errors: responseData['errors'] != null
+          ? List<String>.from(responseData['errors'] as List<dynamic>)
+          : [],
+    );
+  } catch (e) {
+    // If DioError or unknown error occurs, wrap and throw an ApiException
+    if (e is DioException && e.response != null) {
+      final response = e.response!;
+      final responseData = response.data as Map<String, dynamic>;
+
       throw ApiException(
-        statusCode: 500,
-        message: 'An unexpected error occurred',
-        errors: [e.toString()],
+        statusCode: response.statusCode!,
+        message: response.statusMessage ?? 'Unknown error occurred',
+        errors: responseData['errors'] != null
+            ? List<String>.from(responseData['errors'] as List<dynamic>)
+            : ['An unknown error occurred'],
       );
     }
+
+    // Catch any other error and throw as ApiException
+    throw ApiException(
+      statusCode: 500,
+      message: 'An unexpected error occurred',
+      errors: [e.toString()],
+    );
   }
+}
+
 
   Future<T> getRequest<T>(
     String path,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
-      () => dio.get<Map<String, dynamic>>(path),
+      () => dio.get<Map<String, dynamic>>(
+        path,
+        queryParameters: queryParams,
+      ),
       fromJson,
     );
   }
@@ -136,14 +154,16 @@ class ApiService {
   Future<T> postRequest<T>(
     String path,
     Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     if (path == '/login' || path == '/register' || path == '/logout') {
       return _handleRequest(
         () => dio
             .post<Map<String, dynamic>>(
               path,
               data: data,
+              queryParameters: queryParams,
             )
             .then(_handleSetCookie),
         fromJson,
@@ -153,6 +173,7 @@ class ApiService {
         () => dio.post<Map<String, dynamic>>(
           path,
           data: data,
+          queryParameters: queryParams,
         ),
         fromJson,
       );
@@ -162,12 +183,14 @@ class ApiService {
   Future<T> putRequest<T>(
     String path,
     Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
       () => dio.put<Map<String, dynamic>>(
         path,
         data: data,
+        queryParameters: queryParams,
       ),
       fromJson,
     );
@@ -175,10 +198,14 @@ class ApiService {
 
   Future<T> deleteRequest<T>(
     String path,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
-      () => dio.delete<Map<String, dynamic>>(path),
+      () => dio.delete<Map<String, dynamic>>(
+        path,
+        queryParameters: queryParams,
+      ),
       fromJson,
     );
   }
@@ -186,12 +213,14 @@ class ApiService {
   Future<T> patchRequest<T>(
     String path,
     Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
       () => dio.patch<Map<String, dynamic>>(
         path,
         data: data,
+        queryParameters: queryParams,
       ),
       fromJson,
     );

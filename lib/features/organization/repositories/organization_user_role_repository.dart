@@ -21,7 +21,7 @@ class OrganizationUserRoleRepository {
     try {
       final response = await apiService.getRequest<OrganizationUserRole>(
         endpoint,
-        OrganizationUserRole.fromJson,
+        (val) => OrganizationUserRole.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {

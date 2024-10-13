@@ -1,5 +1,6 @@
 import 'package:rlv2_flutter/core/services/api_service.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_model.dart';
+import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/utils/handle_error.dart';
 
 class RecipeRepository {
@@ -32,7 +33,7 @@ class RecipeRepository {
     try {
       final response = await apiService.getRequest<Recipe>(
         endpoint,
-        Recipe.fromJson,
+        (val) => Recipe.fromJson(val as Map<String, dynamic>),
       );
 
       return response;
@@ -49,7 +50,7 @@ class RecipeRepository {
       final response = await apiService.postRequest<Recipe>(
         endpoint,
         recipe.toJson(),
-        Recipe.fromJson,
+        (val) => Recipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -65,7 +66,7 @@ class RecipeRepository {
       final response = await apiService.putRequest<Recipe>(
         endpoint,
         recipe.toJson(),
-        Recipe.fromJson,
+        (val) => Recipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -80,7 +81,7 @@ class RecipeRepository {
     try {
       return await apiService.deleteRequest<Recipe>(
         endpoint,
-        Recipe.fromJson,
+        (val) => Recipe.fromJson(val as Map<String, dynamic>),
       );
     } catch (e) {
       handleError(e, 'Failed to delete recipe');
@@ -95,11 +96,33 @@ class RecipeRepository {
       final response = await apiService.patchRequest<Recipe>(
         endpoint,
         data.toJson(),
-        Recipe.fromJson,
+        (val) => Recipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
       handleError(e, 'Failed to patch recipe');
+      rethrow;
+    }
+  }
+
+  Future<List<RecipeWithData>> fetchRecipesWithData({
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    const endpoint = '/recipes';
+
+    try {
+      final response = await apiService.getRequest<List<RecipeWithData>>(
+        endpoint,
+        (data) => (data as List)
+            .map(
+              (e) => RecipeWithData.fromJson(e as Map<String, dynamic>),
+            )
+            .toList(),
+        queryParams: queryParameters,
+      );
+      return response;
+    } catch (e) {
+      handleError(e, 'Failed to fetch recipes with data');
       rethrow;
     }
   }

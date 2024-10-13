@@ -8,6 +8,11 @@ class CategorySelector extends ConsumerWidget {
   const CategorySelector({required this.categories, super.key});
   final List<Category> categories;
 
+      List<Category> sortByName(List<Category> cat) {
+      return List<Category>.from(cat)
+        ..sort((a, b) => a.name.compareTo(b.name));
+    }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCategories = ref.watch(
@@ -18,38 +23,19 @@ class CategorySelector extends ConsumerWidget {
       return const SizedBox();
     }
 
+    final sortedCategories = sortByName(categories);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Padding(padding: const EdgeInsets.symmetric(horizontal: 8),
-        // child: Row(
-        //   mainAxisAlignment: MainAxisAlignment.end,
-        //   children:[
-        //     const Text('Categories'),
-        //       if (selectedCategories.isNotEmpty)
-        //         CustomButton(onPressed:
-        //         () => ref
-        //           .read(categoryProvider.notifier)
-        //           .clearSelections(),
-        //         text: 'Clear',
-        //         buttonType: ButtonType.secondary,
-        //         visualDensity: VisualDensity.compact,
-        //         )
-        //       else
-        //         const SizedBox(height: 40),
-        //     ],
-        //   ),
-        // ),
-
         SizedBox(
           height: 48,
           child: Padding(
             padding: const EdgeInsets.only(left: 4),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
+              itemCount: sortedCategories.length,
               itemBuilder: (context, index) {
-                final category = categories[index];
+                final category = sortedCategories[index];
                 final isSelected = selectedCategories.contains(category);
                 final theme = Theme.of(context);
                 return Padding(

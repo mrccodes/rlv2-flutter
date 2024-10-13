@@ -4,16 +4,19 @@ import 'package:rlv2_flutter/features/organization/models/organization_model.dar
 import 'package:rlv2_flutter/features/organization/providers/organization_service_provider.dart';
 import 'package:rlv2_flutter/features/organization/services/organization_service.dart';
 import 'package:rlv2_flutter/features/organization/utils/personal_recipes_dummy_org.dart';
+import 'package:rlv2_flutter/features/recipe/providers/category_provider.dart';
 
 class OrganizationState {
   OrganizationState({
     this.isLoading = false,
-    this.selectedOrganization,
+    Organization? selectedOrganization,
     this.error,
-  });
+  }) : selectedOrganization =
+            selectedOrganization ?? PersonalRecipesDummyOrg.instance;
+
   final bool isLoading;
   final String? error;
-  final Organization? selectedOrganization;
+  final Organization selectedOrganization;
 
   OrganizationState copyWith({
     bool? isLoading,
@@ -31,14 +34,18 @@ class OrganizationState {
 final organizationProvider =
     StateNotifierProvider<OrganizationNotifier, OrganizationState>((ref) {
   final organizationService = ref.watch(organizationServiceProvider);
-  return OrganizationNotifier(organizationService);
+  return OrganizationNotifier(
+      organizationService, ref.watch(categoryProvider.notifier),
+      );
 });
 
 class OrganizationNotifier extends StateNotifier<OrganizationState> {
   OrganizationNotifier(
     this._organizationService,
+    this._categoryNotifier,
   ) : super(OrganizationState());
   final OrganizationService _organizationService;
+  final CategoryNotifier _categoryNotifier;
 
   bool get isLoading {
     return state.isLoading == true;
@@ -64,11 +71,14 @@ class OrganizationNotifier extends StateNotifier<OrganizationState> {
 
   Organization selectOrganization(Organization organization) {
     state = state.copyWith(selectedOrganization: organization);
+    _categoryNotifier.clearSelections();
     return organization;
   }
 
   void clearSelectedOrganization() {
-    state = state.copyWith(selectedOrganization: personalRecipesDummyOrg);
+    state = state.copyWith(
+      selectedOrganization: PersonalRecipesDummyOrg.instance,
+    );
   }
 
   Future<List<Organization>> fetchOrganizations() async {

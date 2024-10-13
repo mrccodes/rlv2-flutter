@@ -19,7 +19,7 @@ class UserFavoriteRecipeRepository {
       final response = await apiService.postRequest<UserFavoriteRecipe>(
         endpoint,
         recipe.toJson(),
-        UserFavoriteRecipe.fromJson,
+        (val) => UserFavoriteRecipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -60,7 +60,7 @@ class UserFavoriteRecipeRepository {
       final response = await apiService.putRequest<UserFavoriteRecipe>(
         endpoint,
         userFavoriteRecipe.toJson(),
-        UserFavoriteRecipe.fromJson,
+        (val) => UserFavoriteRecipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -78,7 +78,7 @@ class UserFavoriteRecipeRepository {
     try {
       final response = await apiService.deleteRequest<UserFavoriteRecipe>(
         endpoint,
-        UserFavoriteRecipe.fromJson,
+        (val) => UserFavoriteRecipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -117,7 +117,7 @@ class UserFavoriteRecipeRepository {
     try {
       final response = await apiService.getRequest<UserFavoriteRecipe>(
         endpoint,
-        UserFavoriteRecipe.fromJson,
+        (val) => UserFavoriteRecipe.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
