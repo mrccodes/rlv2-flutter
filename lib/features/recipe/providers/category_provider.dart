@@ -30,7 +30,6 @@ class CategoryState {
 class CategoryNotifier extends StateNotifier<CategoryState> {
   CategoryNotifier() : super(CategoryState());
 
-
   // Method to toggle category selection
   void toggleCategory(Category category) {
     if (state.selectedCategories.contains(category)) {
@@ -46,7 +45,6 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
   void clearSelections() {
     state = state.copyWith(selectedCategories: []);
   }
-
 }
 
 // Provider to expose the CategoryNotifier

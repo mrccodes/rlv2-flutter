@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
 import 'package:rlv2_flutter/features/dashboard/dashboard_provider.dart';
 import 'package:rlv2_flutter/features/dashboard/utils/get_category_list_from_user_recipes_with_data.dart';
 import 'package:rlv2_flutter/features/dashboard/widgets/category_select.dart';
@@ -24,12 +25,23 @@ class DashboardScreen extends ConsumerWidget {
     final userRecipes = ref.watch(
       userRecipesProvider.select((state) => state.data),
     );
-    final selectedOrg = ref.watch(organizationProvider).selectedOrganization;
+    final organization = ref.watch(organizationProvider);
+    final selectedOrg = organization.selectedOrganization;
 
-    if (userInformation.isLoading || dashboardState.isLoading) {
-      AppLogger.info('DashboardScreen waiting: Loading user information');
-      return const Center(child: CircularProgressIndicator());
+    Widget renderChild(Widget child) {
+      if (userInformation.isLoading) {
+        AppLogger.info('DashboardScreen waiting: Loading user information');
+        return const Center(child: LoadingWidget());
+      }
+
+      if (organization.isLoading) {
+        AppLogger.info('DashboardScreen waiting: Loading organization');
+        return const Center(child: LoadingWidget());
+      }
+
+      return child;
     }
+
     final categories = getCategoryListFromUserRecipesWithData(
       userRecipes,
     );
@@ -37,9 +49,9 @@ class DashboardScreen extends ConsumerWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title:
-            selectedOrg != null &&
-            selectedOrg.id != personalRecipesDummyOrg.id ?
-            '${selectedOrg.name} Dashboard' : 'Dashboard',
+            selectedOrg != null && selectedOrg.id != personalRecipesDummyOrg.id
+                ? '${selectedOrg.name} Dashboard'
+                : 'Dashboard',
       ),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: const CustomBottomNavigationBar(),
@@ -50,19 +62,21 @@ class DashboardScreen extends ConsumerWidget {
               ),
             )
           : Center(
-              child: Column(
-                children: [
-                  const OrgSelect(),
-                  const SizedBox(height: 8),
-                  CategorySelector(
-                    categories: categories,
-                  ),
-                  Text(
-                    'Hello${firstName != null ? ' $firstName' : ''}!',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(height: 20),
-                ],
+              child: renderChild(
+                Column(
+                  children: [
+                    const OrgSelect(),
+                    const SizedBox(height: 8),
+                    CategorySelector(
+                      categories: categories,
+                    ),
+                    Text(
+                      'Hello${firstName != null ? ' $firstName' : ''}!',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
     );

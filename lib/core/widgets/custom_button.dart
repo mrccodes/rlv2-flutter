@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
     super.key,
     this.buttonType = ButtonType.primary,
   });
-  final VisualDensity? visualDensity;  
+  final VisualDensity? visualDensity;
   final VoidCallback? onPressed;
   final String text;
   final bool fullWidth;

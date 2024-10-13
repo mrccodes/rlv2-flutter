@@ -49,18 +49,18 @@ class LoginFormState extends ConsumerState<LoginForm> {
       }
     }
   }
+
   Future<void> devLogin() async {
-
-      try {
-        await widget.onLogin?.call('Roderick.Schimmel@gmail.com', '1_GxIdxHbBVmFn2');
-      } catch (err) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(err.toString())),
-          );
-        }
+    try {
+      await widget.onLogin
+          ?.call('Roderick.Schimmel@gmail.com', '1_GxIdxHbBVmFn2');
+    } catch (err) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(err.toString())),
+        );
       }
-
+    }
   }
 
   @override

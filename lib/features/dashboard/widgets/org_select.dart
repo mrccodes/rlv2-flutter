@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/app/app.dart';
 import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
 import 'package:rlv2_flutter/features/organization/providers/organization_provider.dart';
 import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
 import 'package:rlv2_flutter/features/organization/utils/personal_recipes_dummy_org.dart';
 import 'package:rlv2_flutter/l10n/l10n.dart';
-import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class OrgSelect extends ConsumerWidget {
   const OrgSelect({

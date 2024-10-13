@@ -2,12 +2,12 @@ import 'package:rlv2_flutter/features/recipe/models/category_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 
-bool categoryIsDuplicate(List<Category> categories, Category category) => 
-  categories.any((c) => c.name == category.name);
-
+bool categoryIsDuplicate(List<Category> categories, Category category) =>
+    categories.any((c) => c.name == category.name);
 
 List<Category> getCategoryListFromUserRecipesWithData(
-    List<RecipeWithData> recipes) {
+  List<RecipeWithData> recipes,
+) {
   List<RecipeVersionWithData> sortRecipeVersions(
     List<RecipeVersionWithData> versions,
   ) {

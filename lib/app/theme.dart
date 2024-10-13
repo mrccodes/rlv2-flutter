@@ -160,7 +160,7 @@ class MyAppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
-        primaryColor: primaryColor,
+      primaryColor: primaryColor,
       primarySwatch: primarySwatch,
       colorScheme: const ColorScheme.dark(
         primary: Colors.white,

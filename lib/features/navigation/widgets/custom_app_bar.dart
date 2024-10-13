@@ -32,7 +32,8 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             height: 48,
           ),
           const SizedBox(width: 8), // Add some spacing between logo and text
-          Flexible( // Automatically adjusts to available space
+          Flexible(
+            // Automatically adjusts to available space
             child: Text(
               title,
               style: const TextStyle(
