@@ -231,5 +231,10 @@
     "organizationDescriptionSymbolError": "Organization description must only contain letters and numbers and spaces",
     "@organizationDescriptionSymbolError": {
       "description":""
+    },
+
+    "personalRecipesOrgDropdownLabel": "Personal Recipes",
+    "@personalRecipesOrgDropdownLabel": {
+      "description": "Label to render in the org dropdown when user has no organization selected and is viewing personal recipes"
     }
 }

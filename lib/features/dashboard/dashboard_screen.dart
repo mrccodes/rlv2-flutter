@@ -7,6 +7,8 @@ import 'package:rlv2_flutter/features/dashboard/widgets/org_select.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/bottom_nav_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
+import 'package:rlv2_flutter/features/organization/providers/organization_provider.dart';
+import 'package:rlv2_flutter/features/organization/utils/personal_recipes_dummy_org.dart';
 import 'package:rlv2_flutter/features/user/providers/user_information_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_recipes_provider.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
@@ -22,8 +24,9 @@ class DashboardScreen extends ConsumerWidget {
     final userRecipes = ref.watch(
       userRecipesProvider.select((state) => state.data),
     );
+    final selectedOrg = ref.watch(organizationProvider).selectedOrganization;
 
-    if (userInformation.isLoading) {
+    if (userInformation.isLoading || dashboardState.isLoading) {
       AppLogger.info('DashboardScreen waiting: Loading user information');
       return const Center(child: CircularProgressIndicator());
     }
@@ -32,8 +35,11 @@ class DashboardScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Dashboard',
+      appBar: CustomAppBar(
+        title:
+            selectedOrg != null &&
+            selectedOrg.id != personalRecipesDummyOrg.id ?
+            '${selectedOrg.name} Dashboard' : 'Dashboard',
       ),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: const CustomBottomNavigationBar(),
@@ -47,7 +53,7 @@ class DashboardScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   const OrgSelect(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 8),
                   CategorySelector(
                     categories: categories,
                   ),

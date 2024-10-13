@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/custom_button.dart';
 import 'package:rlv2_flutter/features/recipe/models/category_model.dart';
 import 'package:rlv2_flutter/features/recipe/providers/category_provider.dart';
+import 'package:rlv2_flutter/utils/capitalize_string.dart';
 
 class CategorySelector extends ConsumerWidget {
 
@@ -24,29 +25,31 @@ class CategorySelector extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:[
-            const Text('Categories'),
-              if (selectedCategories.isNotEmpty)
-                CustomButton(onPressed: 
-                () => ref
-                  .read(categoryProvider.notifier)
-                  .clearSelections(),
-                text: 'Clear',
-                buttonType: ButtonType.secondary,
-                visualDensity: VisualDensity.compact,
-                )
-              else 
-                const SizedBox(height: 40),
-            ],
-          ),
-        ),
+        // Padding(padding: const EdgeInsets.symmetric(horizontal: 8),
+        // child: Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   children:[
+        //     const Text('Categories'),
+        //       if (selectedCategories.isNotEmpty)
+        //         CustomButton(onPressed: 
+        //         () => ref
+        //           .read(categoryProvider.notifier)
+        //           .clearSelections(),
+        //         text: 'Clear',
+        //         buttonType: ButtonType.secondary,
+        //         visualDensity: VisualDensity.compact,
+        //         )
+        //       else 
+        //         const SizedBox(height: 40),
+        //     ],
+        //   ),
+        // ),
         
         SizedBox(
-          height: 50, // Adjust height as needed
-          child: ListView.builder(
+          height: 48, 
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: categories.length,
             itemBuilder: (context, index) {
@@ -54,14 +57,14 @@ class CategorySelector extends ConsumerWidget {
               final isSelected = selectedCategories.contains(category);
               final theme = Theme.of(context);
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: GestureDetector(
                   onTap: () => ref
                   .read(categoryProvider.notifier)
                   .toggleCategory(category),
                   child: Chip(
                     label: Text(
-                      category.name,
+                      capitalize(category.name),
                       style: TextStyle(
                         color: theme.colorScheme.primary
                       ),
@@ -73,6 +76,7 @@ class CategorySelector extends ConsumerWidget {
                 ),
               );
             },
+          ),
           ),
         ),
       ],
