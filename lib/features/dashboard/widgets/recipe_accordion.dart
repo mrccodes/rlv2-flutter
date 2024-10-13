@@ -8,20 +8,18 @@ import 'package:timeago/timeago.dart' as timeago;
 class RecipeAccordion extends ConsumerWidget {
   const RecipeAccordion({super.key});
 
-    List<RecipeWithData> sortByName(List<RecipeWithData> rec) {
-      return List<RecipeWithData>.from(rec)
-        ..sort((a, b) => a.name.compareTo(b.name));
-    }
+  List<RecipeWithData> sortByName(List<RecipeWithData> rec) {
+    return List<RecipeWithData>.from(rec)
+      ..sort((a, b) => a.name.compareTo(b.name));
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final recipes = ref.watch(recipeListProvider).recipes;
     final filteredRecipes = ref.watch(recipeListProvider).filteredRecipes;
-    final recipesToRender = 
-      filteredRecipes.isNotEmpty ? 
-      sortByName(filteredRecipes) : 
-      sortByName(recipes);
-
-
+    final recipesToRender = filteredRecipes.isNotEmpty
+        ? sortByName(filteredRecipes)
+        : sortByName(recipes);
 
     return Expanded(
       child: ListView.builder(
@@ -31,8 +29,8 @@ class RecipeAccordion extends ConsumerWidget {
           final recipe = recipesToRender[index];
           return RecipeAccordionItem(recipe: recipe);
         },
-      )
-      );
+      ),
+    );
   }
 }
 
@@ -102,6 +100,8 @@ class RecipeVersionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lastUpdatedDateTime = DateTime.parse(version.updatedAt);
+    final ingredientsLength =
+        version.simpleIngredients.length + version.complexIngredients.length;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -123,7 +123,7 @@ class RecipeVersionCard extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                '${version.simpleIngredients.length + version.complexIngredients.length} Ingredients',
+                '$ingredientsLength Ingredients',
                 style: const TextStyle(fontSize: 14),
               ),
               const SizedBox(height: 2),
@@ -133,7 +133,7 @@ class RecipeVersionCard extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                'Last Updated ${timeago.format(lastUpdatedDateTime)}',
+                'Updated ${timeago.format(lastUpdatedDateTime)}',
                 style: const TextStyle(fontSize: 14),
               ),
             ],

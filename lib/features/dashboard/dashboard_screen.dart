@@ -23,10 +23,8 @@ class DashboardScreen extends ConsumerWidget {
     final recipeList = ref.watch(recipeListProvider);
     final organization = ref.watch(organizationProvider);
     final selectedOrg = organization.selectedOrganization;
-  
 
     Widget renderChild(Widget child) {
-
       if (organization.isLoading) {
         AppLogger.info('DashboardScreen waiting: Loading organization');
         return const Center(child: LoadingWidget());
@@ -52,10 +50,9 @@ class DashboardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title:
-            selectedOrg.id != PersonalRecipesDummyOrg.instance.id
-                ? '${selectedOrg.name} Dashboard'
-                : 'Dashboard',
+        title: selectedOrg.id != PersonalRecipesDummyOrg.instance.id
+            ? '${selectedOrg.name} Dashboard'
+            : 'Dashboard',
       ),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: const CustomBottomNavigationBar(),
@@ -72,8 +69,9 @@ class DashboardScreen extends ConsumerWidget {
                     const OrgSelect(),
                     const SizedBox(height: 8),
                     CategorySelector(
-                      categories: 
-                        getCategoryListFromRecipesWithData(recipeList.recipes),
+                      categories: getCategoryListFromRecipesWithData(
+                        recipeList.recipes,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     renderRecipeList(const RecipeAccordion()),

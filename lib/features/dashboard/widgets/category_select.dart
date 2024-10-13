@@ -8,10 +8,9 @@ class CategorySelector extends ConsumerWidget {
   const CategorySelector({required this.categories, super.key});
   final List<Category> categories;
 
-      List<Category> sortByName(List<Category> cat) {
-      return List<Category>.from(cat)
-        ..sort((a, b) => a.name.compareTo(b.name));
-    }
+  List<Category> sortByName(List<Category> cat) {
+    return List<Category>.from(cat)..sort((a, b) => a.name.compareTo(b.name));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

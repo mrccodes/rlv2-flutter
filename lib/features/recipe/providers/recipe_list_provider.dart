@@ -39,8 +39,9 @@ class RecipeListState {
 
 class RecipeListNotifier extends StateNotifier<RecipeListState> {
   RecipeListNotifier(
-      OrganizationRecipesService organizationRecipeService, Ref ref)
-      : _organizationRecipeService = organizationRecipeService,
+    OrganizationRecipesService organizationRecipeService,
+    Ref ref,
+  )   : _organizationRecipeService = organizationRecipeService,
         super(RecipeListState()) {
     // Listen to changes in selectedOrganization and fetch new recipes
     ref.listen<OrganizationState>(
@@ -72,9 +73,9 @@ class RecipeListNotifier extends StateNotifier<RecipeListState> {
           (recipe) => recipe.versions.any(
             (ver) => ver.categories.any(
               (cat) => categoryNames.contains(cat),
-              ),
             ),
-          )
+          ),
+        )
         .toList();
     state = state.copyWith(filteredRecipes: filtered);
     return state.recipes;

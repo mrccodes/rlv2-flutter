@@ -29,7 +29,6 @@ class CategoryState {
 
 // CategoryNotifier that manages the state of selected categories
 class CategoryNotifier extends StateNotifier<CategoryState> {
-
   CategoryNotifier(this.ref) : super(CategoryState());
   final Ref ref;
 
@@ -42,7 +41,9 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
       final newCategoryList = [...state.selectedCategories, category];
       state = state.copyWith(selectedCategories: newCategoryList);
     }
-      ref.read(recipeListProvider.notifier).filterByCategories(state.selectedCategories);
+    ref
+        .read(recipeListProvider.notifier)
+        .filterByCategories(state.selectedCategories);
   }
 
   // Method to clear selected categories

@@ -22,8 +22,7 @@ class OrganizationRecipesService {
     } on ApiException catch (e) {
       AppLogger.error(e.errors.join('\n'));
       rethrow;
-    }catch (e) {
-
+    } catch (e) {
       rethrow;
     }
   }

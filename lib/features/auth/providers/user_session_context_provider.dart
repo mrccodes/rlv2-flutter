@@ -56,8 +56,8 @@ final userSessionListenerProvider = Provider<void>((ref) {
 
         // set recipe list to use user recipes
         ref
-          .read(recipeListProvider.notifier)
-          .updateRecipeList(context.userRecipes);
+            .read(recipeListProvider.notifier)
+            .updateRecipeList(context.userRecipes);
 
         if (context.userInformation != null) {
           ref

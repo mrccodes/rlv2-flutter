@@ -35,8 +35,9 @@ final organizationProvider =
     StateNotifierProvider<OrganizationNotifier, OrganizationState>((ref) {
   final organizationService = ref.watch(organizationServiceProvider);
   return OrganizationNotifier(
-      organizationService, ref.watch(categoryProvider.notifier),
-      );
+    organizationService,
+    ref.watch(categoryProvider.notifier),
+  );
 });
 
 class OrganizationNotifier extends StateNotifier<OrganizationState> {

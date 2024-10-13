@@ -80,8 +80,7 @@ class OrgSelect extends ConsumerWidget {
               ),
               items: orgOptions,
               onChanged: (String? val) => {
-                if (val != null &&
-                    val != organizations.selectedOrganization.id)
+                if (val != null && val != organizations.selectedOrganization.id)
                   {
                     updateSelectedOrganization(val),
                   },
