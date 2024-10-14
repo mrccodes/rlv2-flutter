@@ -38,7 +38,7 @@ void main() {
       (_) async => mockUserSessionContext,
     );
 
-    final result = await repository.getUserSessionContext(userId: 'user123');
+    final result = await repository.getUserSessionContext();
 
     expect(result, equals(mockUserSessionContext));
     verify(

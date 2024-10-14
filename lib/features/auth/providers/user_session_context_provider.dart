@@ -37,8 +37,7 @@ final userSessionListenerProvider = Provider<void>((ref) {
       ref.read(userRecipesProvider.notifier).isLoading = true;
 
       try {
-        final context =
-            await userContextService.fetchUserSessionContext(nextUserId);
+        final context = await userContextService.fetchUserSessionContext();
 
         // Update data using methods
         ref

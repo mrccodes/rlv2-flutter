@@ -12,7 +12,7 @@ class OrganizationRecipesRepository {
     String organizationId,
   ) async {
     try {
-      const endpoint = '/recipeWithData';
+      final endpoint = '/organization/$organizationId/recipeWithData';
       final response = await apiService.getRequest<List<RecipeWithData>>(
         endpoint,
         (data) => (data as List)
@@ -20,7 +20,6 @@ class OrganizationRecipesRepository {
               (e) => RecipeWithData.fromJson(e as Map<String, dynamic>),
             )
             .toList(),
-        queryParams: {'organizationId': organizationId},
       );
       return response;
     } catch (e) {

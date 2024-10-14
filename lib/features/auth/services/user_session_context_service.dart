@@ -8,10 +8,10 @@ class UserSessionContextService {
 
   final UserSessionContextRepository userSessionContextRepository;
 
-  Future<UserSessionContext> fetchUserSessionContext(String userId) async {
+  Future<UserSessionContext> fetchUserSessionContext() async {
     try {
-      final userSessionContext = await userSessionContextRepository
-          .getUserSessionContext(userId: userId);
+      final userSessionContext =
+          await userSessionContextRepository.getUserSessionContext();
       return userSessionContext!;
     } catch (e) {
       rethrow;

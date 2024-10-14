@@ -11,7 +11,7 @@ class MockUserSessionService extends UserSessionContextService {
         );
 
   @override
-  Future<UserSessionContext> fetchUserSessionContext(String userId) async {
+  Future<UserSessionContext> fetchUserSessionContext() async {
     return Future.value(testUserSessionContext);
   }
 }
