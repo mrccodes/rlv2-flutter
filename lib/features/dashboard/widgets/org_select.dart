@@ -15,8 +15,9 @@ class OrgSelect extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     // Define a dropdown menu item for personal recipes
+    final dummyOrg = PersonalRecipesDummyOrg.instance;
     final personalRecipes = DropdownMenuItem<String>(
-      value: personalRecipesDummyOrg.id,
+      value: dummyOrg.id,
       child: Text(l10n.personalRecipesOrgDropdownLabel),
     );
     final userOrganizations = ref.watch(userOrganizationsProvider);
@@ -30,7 +31,7 @@ class OrgSelect extends ConsumerWidget {
     }).toList();
 
     if (userOrganizations.isLoading) {
-      return const CircularProgressIndicator();
+      return const LoadingWidget();
     }
 
     if (userOrganizations.error != null) {
@@ -43,8 +44,8 @@ class OrgSelect extends ConsumerWidget {
     }
 
     Future<void> updateSelectedOrganization(String orgId) async {
-      if (orgId == personalRecipesDummyOrg.id) {
-        orgNotifier.selectOrganization(personalRecipesDummyOrg);
+      if (orgId == dummyOrg.id) {
+        orgNotifier.selectOrganization(dummyOrg);
         return;
       }
       // fetch and select the organization
@@ -55,8 +56,7 @@ class OrgSelect extends ConsumerWidget {
     // Insert personal recipes at the beginning of the list
     orgOptions.insert(0, personalRecipes);
 
-    final selectedOrgId =
-        organizations.selectedOrganization?.id ?? personalRecipes.value;
+    final selectedOrgId = organizations.selectedOrganization.id;
 
     return Container(
       decoration: BoxDecoration(
@@ -80,8 +80,7 @@ class OrgSelect extends ConsumerWidget {
               ),
               items: orgOptions,
               onChanged: (String? val) => {
-                if (val != null &&
-                    val != organizations.selectedOrganization?.id)
+                if (val != null && val != organizations.selectedOrganization.id)
                   {
                     updateSelectedOrganization(val),
                   },

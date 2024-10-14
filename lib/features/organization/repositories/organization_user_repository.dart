@@ -40,7 +40,7 @@ class OrganizationUserRepository {
     try {
       final response = await apiService.getRequest<OrganizationUser>(
         endpoint,
-        OrganizationUser.fromJson,
+        (val) => OrganizationUser.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -80,7 +80,7 @@ class OrganizationUserRepository {
       final response = await apiService.postRequest<OrganizationUser>(
         endpoint,
         organizationUser.toJson(),
-        OrganizationUser.fromJson,
+        (val) => OrganizationUser.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -100,7 +100,7 @@ class OrganizationUserRepository {
       final response = await apiService.putRequest<OrganizationUser>(
         endpoint,
         organizationUser.toJson(),
-        OrganizationUser.fromJson,
+        (val) => OrganizationUser.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -118,7 +118,7 @@ class OrganizationUserRepository {
     try {
       final response = await apiService.deleteRequest<OrganizationUser>(
         endpoint,
-        OrganizationUser.fromJson,
+        (val) => OrganizationUser.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {

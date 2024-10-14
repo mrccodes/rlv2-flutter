@@ -21,7 +21,7 @@ class UserInformationRepository {
       final response = await apiService.postRequest(
         makePath(data.userId),
         data.toJson(),
-        UserInformation.fromJson,
+        (val) => UserInformation.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -38,7 +38,7 @@ class UserInformationRepository {
       final response = await apiService.patchRequest(
         makePath(userId),
         data.toJson(),
-        UserInformation.fromJson,
+        (val) => UserInformation.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -51,7 +51,7 @@ class UserInformationRepository {
     try {
       final response = await apiService.getRequest<UserInformation>(
         makePath(userId),
-        UserInformation.fromJson,
+        (val) => UserInformation.fromJson(val as Map<String, dynamic>),
       );
 
       return response;
@@ -65,7 +65,7 @@ class UserInformationRepository {
     try {
       final response = await apiService.deleteRequest<UserInformation>(
         makePath(userId),
-        UserInformation.fromJson,
+        (val) => UserInformation.fromJson(val as Map<String, dynamic>),
       );
       return response;
     } catch (e) {
@@ -82,7 +82,7 @@ class UserInformationRepository {
       await apiService.patchRequest(
         makePath(userId),
         data,
-        UserInformation.fromJson,
+        (val) => UserInformation.fromJson(val as Map<String, dynamic>),
       );
     } catch (e) {
       handleError(e, 'Failed to patch user information data');

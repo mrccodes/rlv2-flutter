@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
 import 'package:rlv2_flutter/features/auth/models/register_model.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_provider.dart';
@@ -128,7 +129,7 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
             if (formLoading)
               Container(
                 alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
+                child: const LoadingWidget(),
               )
             else
               RegisterForm(

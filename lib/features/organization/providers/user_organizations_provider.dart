@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/organization/models/organization_user_model.dart';
 import 'package:rlv2_flutter/features/organization/providers/organization_user_service_provider.dart';
 import 'package:rlv2_flutter/features/organization/services/organization_user_service.dart';
+import 'package:rlv2_flutter/utils/constants.dart';
 
 class UserOrganizationsState {
   UserOrganizationsState({
@@ -63,7 +64,13 @@ class UserOrganizationsNotifier extends StateNotifier<UserOrganizationsState> {
           await _organizationUserService.fetchOrganizationUsersByUserId(
         userId: userId,
       );
-      state = state.copyWith(data: organizations);
+
+      // ensure user only sees organizations they have view access to
+      final filteredOrganizations = organizations
+          .where((org) => org.roles.contains(OrganizationUserRoles.viewer.name))
+          .toList();
+
+      state = state.copyWith(data: filteredOrganizations);
     } catch (e) {
       state = state.copyWith(error: e.toString());
     } finally {

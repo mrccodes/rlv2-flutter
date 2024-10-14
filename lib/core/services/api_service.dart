@@ -79,7 +79,7 @@ class ApiService {
 
   Future<T> _handleRequest<T>(
     Future<Response<Map<String, dynamic>>> Function() requestFunc,
-    T Function(Map<String, dynamic>) fromJson,
+    T Function(dynamic) fromJson, // Change this to accept dynamic data
   ) async {
     try {
       final response = await requestFunc();
@@ -87,8 +87,20 @@ class ApiService {
 
       // Success (HTTP 200 or 201)
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = fromJson(responseData['data'] as Map<String, dynamic>);
-        return data;
+        // Check if responseData['data'] is a List or Map
+        if (responseData['data'] is List) {
+          final dataList = responseData['data'] as List<dynamic>;
+          return fromJson(dataList); // Pass the array
+        } else if (responseData['data'] is Map<String, dynamic>) {
+          final data = fromJson(responseData['data']);
+          return data; // Pass the object
+        } else {
+          throw ApiException(
+            statusCode: 500,
+            message: 'Invalid response format',
+            errors: ['Expected Map or List in response data'],
+          );
+        }
       }
 
       // If not success, throw an ApiException
@@ -125,10 +137,14 @@ class ApiService {
 
   Future<T> getRequest<T>(
     String path,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
-      () => dio.get<Map<String, dynamic>>(path),
+      () => dio.get<Map<String, dynamic>>(
+        path,
+        queryParameters: queryParams,
+      ),
       fromJson,
     );
   }
@@ -136,14 +152,16 @@ class ApiService {
   Future<T> postRequest<T>(
     String path,
     Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     if (path == '/login' || path == '/register' || path == '/logout') {
       return _handleRequest(
         () => dio
             .post<Map<String, dynamic>>(
               path,
               data: data,
+              queryParameters: queryParams,
             )
             .then(_handleSetCookie),
         fromJson,
@@ -153,6 +171,7 @@ class ApiService {
         () => dio.post<Map<String, dynamic>>(
           path,
           data: data,
+          queryParameters: queryParams,
         ),
         fromJson,
       );
@@ -162,12 +181,14 @@ class ApiService {
   Future<T> putRequest<T>(
     String path,
     Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
       () => dio.put<Map<String, dynamic>>(
         path,
         data: data,
+        queryParameters: queryParams,
       ),
       fromJson,
     );
@@ -175,10 +196,14 @@ class ApiService {
 
   Future<T> deleteRequest<T>(
     String path,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
-      () => dio.delete<Map<String, dynamic>>(path),
+      () => dio.delete<Map<String, dynamic>>(
+        path,
+        queryParameters: queryParams,
+      ),
       fromJson,
     );
   }
@@ -186,12 +211,14 @@ class ApiService {
   Future<T> patchRequest<T>(
     String path,
     Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+    T Function(dynamic) fromJson, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     return _handleRequest(
       () => dio.patch<Map<String, dynamic>>(
         path,
         data: data,
+        queryParameters: queryParams,
       ),
       fromJson,
     );
