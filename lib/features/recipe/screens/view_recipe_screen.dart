@@ -8,6 +8,7 @@ import 'package:rlv2_flutter/features/recipe/widgets/difficulty_badge.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/ingredient_list.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/nutrition_facts.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/recipe_metadata.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/step_list.dart';
 import 'package:rlv2_flutter/utils/format_time_string.dart';
 
 class ViewRecipeScreen extends ConsumerStatefulWidget {
@@ -101,6 +102,8 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
                 simpleIngredients: widget.version!.simpleIngredients,
                 complexIngredients: widget.version!.complexIngredients,
               ),
+              const SizedBox(height: 8),  
+              StepList(steps: widget.version!.steps),
             ],
           ),
         ),
