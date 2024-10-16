@@ -44,6 +44,11 @@ class CategorySelector extends ConsumerWidget {
                         .read(categoryProvider.notifier)
                         .toggleCategory(category),
                     child: Chip(
+                      side: BorderSide(
+                        color: isSelected
+                            ? theme.colorScheme.primary
+                            : theme.primaryColor,
+                      ),
                       label: Text(
                         capitalize(category.name),
                         style: TextStyle(color: theme.colorScheme.primary),

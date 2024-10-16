@@ -4,6 +4,7 @@ import 'package:rlv2_flutter/features/user/providers/user_information_provider.d
 
 String getDisplayName(WidgetRef ref) {
   final username = ref.read(authProvider).user?.username;
+  final formattedUsername = username != null ? '@$username' : null;
   final firstName = ref.read(userInformationProvider).data?.firstName;
-  return firstName ?? username ?? '';
+  return firstName ?? formattedUsername ?? '';
 }

@@ -5,6 +5,7 @@ class RecipeVersionComplexIngredient {
     required this.parentRecipeVersionId,
     // Points to the recipe version which defines this complex ingredient
     required this.childRecipeVersionId,
+    required this.childRecipeVersionNumber,
     required this.childRecipeName,
     required this.childRecipeId,
     required this.qty,
@@ -18,6 +19,7 @@ class RecipeVersionComplexIngredient {
       id: json['id']! as String,
       parentRecipeVersionId: json['parentRecipeVersionId']! as String,
       childRecipeVersionId: json['childRecipeVersionId']! as String,
+      childRecipeVersionNumber: json['childRecipeVersionNumber']! as int,
       childRecipeId: json['childRecipeId']! as String,
       childRecipeName: json['childRecipeName']! as String,
       qty: json['qty']! as int,
@@ -29,6 +31,7 @@ class RecipeVersionComplexIngredient {
   final String id;
   final String parentRecipeVersionId;
   final String childRecipeVersionId;
+  final int childRecipeVersionNumber;
   final String childRecipeName;
   final String childRecipeId;
   final int qty;
@@ -41,6 +44,7 @@ class RecipeVersionComplexIngredient {
       'id': id,
       'parentRecipeVersionId': parentRecipeVersionId,
       'childRecipeVersionId': childRecipeVersionId,
+      'childRecipeVersionNumber': childRecipeVersionNumber,
       'childRecipeName': childRecipeName,
       'childRecipeId': childRecipeId,
       'qty': qty,

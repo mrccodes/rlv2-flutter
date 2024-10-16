@@ -56,10 +56,13 @@ class RecipeWithDataNotifier extends StateNotifier<RecipeState> {
     return state.isFetching;
   }
 
-  Future<RecipeWithData> fetchRecipeWithData(String recipeId) async {
+  Future<RecipeWithData> fetchRecipeWithData(
+    String recipeId,
+    String complexIngredientId,
+  ) async {
     try {
       isLoading = true;
-      isFetching = recipeId;
+      isFetching = complexIngredientId;
       final recipeWithData =
           await _recipeService.fetchUserRecipeWithData(recipeId);
       return recipeWithData;

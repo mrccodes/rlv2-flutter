@@ -49,13 +49,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final newStateId = state.user!.id;
       AppLogger.info('writing user_id to storage: $newStateId');
     } on ApiException catch (err) {
-      if (err.statusCode == 401) {
-        state = AuthState(error: 'Invalid email or password');
-      } else if (err.statusCode == 404) {
-        state = AuthState(error: 'User does not exist');
-      } else if (err.statusCode == 400) {
-        state = AuthState(error: 'Invalid password');
-      }
+      state = AuthState(error: err.errors.join('\n'));
+    } on Exception catch (err, stackTrace) {
+      state = AuthState(error: 'Unable to login. Please try again.');
+      AppLogger.error('Error logging in', err, stackTrace);
     } catch (e) {
       state = AuthState(error: e.toString());
     }

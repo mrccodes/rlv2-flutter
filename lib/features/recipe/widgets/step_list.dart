@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rlv2_flutter/features/recipe/models/step_model.dart' as recipe_model;
+import 'package:rlv2_flutter/features/recipe/models/step_model.dart'
+    as recipe_model;
 
 class StepList extends StatefulWidget {
   const StepList({
@@ -35,9 +36,9 @@ class StepListState extends State<StepList> {
       onTap: () {
         setState(() {
           if (isCompleted) {
-            completedSteps.remove(step.stepNumber); 
+            completedSteps.remove(step.stepNumber);
           } else {
-            completedSteps.add(step.stepNumber); 
+            completedSteps.add(step.stepNumber);
           }
         });
       },
@@ -46,40 +47,40 @@ class StepListState extends State<StepList> {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.tertiary.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(8), 
+            borderRadius: BorderRadius.circular(8),
           ),
           child: ListTile(
-            leading: Padding( 
+            leading: Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
               child: Container(
-              padding: const EdgeInsets.all(2), 
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isCompleted ? 
-                    Theme.of(context).primaryColor : 
-                    Colors.transparent, 
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isCompleted
+                        ? Theme.of(context).primaryColor
+                        : Colors.transparent,
+                  ),
+                ),
+                child: CircleAvatar(
+                  backgroundColor: isCompleted
+                      ? Theme.of(context).primaryColor.withOpacity(.2)
+                      : Theme.of(context).colorScheme.tertiary,
+                  radius: 24,
+                  child: isCompleted
+                      ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                      : Text(
+                          step.stepNumber.toString(),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                 ),
               ),
-              child: CircleAvatar(
-                backgroundColor: isCompleted
-                    ? Theme.of(context).primaryColor.withOpacity(.2)
-                    : Theme.of(context).colorScheme.tertiary, 
-                radius: 24,
-                child: isCompleted
-                    ? Icon(Icons.check, color: Theme.of(context).primaryColor) 
-                    : Text(
-                        step.stepNumber.toString(), 
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-              ),
             ),
-          ),
             title: Text(
               step.instruction,
               style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                decoration: isCompleted ? TextDecoration.lineThrough : null,
-              ),
+                    decoration: isCompleted ? TextDecoration.lineThrough : null,
+                  ),
             ),
           ),
         ),

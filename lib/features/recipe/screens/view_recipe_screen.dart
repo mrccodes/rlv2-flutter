@@ -4,11 +4,14 @@ import 'package:rlv2_flutter/features/recipe/models/nutrition_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/utils/find_recipe_owner.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/allergen_list.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/category_chip_widget.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/difficulty_badge.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/ingredient_list.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/nutrition_facts.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/recipe_metadata.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/step_list.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/tip_list.dart';
 import 'package:rlv2_flutter/utils/format_time_string.dart';
 
 class ViewRecipeScreen extends ConsumerStatefulWidget {
@@ -87,7 +90,10 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
                 )}',
                 style: Theme.of(context).textTheme.labelMedium,
               ),
+              const SizedBox(height: 8),
+              CategoryChipWidget(categories: widget.version!.categories),
               const SizedBox(height: 16),
+              AllergenIndicator(allergens: widget.version!.allergens),
               NutritionFactsAccordion(
                 nutritionData: NutritionData.fromVersion(widget.version!),
               ),
@@ -102,8 +108,12 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
                 simpleIngredients: widget.version!.simpleIngredients,
                 complexIngredients: widget.version!.complexIngredients,
               ),
-              const SizedBox(height: 8),  
+              const SizedBox(height: 8),
+              Text('Steps', style: Theme.of(context).textTheme.labelMedium),
+              const SizedBox(height: 8),
               StepList(steps: widget.version!.steps),
+              const SizedBox(height: 8),
+              TipList(tips: widget.version!.tips),
             ],
           ),
         ),

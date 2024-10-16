@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class MyAppTheme {
   static const primaryColor = Color(0xFFBC5F04);
-  static const primaryGrey = Color(0xFF35302D);
+  static const primaryGrey = Color.fromARGB(255, 130, 125, 121);
   static const primarySwatch = MaterialColor(
     0xFFBC5F04,
     <int, Color>{
-      50: Color(0xFFFFEEE2),
+      50: Color(0xFFfaf4f0),
       100: Color(0xFFF8DEC9),
       200: Color(0xFFE9BE98),
       300: Color(0xFFDA9F67),
@@ -70,7 +70,7 @@ class MyAppTheme {
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: Colors.white, // Primary color
         secondary: primaryGrey, // Secondary color
-        tertiary: primaryGrey.withOpacity(.2), // Tertiary color
+        tertiary: primaryGrey.withOpacity(.3), // Tertiary color
         surface: primarySwatch.shade50, // Surface color (cards, modals)
         error: const Color.fromARGB(255, 167, 21, 21), // Error color
         onPrimary: primarySwatch.shade900, // Text/icons on primary color
@@ -144,6 +144,11 @@ class MyAppTheme {
             return primarySwatch.shade100;
           },
         ),
+      ),
+
+      expansionTileTheme: ExpansionTileThemeData(
+        iconColor: primarySwatch.shade900,
+        textColor: primarySwatch.shade900,
       ),
 
       // App bar settings

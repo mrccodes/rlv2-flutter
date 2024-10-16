@@ -7,6 +7,7 @@ class RecipeVersionComplexIngredientWithData
     required this.unit,
     required super.id,
     required super.parentRecipeVersionId,
+    required super.childRecipeVersionNumber,
     required super.childRecipeName,
     required super.childRecipeVersionId,
     required super.qty,
@@ -25,6 +26,7 @@ class RecipeVersionComplexIngredientWithData
       ),
       id: json['id'] as String,
       parentRecipeVersionId: json['parentRecipeVersionId'] as String,
+      childRecipeVersionNumber: json['childRecipeVersionNumber'] as int,
       childRecipeName: json['childRecipeName'] as String,
       childRecipeId: json['childRecipeId'] as String,
       childRecipeVersionId: json['childRecipeVersionId'] as String,
@@ -42,6 +44,7 @@ class RecipeVersionComplexIngredientWithData
     return {
       'id': id,
       'parentRecipeVersionId': parentRecipeVersionId,
+      'childRecipeVersionNumber': childRecipeVersionNumber,
       'childRecipeName': childRecipeName,
       'childRecipeVersionId': childRecipeVersionId,
       'childRecipeId': childRecipeId,
