@@ -71,11 +71,10 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   Future<void> devLogin() async {
     try {
-      await widget.onLogin
-          ?.call(
-            dotenv.env['DEV_USER_EMAIL'] ?? '',
-            dotenv.env['DEV_USER_PASSWORD'] ?? '',
-          );
+      await widget.onLogin?.call(
+        dotenv.env['DEV_USER_EMAIL'] ?? '',
+        dotenv.env['DEV_USER_PASSWORD'] ?? '',
+      );
     } catch (err) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

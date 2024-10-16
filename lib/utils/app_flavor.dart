@@ -1,4 +1,4 @@
-  const String appFlavor = String.fromEnvironment(
-    'flavor', 
-    defaultValue: 'production',
-    );
+const String appFlavor = String.fromEnvironment(
+  'flavor',
+  defaultValue: 'production',
+);
