@@ -64,7 +64,7 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             title: Text(widget.recipe.name),
             trailing: Row(
-              mainAxisSize: MainAxisSize.min, 
+              mainAxisSize: MainAxisSize.min,
               children: [
                 PopupMenuButton<ActionOptions>(
                   padding: EdgeInsets.zero,
@@ -127,7 +127,6 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
     );
   }
 }
-
 
 class RecipeVersionCard extends StatelessWidget {
   const RecipeVersionCard({

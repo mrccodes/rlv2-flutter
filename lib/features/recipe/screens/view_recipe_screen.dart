@@ -68,8 +68,11 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
           renderChild(
             Padding(
               padding: const EdgeInsets.only(
-                  top: 16, left: 16, right: 16, bottom: 72,
-                  ),
+                top: 16,
+                left: 16,
+                right: 16,
+                bottom: 72,
+              ),
               child: ListView(
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,8 +132,11 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
             right: 0,
             child: Container(
               padding: const EdgeInsets.only(
-                  left: 16, right: 16, top: 12, bottom: 12,
-                  ),
+                left: 16,
+                right: 16,
+                top: 12,
+                bottom: 12,
+              ),
               decoration: BoxDecoration(
                 color:
                     Theme.of(context).colorScheme.tertiary, // Background color
