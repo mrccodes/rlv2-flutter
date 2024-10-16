@@ -60,7 +60,9 @@ class RecipeVersionWithData extends RecipeVersion {
           )
           .toList(),
       steps: (json['steps'] as List)
-          .map((item) => Step.fromJson(item as Map<String, dynamic>))
+          .map((item) => RecipeVersionStep
+          .fromJson(item as Map<String, dynamic>),
+          )
           .toList(),
       tips: (json['tips'] as List)
           .map((item) => Tip.fromJson(item as Map<String, dynamic>))
@@ -98,7 +100,7 @@ class RecipeVersionWithData extends RecipeVersion {
 
   final List<RecipeVersionSimpleIngredientsWithData> simpleIngredients;
   final List<RecipeVersionComplexIngredientWithData> complexIngredients;
-  final List<Step> steps;
+  final List<RecipeVersionStep> steps;
   final List<Tip> tips;
   final List<Category> categories;
   final List<Allergen> allergens;

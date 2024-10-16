@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/circular_button.dart';
 import 'package:rlv2_flutter/features/navigation/navigation_provider.dart';
+import 'package:rlv2_flutter/features/recipe/screens/create_recipe_screen.dart';
 
 class CustomBottomNavigationBar extends ConsumerWidget {
   const CustomBottomNavigationBar({super.key});
@@ -66,6 +67,12 @@ class CustomBottomNavigationBar extends ConsumerWidget {
               isSelected: selectedIndex == 1,
               onPressed: () {
                 ref.read(selectedIndexProvider.notifier).state = 1;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<CreateRecipeScreen>(
+                    builder: (_) => const CreateRecipeScreen(),
+                  ),
+                );
               },
             ),
           ),

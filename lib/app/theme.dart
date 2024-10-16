@@ -200,6 +200,24 @@ class MyAppTheme {
         onSecondary: Colors.white,
         onError: Colors.white,
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return primarySwatch.shade500;
+            }
+            return primarySwatch.shade500.withOpacity(.8);
+          },
+        ),
+        trackColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return primarySwatch.shade100;
+            }
+            return primarySwatch.shade50;
+          },
+        ),
+      ),
       scaffoldBackgroundColor: const Color(0xFF121212),
       appBarTheme: AppBarTheme(
         color: const Color(0xFF1E1E1E),

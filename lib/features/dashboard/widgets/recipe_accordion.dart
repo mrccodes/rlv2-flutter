@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/providers/recipe_list_provider.dart';
+import 'package:rlv2_flutter/features/recipe/screens/create_recipe_screen.dart';
 import 'package:rlv2_flutter/features/recipe/screens/view_recipe_screen.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/difficulty_badge.dart';
 import 'package:rlv2_flutter/utils/format_time_string.dart';
@@ -70,7 +71,22 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
                   padding: EdgeInsets.zero,
                   onSelected: (ActionOptions item) {
                     setState(() {
-                      // Handle item selection
+                      if ( item == ActionOptions.newVersion) {
+                        // Create new version
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<CreateRecipeScreen>(
+                            builder: (_) => CreateRecipeScreen(
+                              recipe: widget.recipe,
+                              previousVersion: widget.recipe.latestVersion,
+                            ),
+                          ),
+                        );
+                      } else if (item == ActionOptions.delete) {
+                        // Delete recipe
+                      } else if (item == ActionOptions.share) {
+                        // Share recipe
+                      }
                     });
                   },
                   itemBuilder: (BuildContext context) =>

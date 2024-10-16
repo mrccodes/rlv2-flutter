@@ -4,6 +4,7 @@ import 'package:rlv2_flutter/core/widgets/custom_button.dart';
 import 'package:rlv2_flutter/features/recipe/models/nutrition_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
+import 'package:rlv2_flutter/features/recipe/models/step_item_model.dart';
 import 'package:rlv2_flutter/features/recipe/utils/find_recipe_owner.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/allergen_list.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/category_chip_widget.dart';
@@ -119,7 +120,10 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
                   const SizedBox(height: 8),
                   Text('Steps', style: Theme.of(context).textTheme.labelMedium),
                   const SizedBox(height: 8),
-                  StepList(steps: widget.version!.steps),
+                  StepList(
+                    steps: StepItem.fromRecipeVersionSteps(widget.version!.steps), 
+                    editable: false
+                  ),
                   const SizedBox(height: 8),
                   TipList(tips: widget.version!.tips),
                 ],

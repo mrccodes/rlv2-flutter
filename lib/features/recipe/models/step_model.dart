@@ -1,15 +1,17 @@
-class Step {
-  Step({
+import 'package:rlv2_flutter/features/recipe/models/create_recipe_step_model.dart';
+
+class RecipeVersionStep extends CreateRecipeVersionStep{
+  RecipeVersionStep({
     required this.id,
-    required this.instruction,
-    required this.versionId,
-    required this.stepNumber,
     required this.createdAt,
     required this.updatedAt,
+    required super.versionId,
+    required super.stepNumber,
+    required super.instruction,
   });
 
-  factory Step.fromJson(Map<String, dynamic> json) {
-    return Step(
+  factory RecipeVersionStep.fromJson(Map<String, dynamic> json) {
+    return RecipeVersionStep(
       id: json['id'] as String,
       instruction: json['instruction'] as String,
       versionId: json['versionId'] as String,
@@ -19,9 +21,6 @@ class Step {
     );
   }
   final String id;
-  final String instruction;
-  final String versionId;
-  final int stepNumber;
   final String createdAt;
   final String updatedAt;
 
