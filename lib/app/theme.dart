@@ -19,6 +19,47 @@ class MyAppTheme {
     },
   );
 
+  static const textTheme = TextTheme(
+    headlineSmall: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineLarge: TextStyle(
+      fontSize: 40,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 16,
+    ),
+    bodySmall: TextStyle(fontSize: 14),
+    bodyLarge: TextStyle(fontSize: 18),
+    titleLarge: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
+    titleMedium: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    titleSmall: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    displayLarge: TextStyle(
+      fontSize: 24,
+    ),
+    displayMedium: TextStyle(
+      fontSize: 20,
+    ),
+    displaySmall: TextStyle(
+      fontSize: 16,
+    ),
+  );
+
   static ThemeData get lightTheme {
     return ThemeData(
       // Define your primary color (accent for buttons, appbars, etc.)
@@ -123,26 +164,7 @@ class MyAppTheme {
       ),
 
       // Text styles
-      textTheme: TextTheme(
-        headlineSmall: TextStyle(
-          color: primarySwatch.shade900,
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-        headlineMedium: TextStyle(
-          color: primarySwatch.shade900,
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-        ),
-        headlineLarge: TextStyle(
-          color: primarySwatch.shade900,
-          fontSize: 40,
-          fontWeight: FontWeight.bold,
-        ),
-        bodyMedium: TextStyle(color: primarySwatch.shade900, fontSize: 16),
-        bodySmall: TextStyle(color: primarySwatch.shade900, fontSize: 14),
-        bodyLarge: TextStyle(color: primarySwatch.shade900, fontSize: 18),
-      ),
+      textTheme: textTheme,
 
       // Elevated button style
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -186,26 +208,7 @@ class MyAppTheme {
         buttonColor: primarySwatch.shade500,
         textTheme: ButtonTextTheme.accent,
       ),
-      textTheme: const TextTheme(
-        headlineSmall: TextStyle(
-          color: Colors.white,
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-        headlineMedium: TextStyle(
-          color: Colors.white,
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-        ),
-        headlineLarge: TextStyle(
-          color: Colors.white,
-          fontSize: 40,
-          fontWeight: FontWeight.bold,
-        ),
-        bodyMedium: TextStyle(color: Colors.white, fontSize: 16),
-        bodySmall: TextStyle(color: Colors.white, fontSize: 14),
-        bodyLarge: TextStyle(color: Colors.white, fontSize: 18),
-      ),
+      textTheme: textTheme,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primarySwatch.shade500,

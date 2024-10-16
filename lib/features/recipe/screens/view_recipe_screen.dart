@@ -69,7 +69,7 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
                   Text(
                     'v$versionNumber'
                     ' ${isLatestVersion ? '(Latest)' : ''}',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   const Spacer(),
                   DifficultyBadge(difficulty: widget.version!.difficulty),
@@ -77,7 +77,7 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
               ),
               Text(
                 findRecipeOwner(widget.recipe, ref),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               const SizedBox(height: 2),
               Text(
