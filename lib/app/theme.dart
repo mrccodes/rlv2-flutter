@@ -70,10 +70,12 @@ class MyAppTheme {
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: Colors.white, // Primary color
         secondary: primaryGrey, // Secondary color
+        tertiary: primaryGrey.withOpacity(.2), // Tertiary color
         surface: primarySwatch.shade50, // Surface color (cards, modals)
         error: const Color.fromARGB(255, 167, 21, 21), // Error color
         onPrimary: primarySwatch.shade900, // Text/icons on primary color
         onSecondary: Colors.white, // Text/icons on secondary color
+        onTertiary: primarySwatch.shade900, // Text/icons on tertiary color
         onSurface: primarySwatch.shade900, // Text/icons on surfaces
         onError: Colors.white, // Text/icons on error
         brightness: Brightness.light, // Light theme
