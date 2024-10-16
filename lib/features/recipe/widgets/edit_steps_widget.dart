@@ -52,8 +52,6 @@ class EditStepsWidgetState extends State<EditStepsWidget> {
   }
 
   void _onStepsUpdated(List<StepItem> updatedSteps) {
-    final isValid = _stepFormKey.currentState!.validate();
-    AppLogger.info('Step form is valid: $isValid');
     setState(() {
       widget.onStepsUpdated(updatedSteps);
     });
