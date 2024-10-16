@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/custom_button.dart';
+import 'package:rlv2_flutter/utils/app_flavor.dart';
+import 'package:rlv2_flutter/utils/app_logger.dart';
 import 'package:rlv2_flutter/utils/validators.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
@@ -50,10 +53,28 @@ class LoginFormState extends ConsumerState<LoginForm> {
     }
   }
 
+  Widget renderDevLogin() {
+    AppLogger.info('appFlavor:  $appFlavor');
+    if (appFlavor != 'development') {
+      return const SizedBox();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: CustomButton(
+          onPressed: devLogin,
+          fullWidth: true,
+          text: 'Dev Login',
+        ),
+      );
+    }
+  }
+
   Future<void> devLogin() async {
     try {
-      await widget.onLogin
-          ?.call('Roderick.Schimmel@gmail.com', '1_GxIdxHbBVmFn2');
+      await widget.onLogin?.call(
+        dotenv.env['DEV_USER_EMAIL'] ?? '',
+        dotenv.env['DEV_USER_PASSWORD'] ?? '',
+      );
     } catch (err) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -96,14 +117,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               text: 'Login',
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CustomButton(
-              onPressed: devLogin,
-              fullWidth: true,
-              text: 'Dev Login',
-            ),
-          ),
+          renderDevLogin(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: CustomButton(
