@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/providers/recipe_list_provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:rlv2_flutter/features/recipe/screens/view_recipe_screen.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/difficulty_badge.dart';
+import 'package:rlv2_flutter/utils/format_time_string.dart';
 
 class RecipeAccordion extends ConsumerWidget {
   const RecipeAccordion({super.key});
@@ -75,7 +77,10 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
                   itemBuilder: (context, index) {
                     final idx = widget.recipe.versions.length - 1 - index;
                     final version = widget.recipe.versions[idx];
-                    return RecipeVersionCard(version: version);
+                    return RecipeVersionCard(
+                      recipe: widget.recipe,
+                      version: version,
+                    );
                   },
                 ),
               ),
@@ -89,19 +94,29 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
 class RecipeVersionCard extends StatelessWidget {
   const RecipeVersionCard({
     required this.version,
+    required this.recipe,
     super.key,
   });
   final RecipeVersionWithData version;
-
-  void onPressed() {
-    // Add navigation to the recipe detail screen
-  }
+  final RecipeWithData recipe;
 
   @override
   Widget build(BuildContext context) {
-    final lastUpdatedDateTime = DateTime.parse(version.updatedAt);
     final ingredientsLength =
         version.simpleIngredients.length + version.complexIngredients.length;
+
+    void onPressed() {
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (context) => ViewRecipeScreen(
+            recipe: recipe,
+            version: version,
+          ),
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -117,9 +132,18 @@ class RecipeVersionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Version ${version.versionNumber}',
-                style: Theme.of(context).textTheme.labelLarge,
+              Row(
+                children: [
+                  Text(
+                    'Version ${version.versionNumber}',
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  const Spacer(),
+                  DifficultyBadge(
+                    difficulty: version.difficulty,
+                    small: true,
+                  ),
+                ],
               ),
               const SizedBox(height: 2),
               Text(
@@ -133,7 +157,7 @@ class RecipeVersionCard extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                'Updated ${timeago.format(lastUpdatedDateTime)}',
+                'Updated ${formatTimeAgoString(version.updatedAt)}',
                 style: const TextStyle(fontSize: 14),
               ),
             ],

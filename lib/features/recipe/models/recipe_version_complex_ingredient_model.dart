@@ -5,8 +5,10 @@ class RecipeVersionComplexIngredient {
     required this.parentRecipeVersionId,
     // Points to the recipe version which defines this complex ingredient
     required this.childRecipeVersionId,
+    required this.childRecipeName,
+    required this.childRecipeId,
     required this.qty,
-    required this.unit,
+    required this.unitId,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -16,8 +18,10 @@ class RecipeVersionComplexIngredient {
       id: json['id']! as String,
       parentRecipeVersionId: json['parentRecipeVersionId']! as String,
       childRecipeVersionId: json['childRecipeVersionId']! as String,
+      childRecipeId: json['childRecipeId']! as String,
+      childRecipeName: json['childRecipeName']! as String,
       qty: json['qty']! as int,
-      unit: json['unit']! as String,
+      unitId: json['unitId']! as String,
       createdAt: json['createdAt']! as String,
       updatedAt: json['updatedAt']! as String,
     );
@@ -25,8 +29,10 @@ class RecipeVersionComplexIngredient {
   final String id;
   final String parentRecipeVersionId;
   final String childRecipeVersionId;
+  final String childRecipeName;
+  final String childRecipeId;
   final int qty;
-  final String unit;
+  final String unitId;
   final String createdAt;
   final String updatedAt;
 
@@ -35,8 +41,10 @@ class RecipeVersionComplexIngredient {
       'id': id,
       'parentRecipeVersionId': parentRecipeVersionId,
       'childRecipeVersionId': childRecipeVersionId,
+      'childRecipeName': childRecipeName,
+      'childRecipeId': childRecipeId,
       'qty': qty,
-      'unit': unit,
+      'unitId': unitId,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
