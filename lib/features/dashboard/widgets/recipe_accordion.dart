@@ -27,6 +27,7 @@ class RecipeAccordion extends ConsumerWidget {
       child: ListView.builder(
         itemCount: recipesToRender.length,
         shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final recipe = recipesToRender[index];
           return RecipeAccordionItem(recipe: recipe);
@@ -44,6 +45,12 @@ class RecipeAccordionItem extends StatefulWidget {
   RecipeAccordionItemState createState() => RecipeAccordionItemState();
 }
 
+enum ActionOptions {
+  newVersion,
+  delete,
+  share,
+}
+
 class RecipeAccordionItemState extends State<RecipeAccordionItem> {
   bool _isExpanded = false;
 
@@ -54,16 +61,45 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
       child: Column(
         children: [
           ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             title: Text(widget.recipe.name),
-            trailing: IconButton(
-              icon: Icon(
-                _isExpanded ? Icons.expand_less : Icons.expand_more,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              },
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min, 
+              children: [
+                PopupMenuButton<ActionOptions>(
+                  padding: EdgeInsets.zero,
+                  onSelected: (ActionOptions item) {
+                    setState(() {
+                      // Handle item selection
+                    });
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<ActionOptions>>[
+                    const PopupMenuItem<ActionOptions>(
+                      value: ActionOptions.newVersion,
+                      child: Text('Create New Version'),
+                    ),
+                    const PopupMenuItem<ActionOptions>(
+                      value: ActionOptions.delete,
+                      child: Text('Delete Recipe'),
+                    ),
+                    const PopupMenuItem<ActionOptions>(
+                      value: ActionOptions.share,
+                      child: Text('Share Recipe'),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(
+                    _isExpanded ? Icons.expand_less : Icons.expand_more,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isExpanded = !_isExpanded;
+                    });
+                  },
+                ),
+              ],
             ),
           ),
           if (_isExpanded)
@@ -74,6 +110,7 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.recipe.versions.length,
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     final idx = widget.recipe.versions.length - 1 - index;
                     final version = widget.recipe.versions[idx];
@@ -90,6 +127,7 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
     );
   }
 }
+
 
 class RecipeVersionCard extends StatelessWidget {
   const RecipeVersionCard({
