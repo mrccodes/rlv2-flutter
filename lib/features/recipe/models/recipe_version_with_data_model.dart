@@ -1,8 +1,8 @@
 import 'package:rlv2_flutter/features/recipe/models/allergen_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/category_model.dart';
-import 'package:rlv2_flutter/features/recipe/models/recipe_version_complex_ingredient_model.dart';
+import 'package:rlv2_flutter/features/recipe/models/recipe_version_complex_ingredient_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_model.dart';
-import 'package:rlv2_flutter/features/recipe/models/simple_ingredient_model.dart';
+import 'package:rlv2_flutter/features/recipe/models/recipe_version_simple_ingredients_with_ingredient.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/tip_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
@@ -47,12 +47,14 @@ class RecipeVersionWithData extends RecipeVersion {
     return RecipeVersionWithData(
       simpleIngredients: (json['simpleIngredients'] as List)
           .map(
-            (item) => SimpleIngredient.fromJson(item as Map<String, dynamic>),
+            (item) => RecipeVersionSimpleIngredientsWithData.fromJson(
+              item as Map<String, dynamic>,
+            ),
           )
           .toList(),
       complexIngredients: (json['complexIngredients'] as List)
           .map(
-            (item) => RecipeVersionComplexIngredient.fromJson(
+            (item) => RecipeVersionComplexIngredientWithData.fromJson(
               item as Map<String, dynamic>,
             ),
           )
@@ -94,8 +96,8 @@ class RecipeVersionWithData extends RecipeVersion {
     );
   }
 
-  final List<SimpleIngredient> simpleIngredients;
-  final List<RecipeVersionComplexIngredient> complexIngredients;
+  final List<RecipeVersionSimpleIngredientsWithData> simpleIngredients;
+  final List<RecipeVersionComplexIngredientWithData> complexIngredients;
   final List<Step> steps;
   final List<Tip> tips;
   final List<Category> categories;

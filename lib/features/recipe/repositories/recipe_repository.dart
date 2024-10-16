@@ -126,4 +126,20 @@ class RecipeRepository {
       rethrow;
     }
   }
+
+  Future<RecipeWithData> fetchUserRecipeWithData(String recipeId) async {
+    final endpoint = '/recipeWithData/$recipeId';
+
+    try {
+      final response = await apiService.getRequest<RecipeWithData>(
+        endpoint,
+        (val) => RecipeWithData.fromJson(val as Map<String, dynamic>),
+      );
+
+      return response;
+    } catch (e) {
+      handleError(e, 'Failed to fetch recipe with data');
+      rethrow;
+    }
+  }
 }

@@ -57,6 +57,10 @@ class UserOrganizationsNotifier extends StateNotifier<UserOrganizationsState> {
     state = state.copyWith(isLoading: value);
   }
 
+  List<OrganizationUser> get data {
+    return state.data;
+  }
+
   Future<void> fetchUserOrganizations(String userId) async {
     state = state.copyWith(isLoading: true);
     try {

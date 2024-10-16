@@ -1,6 +1,7 @@
 // features/auth/screens/landing_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/custom_button.dart';
 import 'package:rlv2_flutter/features/auth/screens/login_screen.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_app_bar.dart';
 
@@ -11,7 +12,7 @@ class LandingScreen extends ConsumerWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: 'RecipeLab'),
       body: Center(
-        child: ElevatedButton(
+        child: CustomButton(
           key: const ValueKey('loginButton'),
           onPressed: () {
             // Navigate to LoginScreen
@@ -22,7 +23,7 @@ class LandingScreen extends ConsumerWidget {
               ),
             );
           },
-          child: const Text('Go to Login'),
+          text: 'Go to Login',
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:rlv2_flutter/features/recipe/models/recipe_model.dart';
+import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/repositories/recipe_repository.dart';
 import 'package:rlv2_flutter/utils/handle_error.dart';
 
@@ -65,6 +66,16 @@ class RecipeService {
       return response;
     } catch (e) {
       handleError(e, 'Failed to patch recipe');
+      rethrow;
+    }
+  }
+
+  Future<RecipeWithData> fetchUserRecipeWithData(String recipeId) async {
+    try {
+      final response = await recipeRepository.fetchUserRecipeWithData(recipeId);
+      return response;
+    } catch (e) {
+      handleError(e, 'Failed to fetch recipe with data');
       rethrow;
     }
   }

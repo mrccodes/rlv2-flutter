@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/providers/recipe_list_provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:rlv2_flutter/features/recipe/screens/view_recipe_screen.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/difficulty_badge.dart';
+import 'package:rlv2_flutter/utils/format_time_string.dart';
 
 class RecipeAccordion extends ConsumerWidget {
   const RecipeAccordion({super.key});
@@ -25,6 +27,7 @@ class RecipeAccordion extends ConsumerWidget {
       child: ListView.builder(
         itemCount: recipesToRender.length,
         shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final recipe = recipesToRender[index];
           return RecipeAccordionItem(recipe: recipe);
@@ -42,6 +45,12 @@ class RecipeAccordionItem extends StatefulWidget {
   RecipeAccordionItemState createState() => RecipeAccordionItemState();
 }
 
+enum ActionOptions {
+  newVersion,
+  delete,
+  share,
+}
+
 class RecipeAccordionItemState extends State<RecipeAccordionItem> {
   bool _isExpanded = false;
 
@@ -52,16 +61,45 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
       child: Column(
         children: [
           ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             title: Text(widget.recipe.name),
-            trailing: IconButton(
-              icon: Icon(
-                _isExpanded ? Icons.expand_less : Icons.expand_more,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              },
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PopupMenuButton<ActionOptions>(
+                  padding: EdgeInsets.zero,
+                  onSelected: (ActionOptions item) {
+                    setState(() {
+                      // Handle item selection
+                    });
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<ActionOptions>>[
+                    const PopupMenuItem<ActionOptions>(
+                      value: ActionOptions.newVersion,
+                      child: Text('Create New Version'),
+                    ),
+                    const PopupMenuItem<ActionOptions>(
+                      value: ActionOptions.delete,
+                      child: Text('Delete Recipe'),
+                    ),
+                    const PopupMenuItem<ActionOptions>(
+                      value: ActionOptions.share,
+                      child: Text('Share Recipe'),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(
+                    _isExpanded ? Icons.expand_less : Icons.expand_more,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isExpanded = !_isExpanded;
+                    });
+                  },
+                ),
+              ],
             ),
           ),
           if (_isExpanded)
@@ -72,10 +110,14 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.recipe.versions.length,
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     final idx = widget.recipe.versions.length - 1 - index;
                     final version = widget.recipe.versions[idx];
-                    return RecipeVersionCard(version: version);
+                    return RecipeVersionCard(
+                      recipe: widget.recipe,
+                      version: version,
+                    );
                   },
                 ),
               ),
@@ -89,19 +131,29 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
 class RecipeVersionCard extends StatelessWidget {
   const RecipeVersionCard({
     required this.version,
+    required this.recipe,
     super.key,
   });
   final RecipeVersionWithData version;
-
-  void onPressed() {
-    // Add navigation to the recipe detail screen
-  }
+  final RecipeWithData recipe;
 
   @override
   Widget build(BuildContext context) {
-    final lastUpdatedDateTime = DateTime.parse(version.updatedAt);
     final ingredientsLength =
         version.simpleIngredients.length + version.complexIngredients.length;
+
+    void onPressed() {
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (context) => ViewRecipeScreen(
+            recipe: recipe,
+            version: version,
+          ),
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -109,7 +161,7 @@ class RecipeVersionCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -117,9 +169,18 @@ class RecipeVersionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Version ${version.versionNumber}',
-                style: Theme.of(context).textTheme.labelLarge,
+              Row(
+                children: [
+                  Text(
+                    'Version ${version.versionNumber}',
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  const Spacer(),
+                  DifficultyBadge(
+                    difficulty: version.difficulty,
+                    small: true,
+                  ),
+                ],
               ),
               const SizedBox(height: 2),
               Text(
@@ -133,7 +194,7 @@ class RecipeVersionCard extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                'Updated ${timeago.format(lastUpdatedDateTime)}',
+                'Updated ${formatTimeAgoString(version.updatedAt)}',
                 style: const TextStyle(fontSize: 14),
               ),
             ],
