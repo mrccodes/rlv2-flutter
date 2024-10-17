@@ -90,7 +90,7 @@ class TextFormFieldWidget extends StatelessWidget {
             keyboardType: keyboardType,
             textCapitalization: textCapitalization,
             textInputAction: textInputAction,
-            style: style,
+            style: style ?? Theme.of(context).textTheme.labelLarge,
             strutStyle: strutStyle,
             textAlign: textAlign,
             textAlignVertical: textAlignVertical,

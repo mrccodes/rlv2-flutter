@@ -60,7 +60,7 @@ class DropdownButtonFormFieldWidget<T> extends StatelessWidget {
             autofocus: autofocus,
             focusNode: focusNode,
             decoration: decoration,
-            style: style ?? Theme.of(context).textTheme.bodyLarge,
+            style: style ?? Theme.of(context).textTheme.labelLarge,
           ),
         ),
       ],

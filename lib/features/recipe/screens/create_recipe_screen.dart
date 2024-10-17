@@ -4,10 +4,13 @@ import 'package:rlv2_flutter/core/widgets/dropdown_button_form_field_widget.dart
 import 'package:rlv2_flutter/core/widgets/text_field_widget.dart';
 import 'package:rlv2_flutter/core/widgets/text_form_field_widget.dart';
 import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
+import 'package:rlv2_flutter/features/recipe/models/create_simple_ingredient_item_model.dart';
+import 'package:rlv2_flutter/features/recipe/models/recipe_version_simple_ingredients_with_ingredient.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_item_model.dart';
 import 'package:rlv2_flutter/features/recipe/utils/find_latest_version.dart';
+import 'package:rlv2_flutter/features/recipe/widgets/edit_ingredients_widget.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/edit_steps_widget.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 import 'package:rlv2_flutter/utils/constants.dart';
@@ -48,6 +51,9 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
   TextEditingController sodiumController = TextEditingController();
 
   List<StepItem> stepItems = [];
+  List<RecipeVersionSimpleIngredientsWithData> ingredientsToUpdate = [];
+  List<RecipeVersionSimpleIngredientsWithData> ingredientsToDelete = [];
+  List<CreateSimpleIngredientItem> newIngredients = [];
 
   bool isPrefilled = true;
 
@@ -131,6 +137,22 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
           ),
         ],
       );
+    }
+
+    void onExistingIngredientDeleted(
+      RecipeVersionSimpleIngredientsWithData ingredient,
+    ) {
+      setState(() {
+        ingredientsToDelete.add(ingredient);
+      });
+    }
+
+    void onNewIngredientsUpdated(
+      List<CreateSimpleIngredientItem> updatedIngredients,
+    ) {
+      setState(() {
+        newIngredients = updatedIngredients;
+      });
     }
 
     final latestVersion = findLatestVersion(widget.recipe?.versions ?? []);
@@ -261,6 +283,17 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
               textAlignVertical: TextAlignVertical.top,
             ),
             const SizedBox(height: 16),
+            Text(
+              'Ingredients',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            EditIngredientWidget(
+              existingIngredients:
+                  widget.previousVersion?.simpleIngredients ?? [],
+              onExistingIngredientDeleted: onExistingIngredientDeleted,
+              onNewIngredientsUpdated: onNewIngredientsUpdated,
+            ),
+
             Text(
               'Steps',
               style: Theme.of(context).textTheme.titleMedium,

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_complex_ingredient_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_simple_ingredients_with_ingredient.dart';
-import 'package:rlv2_flutter/features/recipe/models/unit_model.dart';
 import 'package:rlv2_flutter/features/recipe/providers/recipe_provider.dart';
 import 'package:rlv2_flutter/features/recipe/screens/view_recipe_screen.dart';
 import 'package:rlv2_flutter/features/recipe/utils/check_for_version.dart';
-import 'package:rlv2_flutter/features/user/utils/format_unit.dart';
+import 'package:rlv2_flutter/features/recipe/utils/format_ingredient.dart';
 import 'package:rlv2_flutter/utils/widget_handle_error.dart';
 
 class IngredientAccordion extends ConsumerWidget {
@@ -20,13 +19,6 @@ class IngredientAccordion extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String ingredientStr(int qty, Unit unit, String name, int? versionNumber) {
-      final unitStr = formatUnit(unit, qty);
-      return '$qty '
-          '$unitStr '
-          '$name${versionNumber != null ? ' v$versionNumber' : ''}';
-    }
-
     return ExpansionTile(
       title: Text(
         'Ingredients',
@@ -41,11 +33,10 @@ class IngredientAccordion extends ConsumerWidget {
         ...simpleIngredients.map(
           (ingredient) => ListTile(
             title: Text(
-              ingredientStr(
+              formatIngredient(
                 ingredient.qty,
                 ingredient.unit,
                 ingredient.simpleIngredient.name,
-                null,
               ),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -93,7 +84,7 @@ class IngredientAccordion extends ConsumerWidget {
               ),
               child: ListTile(
                 title: Text(
-                  ingredientStr(
+                  formatIngredient(
                     complexIngredient.qty,
                     complexIngredient.unit,
                     complexIngredient.childRecipeName,

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Unit {
   Unit({
     required this.id,
@@ -25,6 +27,17 @@ class Unit {
   final String system;
   final String type;
   final String? abbreviation;
+
+  static List<DropdownMenuItem<Unit>> toDropdownMenuItems(List<Unit> units) {
+    return units
+        .map(
+          (unit) => DropdownMenuItem<Unit>(
+            value: unit,
+            child: Text(unit.label),
+          ),
+        )
+        .toList();
+  }
 
   Map<String, dynamic> toJson() {
     return {

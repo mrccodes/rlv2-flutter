@@ -4,6 +4,7 @@ import 'package:rlv2_flutter/features/auth/providers/auth_provider.dart';
 import 'package:rlv2_flutter/features/auth/providers/user_session_context_service_provider.dart';
 import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
 import 'package:rlv2_flutter/features/recipe/providers/recipe_list_provider.dart';
+import 'package:rlv2_flutter/features/recipe/providers/unit_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_favorite_recipe_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_information_provider.dart';
 import 'package:rlv2_flutter/features/user/providers/user_recipes_provider.dart';
@@ -38,6 +39,7 @@ final userSessionListenerProvider = Provider<void>((ref) {
 
       try {
         final context = await userContextService.fetchUserSessionContext();
+        await ref.read(unitProvider.notifier).loadUnits(forceLoad: true);
 
         // Update data using methods
         ref
@@ -85,6 +87,8 @@ final userSessionListenerProvider = Provider<void>((ref) {
       ref.read(userFavoriteRecipeProvider.notifier).clearUserFavoriteRecipes();
       ref.read(userOrganizationsProvider.notifier).clearUserOrganizations();
       ref.read(userRecipesProvider.notifier).clearUserRecipes();
+      ref.read(recipeListProvider.notifier).updateRecipeList([]);
+      ref.read(unitProvider.notifier).clearUnits();
     }
   });
 });

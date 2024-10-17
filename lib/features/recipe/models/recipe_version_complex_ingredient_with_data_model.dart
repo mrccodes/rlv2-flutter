@@ -30,7 +30,7 @@ class RecipeVersionComplexIngredientWithData
       childRecipeName: json['childRecipeName'] as String,
       childRecipeId: json['childRecipeId'] as String,
       childRecipeVersionId: json['childRecipeVersionId'] as String,
-      qty: json['qty'] as int,
+      qty: json['qty'] as num,
       unitId: json['unitId'] as String,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,

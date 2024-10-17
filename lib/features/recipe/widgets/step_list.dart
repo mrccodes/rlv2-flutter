@@ -121,7 +121,7 @@ class StepListState extends State<StepList> {
           child: CircleAvatar(
             backgroundColor: isCompleted
                 ? Theme.of(context).primaryColor.withOpacity(.2)
-                : Theme.of(context).colorScheme.tertiary,
+                : Theme.of(context).colorScheme.tertiary.withOpacity(.2),
             radius: 24,
             child: isCompleted
                 ? Icon(Icons.check, color: Theme.of(context).primaryColor)

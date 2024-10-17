@@ -72,6 +72,7 @@ class MyAppTheme {
         secondary: primaryGrey, // Secondary color
         tertiary: primaryGrey.withOpacity(.3), // Tertiary color
         surface: primarySwatch.shade50, // Surface color (cards, modals)
+        surfaceBright: Colors.white, // Bright surface color
         error: const Color.fromARGB(255, 167, 21, 21), // Error color
         onPrimary: primarySwatch.shade900, // Text/icons on primary color
         onSecondary: Colors.white, // Text/icons on secondary color
@@ -202,11 +203,13 @@ class MyAppTheme {
       brightness: Brightness.dark,
       primaryColor: primaryColor,
       primarySwatch: primarySwatch,
-      colorScheme: const ColorScheme.dark(
+      colorScheme: ColorScheme.dark(
         primary: Colors.white,
-        secondary: Color(0xFF35302D),
-        surface: Color(0xFF1E1E1E),
-        error: Color.fromARGB(255, 167, 21, 21),
+        secondary: const Color(0xFF35302D),
+        tertiary: primarySwatch.shade50,
+        surface: const Color(0xFF1E1E1E),
+        surfaceBright: primarySwatch.shade50,
+        error: const Color.fromARGB(255, 167, 21, 21),
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onError: Colors.white,

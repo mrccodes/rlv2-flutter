@@ -25,7 +25,7 @@ class RecipeVersionSimpleIngredientsWithData
       id: json['id'] as String,
       simpleIngredientId: json['simpleIngredientId'] as String,
       recipeVersionId: json['recipeVersionId'] as String,
-      qty: json['qty'] as int,
+      qty: json['qty'] as num,
       unitId: json['unitId'] as String,
       unit: Unit.fromJson(
         json['unit'] as Map<String, dynamic>,

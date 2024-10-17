@@ -1,11 +1,13 @@
-class SimpleIngredient {
+import 'package:rlv2_flutter/features/recipe/models/create_simple_ingredient_model.dart';
+
+class SimpleIngredient extends CreateSimpleIngredient {
   SimpleIngredient({
     required this.id,
-    required this.name,
     required this.createdAt,
     required this.updatedAt,
-    this.brand,
-    this.origin,
+    required super.name,
+    super.brand,
+    super.origin,
   });
 
   factory SimpleIngredient.fromJson(Map<String, dynamic> json) {
@@ -20,12 +22,10 @@ class SimpleIngredient {
   }
 
   final String id;
-  final String name;
-  final String? brand;
-  final String? origin;
   final String createdAt;
   final String updatedAt;
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,

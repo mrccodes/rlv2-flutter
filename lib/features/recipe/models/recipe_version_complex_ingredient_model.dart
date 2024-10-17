@@ -22,7 +22,7 @@ class RecipeVersionComplexIngredient {
       childRecipeVersionNumber: json['childRecipeVersionNumber']! as int,
       childRecipeId: json['childRecipeId']! as String,
       childRecipeName: json['childRecipeName']! as String,
-      qty: json['qty']! as int,
+      qty: json['qty']! as num,
       unitId: json['unitId']! as String,
       createdAt: json['createdAt']! as String,
       updatedAt: json['updatedAt']! as String,
@@ -34,7 +34,7 @@ class RecipeVersionComplexIngredient {
   final int childRecipeVersionNumber;
   final String childRecipeName;
   final String childRecipeId;
-  final int qty;
+  final num qty;
   final String unitId;
   final String createdAt;
   final String updatedAt;
