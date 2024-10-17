@@ -2,29 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:rlv2_flutter/core/models/api_exception_model.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
-void widgetHandleError(
+String widgetHandleError(
   Object error,
-  BuildContext context,
+  BuildContext context, {
+  bool notifyUser = false,
   StackTrace? stackTrace,
-) {
-  void showError(String message) {
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-        ),
-      );
+}) {
+  String showError(String message) {
+    if (context.mounted && notifyUser) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      });
     }
+    return message;
   }
 
   if (error is ApiException) {
-    showError(error.errors.join('\n'));
     AppLogger.error(error.toString(), error, stackTrace);
+
+    return showError(error.errors.join('\n'));
   } else if (error is Exception) {
-    showError(error.toString());
     AppLogger.error(error.toString(), error, stackTrace);
+    return showError(error.toString());
   } else {
-    showError('An unknown error occurred');
     AppLogger.error(error.toString());
+    return showError('An unknown error occurred');
   }
 }

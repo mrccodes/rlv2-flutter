@@ -39,18 +39,20 @@ class StepListState extends State<StepList> {
       physics: const NeverScrollableScrollPhysics(),
       onReorder: _onReorder,
       children: widget.steps
-          .map((step) => Dismissible(
-                key: ValueKey(step.recipeVersionStepId ?? step.stepNumber),
-                direction: DismissDirection.endToStart,
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: const Icon(Icons.delete, color: Colors.white),
-                ),
-                onDismissed: (_) => _deleteStep(step),
-                child: _buildStepItem(step),
-              ))
+          .map(
+            (step) => Dismissible(
+              key: ValueKey(step.recipeVersionStepId ?? step.stepNumber),
+              direction: DismissDirection.endToStart,
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: const Icon(Icons.delete, color: Colors.white),
+              ),
+              onDismissed: (_) => _deleteStep(step),
+              child: _buildStepItem(step),
+            ),
+          )
           .toList(),
     );
   }

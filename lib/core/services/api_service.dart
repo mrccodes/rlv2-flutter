@@ -25,6 +25,7 @@ class ApiService {
 
   void _setupDio() {
     dio.options.baseUrl = apiUrl; // Ensure the correct baseUrl is set
+    dio.options.receiveDataWhenStatusError = true;
     dio.options.headers = {
       'Content-Type': 'application/json',
     };
@@ -82,7 +83,17 @@ class ApiService {
     T Function(dynamic) fromJson, // Change this to accept dynamic data
   ) async {
     try {
-      final response = await requestFunc();
+      final response = await requestFunc().timeout(
+        const Duration(seconds: 5), // Ensure timeout is applied directly here
+        onTimeout: () {
+          throw DioException(
+            requestOptions: RequestOptions(),
+            message: 'Request timeout',
+            type: DioExceptionType.connectionTimeout,
+          );
+        },
+      );
+
       final responseData = response.data!;
 
       // Success (HTTP 200 or 201)
@@ -111,26 +122,87 @@ class ApiService {
             ? List<String>.from(responseData['errors'] as List<dynamic>)
             : [],
       );
-    } catch (e) {
-      // If DioError or unknown error occurs, wrap and throw an ApiException
-      if (e is DioException && e.response != null) {
-        final response = e.response!;
-        final responseData = response.data as Map<String, dynamic>;
+    } catch (error) {
+      if (error is DioException) {
+        final response = error.response;
+        final responseData = response?.data;
+        AppLogger.error('Response Data: $responseData');
+        if (response != null &&
+            responseData != null &&
+            responseData is Map<String, dynamic> &&
+            responseData.containsKey('message') &&
+            responseData.containsKey('errors')) {
+          throw ApiException(
+            statusCode: response.statusCode!,
+            message: responseData['message'] as String,
+            errors: List<String>.from(responseData['errors'] as List<dynamic>),
+          );
+        }
+        if (error.type == DioExceptionType.connectionTimeout) {
+          throw ApiException(
+            statusCode: 408,
+            message: 'Request timeout',
+            errors: ['The request took too long to complete'],
+          );
+        } else if (error.type == DioExceptionType.sendTimeout) {
+          throw ApiException(
+            statusCode: 408,
+            message: 'Request timeout',
+            errors: ['The request took too long to send'],
+          );
+        } else if (error.type == DioExceptionType.receiveTimeout) {
+          throw ApiException(
+            statusCode: 408,
+            message: 'Request timeout',
+            errors: ['The request took too long to receive'],
+          );
+        } else if (error.type == DioExceptionType.badResponse) {
+          if (error.response?.statusCode == 401) {
+            AppLogger.error(error.toString());
+            throw ApiException(
+              statusCode: 401,
+              message: error.response?.statusMessage ?? 'Unauthorized',
+              errors: ['You are not authorized to perform this action'],
+            );
+          }
 
-        throw ApiException(
-          statusCode: response.statusCode!,
-          message: response.statusMessage ?? 'Unknown error occurred',
-          errors: responseData['errors'] != null
-              ? List<String>.from(responseData['errors'] as List<dynamic>)
-              : ['An unknown error occurred'],
-        );
+          throw ApiException(
+            statusCode: 500,
+            message: 'Bad response',
+            errors: ['The server returned an invalid response'],
+          );
+        } else if (error.type == DioExceptionType.cancel) {
+          throw ApiException(
+            statusCode: 499,
+            message: 'Request cancelled',
+            errors: ['The request was cancelled'],
+          );
+        } else if (error.type == DioExceptionType.badCertificate) {
+          throw ApiException(
+            statusCode: 500,
+            message: 'Bad certificate',
+            errors: ['The server returned a bad certificate'],
+          );
+        } else if (error.type == DioExceptionType.unknown) {
+          throw ApiException(
+            statusCode: 500,
+            message: 'An unexpected error occurred',
+            errors: ['An unexpected error occurred'],
+          );
+        } else {
+          throw ApiException(
+            statusCode: 500,
+            message: 'An unexpected error occurred',
+            errors: ['An unexpected error occurred'],
+          );
+        }
       }
 
       // Catch any other error and throw as ApiException
       throw ApiException(
         statusCode: 500,
         message: 'An unexpected error occurred',
-        errors: [e.toString()],
+        errors: [error.toString()],
       );
     }
   }

@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
     this.fullWidth = false,
     this.visualDensity = VisualDensity.standard,
     this.icon,
+    this.isLoading = false,
     super.key,
     this.buttonType = ButtonType.primary,
   });
@@ -20,6 +21,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final bool fullWidth;
   final Widget? icon;
+  final bool isLoading;
   final ButtonType buttonType;
 
   @override
@@ -45,6 +47,17 @@ class CustomButton extends StatelessWidget {
     // Choose the style based on buttonType
     final buttonStyle =
         buttonType == ButtonType.secondary ? secondaryStyle : primaryStyle;
+
+    if (isLoading) {
+      return SizedBox(
+        width: fullWidth ? double.infinity : null,
+        child: ElevatedButton(
+          onPressed: null,
+          style: buttonStyle,
+          child: const CircularProgressIndicator(),
+        ),
+      );
+    }
 
     return SizedBox(
       width: fullWidth ? double.infinity : null,

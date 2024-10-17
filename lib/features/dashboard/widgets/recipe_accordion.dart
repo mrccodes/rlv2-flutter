@@ -71,7 +71,7 @@ class RecipeAccordionItemState extends State<RecipeAccordionItem> {
                   padding: EdgeInsets.zero,
                   onSelected: (ActionOptions item) {
                     setState(() {
-                      if ( item == ActionOptions.newVersion) {
+                      if (item == ActionOptions.newVersion) {
                         // Create new version
                         Navigator.push(
                           context,

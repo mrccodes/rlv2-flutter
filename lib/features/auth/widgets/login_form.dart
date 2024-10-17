@@ -8,9 +8,14 @@ import 'package:rlv2_flutter/utils/app_logger.dart';
 import 'package:rlv2_flutter/utils/validators.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
-  const LoginForm({super.key, this.onLogin});
+  const LoginForm({
+    super.key,
+    this.onLogin,
+    this.isLoading = false,
+  });
 
   final Future<void> Function(String email, String password)? onLogin;
+  final bool isLoading;
 
   @override
   LoginFormState createState() => LoginFormState();
@@ -62,6 +67,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: CustomButton(
           onPressed: devLogin,
+          isLoading: widget.isLoading,
           fullWidth: true,
           text: 'Dev Login',
         ),
@@ -113,6 +119,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: CustomButton(
               onPressed: login,
+              isLoading: widget.isLoading,
               fullWidth: true,
               text: 'Login',
             ),

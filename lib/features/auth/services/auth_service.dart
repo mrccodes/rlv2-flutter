@@ -43,7 +43,7 @@ class AuthService {
       final user = await authRepository.login(email: email, password: password);
       return user;
     } catch (e) {
-      throw Exception('Error logging in: $e');
+      rethrow;
     }
   }
 

@@ -60,8 +60,8 @@ class RecipeVersionWithData extends RecipeVersion {
           )
           .toList(),
       steps: (json['steps'] as List)
-          .map((item) => RecipeVersionStep
-          .fromJson(item as Map<String, dynamic>),
+          .map(
+            (item) => RecipeVersionStep.fromJson(item as Map<String, dynamic>),
           )
           .toList(),
       tips: (json['tips'] as List)

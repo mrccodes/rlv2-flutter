@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:rlv2_flutter/core/models/api_exception_model.dart';
 import 'package:rlv2_flutter/features/auth/models/register_model.dart';
 import 'package:rlv2_flutter/features/auth/providers/auth_service_provider.dart';
 import 'package:rlv2_flutter/features/auth/services/auth_service.dart';
@@ -48,13 +47,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = AuthState(user: user);
       final newStateId = state.user!.id;
       AppLogger.info('writing user_id to storage: $newStateId');
-    } on ApiException catch (err) {
-      state = AuthState(error: err.errors.join('\n'));
-    } on Exception catch (err, stackTrace) {
-      state = AuthState(error: 'Unable to login. Please try again.');
-      AppLogger.error('Error logging in', err, stackTrace);
     } catch (e) {
       state = AuthState(error: e.toString());
+      rethrow;
     }
   }
 

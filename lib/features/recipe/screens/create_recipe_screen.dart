@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_item_model.dart';
+import 'package:rlv2_flutter/features/recipe/utils/find_latest_version.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/edit_steps_widget.dart';
-import 'package:rlv2_flutter/features/recipe/widgets/step_list.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class CreateRecipeScreen extends ConsumerStatefulWidget {
@@ -126,8 +126,10 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
       );
     }
 
-    final nextVersionNumber = widget.previousVersion?.versionNumber != null
-        ? widget.previousVersion!.versionNumber + 1
+    final latestVersion = findLatestVersion(widget.recipe?.versions ?? []);
+
+    final nextVersionNumber = latestVersion?.versionNumber != null
+        ? latestVersion!.versionNumber + 1
         : 1;
     return Scaffold(
       appBar: AppBar(
@@ -187,10 +189,12 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                         value: selectedDifficulty,
                         items:
                             ['beginner', 'intermediate', 'advanced', 'expert']
-                                .map((difficulty) => DropdownMenuItem(
-                                      value: difficulty,
-                                      child: Text(difficulty),
-                                    ))
+                                .map(
+                                  (difficulty) => DropdownMenuItem(
+                                    value: difficulty,
+                                    child: Text(difficulty),
+                                  ),
+                                )
                                 .toList(),
                         onChanged: (value) {
                           setState(() {
@@ -240,12 +244,14 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
               maxLines: 3,
             ),
             const SizedBox(height: 16),
-            Text('Steps',
-                style: Theme.of(context).textTheme.labelMedium,
-                ),
-            Text('Drag and drop to reorder or swipe to delete',
-                style: Theme.of(context).textTheme.labelSmall,
-                ),
+            Text(
+              'Steps',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+            Text(
+              'Drag and drop to reorder or swipe to delete',
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
             EditStepsWidget(
               steps: StepItem.fromRecipeVersionSteps(
                 widget.previousVersion?.steps ?? [],

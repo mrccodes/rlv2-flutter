@@ -30,15 +30,14 @@ class RecipeWithData extends Recipe {
       organizationId: json['organizationId'] as String?,
     );
   }
-  
- RecipeVersionWithData? get latestVersion {
-  if (versions.isEmpty) {
-    return null;
-  }
+
+  RecipeVersionWithData? get latestVersion {
+    if (versions.isEmpty) {
+      return null;
+    }
     versions.sort((a, b) => a.versionNumber.compareTo(b.versionNumber));
     return versions.last;
   }
-
 
   final List<RecipeVersionWithData> versions;
 

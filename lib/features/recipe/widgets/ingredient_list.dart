@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rlv2_flutter/core/models/api_exception_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_complex_ingredient_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_simple_ingredients_with_ingredient.dart';
 import 'package:rlv2_flutter/features/recipe/models/unit_model.dart';
@@ -8,6 +7,7 @@ import 'package:rlv2_flutter/features/recipe/providers/recipe_provider.dart';
 import 'package:rlv2_flutter/features/recipe/screens/view_recipe_screen.dart';
 import 'package:rlv2_flutter/features/recipe/utils/check_for_version.dart';
 import 'package:rlv2_flutter/features/user/utils/format_unit.dart';
+import 'package:rlv2_flutter/utils/widget_handle_error.dart';
 
 class IngredientAccordion extends ConsumerWidget {
   const IngredientAccordion({
@@ -78,21 +78,9 @@ class IngredientAccordion extends ConsumerWidget {
                     ),
                   );
                 }
-              } on ApiException catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.errors.join('\n')),
-                    ),
-                  );
-                }
               } catch (err) {
                 if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(err.toString()),
-                    ),
-                  );
+                  widgetHandleError(err, context, notifyUser: true);
                 }
               }
             },

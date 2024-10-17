@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_item_model.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/step_list.dart';
-import 'package:rlv2_flutter/utils/app_logger.dart';
 
 class EditStepsWidget extends StatefulWidget {
   const EditStepsWidget({
@@ -33,7 +32,7 @@ class EditStepsWidgetState extends State<EditStepsWidget> {
     super.dispose();
   }
 
-    void _addNewStep(String instruction) {
+  void _addNewStep(String instruction) {
     // Validate the step form, not the whole form
     if (_stepFormKey.currentState!.validate()) {
       final newStep = StepItem(
@@ -71,27 +70,26 @@ class EditStepsWidgetState extends State<EditStepsWidget> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
-            'Step ${widget.steps.length + 1}', 
+            'Step ${widget.steps.length + 1}',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         Form(
           key: _stepFormKey,
           child: TextFormField(
-          controller: _stepController,
-          maxLines: null,
-          decoration: InputDecoration(
-            hintText: 'Enter instruction for Step ${widget.steps.length + 1}', 
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            controller: _stepController,
+            maxLines: null,
+            decoration: InputDecoration(
+              hintText: 'Enter instruction for Step ${widget.steps.length + 1}',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
+            validator: (value) => value != null && value.trim().isEmpty
+                ? 'Please enter a step'
+                : null,
           ),
-          validator: (value) => value != null && value.trim().isEmpty
-              ? 'Please enter a step'
-              : null,
         ),
-        ),
-                
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: () => _addNewStep(_stepController.text),

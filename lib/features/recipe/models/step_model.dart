@@ -1,6 +1,6 @@
 import 'package:rlv2_flutter/features/recipe/models/create_recipe_step_model.dart';
 
-class RecipeVersionStep extends CreateRecipeVersionStep{
+class RecipeVersionStep extends CreateRecipeVersionStep {
   RecipeVersionStep({
     required this.id,
     required this.createdAt,
@@ -24,6 +24,7 @@ class RecipeVersionStep extends CreateRecipeVersionStep{
   final String createdAt;
   final String updatedAt;
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
