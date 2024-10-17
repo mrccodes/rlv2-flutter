@@ -15,6 +15,7 @@ import 'package:rlv2_flutter/features/recipe/widgets/nutrition_facts.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/recipe_metadata.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/step_list.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/tip_list.dart';
+import 'package:rlv2_flutter/utils/constants.dart';
 import 'package:rlv2_flutter/utils/format_time_string.dart';
 
 class ViewRecipeScreen extends ConsumerStatefulWidget {
@@ -86,7 +87,11 @@ class ViewRecipeScreenState extends ConsumerState<ViewRecipeScreen> {
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const Spacer(),
-                      DifficultyBadge(difficulty: widget.version!.difficulty),
+                      DifficultyBadge(
+                        difficulty: RecipeDifficulty.fromString(
+                          widget.version!.difficulty,
+                        ),
+                      ),
                     ],
                   ),
                   Text(

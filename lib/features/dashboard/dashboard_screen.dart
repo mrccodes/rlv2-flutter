@@ -66,6 +66,7 @@ class DashboardScreen extends ConsumerWidget {
               child: renderChild(
                 Column(
                   children: [
+                    const SizedBox(height: 8),
                     const OrgSelect(),
                     const SizedBox(height: 8),
                     CategorySelector(

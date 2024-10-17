@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rlv2_flutter/core/widgets/custom_button.dart';
+import 'package:rlv2_flutter/core/widgets/text_form_field_widget.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_item_model.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/step_list.dart';
 
@@ -62,25 +64,31 @@ class EditStepsWidgetState extends State<EditStepsWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.steps.isNotEmpty)
+          Text(
+            'Drag and drop to reorder or swipe to delete',
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+        if (widget.steps.isNotEmpty)
           StepList(
             steps: widget.steps,
             onStepsUpdated: _onStepsUpdated,
             editable: true,
           ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.all(8),
           child: Text(
             'Step ${widget.steps.length + 1}',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
         Form(
           key: _stepFormKey,
-          child: TextFormField(
+          child: TextFormFieldWidget(
             controller: _stepController,
             maxLines: null,
             decoration: InputDecoration(
-              hintText: 'Enter instruction for Step ${widget.steps.length + 1}',
+              hintText:
+                  'Enter instruction to add step ${widget.steps.length + 1}',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -90,11 +98,14 @@ class EditStepsWidgetState extends State<EditStepsWidget> {
                 : null,
           ),
         ),
-        const SizedBox(height: 12),
-        ElevatedButton(
+        const SizedBox(height: 8),
+        CustomButton(
           onPressed: () => _addNewStep(_stepController.text),
-          child: const Text('Add Step'),
+          text: 'Add Step',
+          buttonType: ButtonType.secondary,
+          icon: const Icon(Icons.add),
         ),
+        const SizedBox(height: 16),
       ],
     );
   }

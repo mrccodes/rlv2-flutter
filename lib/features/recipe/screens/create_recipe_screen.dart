@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/dropdown_button_form_field_widget.dart';
+import 'package:rlv2_flutter/core/widgets/text_field_widget.dart';
+import 'package:rlv2_flutter/core/widgets/text_form_field_widget.dart';
+import 'package:rlv2_flutter/features/navigation/widgets/custom_nav_drawer.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_version_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/recipe_with_data_model.dart';
 import 'package:rlv2_flutter/features/recipe/models/step_item_model.dart';
 import 'package:rlv2_flutter/features/recipe/utils/find_latest_version.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/edit_steps_widget.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
+import 'package:rlv2_flutter/utils/constants.dart';
 
 class CreateRecipeScreen extends ConsumerStatefulWidget {
   const CreateRecipeScreen({
@@ -27,7 +32,7 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
   List<TextEditingController> tipControllers = [TextEditingController()];
   TextEditingController nameController = TextEditingController();
   TextEditingController servingsController = TextEditingController();
-  String? selectedDifficulty;
+  RecipeDifficulty? selectedDifficulty;
   TextEditingController descriptionController = TextEditingController();
 
   TextEditingController cookTimeController = TextEditingController();
@@ -58,7 +63,9 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
 
       if (widget.previousVersion != null) {
         servingsController.text = widget.previousVersion!.servings.toString();
-        selectedDifficulty = widget.previousVersion!.difficulty;
+        selectedDifficulty = RecipeDifficulty.fromString(
+          widget.previousVersion!.difficulty,
+        );
         descriptionController.text = widget.previousVersion!.description ?? '';
 
         stepItems =
@@ -132,6 +139,7 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
         ? latestVersion!.versionNumber + 1
         : 1;
     return Scaffold(
+      endDrawer: const CustomDrawer(),
       appBar: AppBar(
         title: Text(
           widget.recipe == null
@@ -146,8 +154,9 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
           children: [
             // Recipe Name (Editable or not based on context)
             renderPrefillSwitch(),
+
             if (widget.recipe == null)
-              TextFormField(
+              TextFormFieldWidget(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: 'Recipe Name'),
                 validator: (value) {
@@ -174,8 +183,9 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                   children: [
                     // Servings
                     Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextFormField(
+                      padding:
+                          const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+                      child: TextFormFieldWidget(
                         controller: servingsController,
                         decoration:
                             const InputDecoration(labelText: 'Servings'),
@@ -184,18 +194,19 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                     ),
                     // Difficulty
                     Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: DropdownButtonFormField<String>(
+                      padding:
+                          const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                      child: DropdownButtonFormFieldWidget<RecipeDifficulty>(
                         value: selectedDifficulty,
-                        items:
-                            ['beginner', 'intermediate', 'advanced', 'expert']
-                                .map(
-                                  (difficulty) => DropdownMenuItem(
-                                    value: difficulty,
-                                    child: Text(difficulty),
-                                  ),
-                                )
-                                .toList(),
+                        items: RecipeDifficulty.values
+                            .map(
+                              (difficulty) =>
+                                  DropdownMenuItem<RecipeDifficulty>(
+                                value: difficulty,
+                                child: Text(difficulty.name),
+                              ),
+                            )
+                            .toList(),
                         onChanged: (value) {
                           setState(() {
                             selectedDifficulty = value;
@@ -211,8 +222,9 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                   children: [
                     // Cook Time
                     Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextFormField(
+                      padding:
+                          const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+                      child: TextFormFieldWidget(
                         controller: cookTimeController,
                         decoration: const InputDecoration(
                           labelText: 'Cook Time',
@@ -223,8 +235,9 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                     ),
                     // Prep Time
                     Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextFormField(
+                      padding:
+                          const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                      child: TextFormFieldWidget(
                         controller: prepTimeController,
                         decoration: const InputDecoration(
                           labelText: 'Prep Time',
@@ -237,20 +250,20 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
                 ),
               ],
             ),
-
-            TextField(
+            const SizedBox(height: 16),
+            TextFieldWidget(
               controller: descriptionController,
-              decoration: const InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(
+                labelText: 'Recipe Description',
+                alignLabelWithHint: true,
+              ),
               maxLines: 3,
+              textAlignVertical: TextAlignVertical.top,
             ),
             const SizedBox(height: 16),
             Text(
               'Steps',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            Text(
-              'Drag and drop to reorder or swipe to delete',
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             EditStepsWidget(
               steps: StepItem.fromRecipeVersionSteps(
@@ -260,78 +273,150 @@ class CreateRecipeScreenState extends ConsumerState<CreateRecipeScreen> {
             ),
             // Nutritional Info
 
-            TextField(
-              controller: caloriesController,
-              decoration: const InputDecoration(
-                labelText: 'Calories',
-                suffixText: 'per serving',
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: EdgeInsets.zero,
+              title: Text(
+                'Nutrition information per serving',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              keyboardType: TextInputType.number,
+              shape: const Border(),
+              children: [
+                Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(),
+                    1: FlexColumnWidth(),
+                  },
+                  children: [
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 8,
+                            top: 8,
+                            bottom: 8,
+                          ),
+                          child: TextFieldWidget(
+                            controller: caloriesController,
+                            decoration: const InputDecoration(
+                              labelText: 'Calories',
+                              suffixText: 'kcal',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                          child: TextFieldWidget(
+                            controller: proteinController,
+                            decoration: const InputDecoration(
+                              labelText: 'Protein',
+                              suffixText: 'g',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 8,
+                            top: 8,
+                            bottom: 8,
+                          ),
+                          child: TextFieldWidget(
+                            controller: carbohydratesController,
+                            decoration: const InputDecoration(
+                              labelText: 'Carbohydrates',
+                              suffixText: 'g',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                          child: TextFieldWidget(
+                            controller: fatController,
+                            decoration: const InputDecoration(
+                              labelText: 'Fat',
+                              suffixText: 'g',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 8,
+                            top: 8,
+                            bottom: 8,
+                          ),
+                          child: TextFieldWidget(
+                            controller: saturatedFatController,
+                            decoration: const InputDecoration(
+                              labelText: 'Saturated Fat',
+                              suffixText: 'g',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                          child: TextFieldWidget(
+                            controller: cholesterolController,
+                            decoration: const InputDecoration(
+                              labelText: 'Cholesterol',
+                              suffixText: 'g',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 8,
+                            top: 8,
+                            bottom: 8,
+                          ),
+                          child: TextFieldWidget(
+                            controller: fiberController,
+                            decoration: const InputDecoration(
+                              labelText: 'Fiber',
+                              suffixText: 'g',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                          child: TextFieldWidget(
+                            controller: sodiumController,
+                            decoration: const InputDecoration(
+                              labelText: 'Sodium',
+                              suffixText: 'mg',
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
-
-            TextField(
-              controller: proteinController,
-              decoration: const InputDecoration(
-                labelText: 'Protein',
-                suffixText: 'grams per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
-            TextField(
-              controller: carbohydratesController,
-              decoration: const InputDecoration(
-                labelText: 'Carbohydrates',
-                suffixText: 'grams per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
-            TextField(
-              controller: fatController,
-              decoration: const InputDecoration(
-                labelText: 'Fat',
-                suffixText: 'grams per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
-            TextField(
-              controller: saturatedFatController,
-              decoration: const InputDecoration(
-                labelText: 'Saturated Fat',
-                suffixText: 'grams per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
-            TextField(
-              controller: cholesterolController,
-              decoration: const InputDecoration(
-                labelText: 'Cholesterol',
-                suffixText: 'grams per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
-            TextField(
-              controller: fiberController,
-              decoration: const InputDecoration(
-                labelText: 'Fiber',
-                suffixText: 'grams per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
-            TextField(
-              controller: sodiumController,
-              decoration: const InputDecoration(
-                labelText: 'Sodium',
-                suffixText: 'mg per serving',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {

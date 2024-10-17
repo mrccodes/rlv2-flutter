@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rlv2_flutter/core/widgets/dropdown_button_form_field_widget.dart';
 import 'package:rlv2_flutter/core/widgets/loading_widget.dart';
 import 'package:rlv2_flutter/features/organization/providers/organization_provider.dart';
 import 'package:rlv2_flutter/features/organization/providers/user_organizations_provider.dart';
@@ -34,10 +35,6 @@ class OrgSelect extends ConsumerWidget {
       return const LoadingWidget();
     }
 
-    if (userOrganizations.error != null) {
-      return Text(userOrganizations.error!);
-    }
-
     // If user has no organizations, return an empty SizedBox
     if (orgOptions.isEmpty) {
       return const SizedBox.shrink();
@@ -59,33 +56,25 @@ class OrgSelect extends ConsumerWidget {
     final selectedOrgId = organizations.selectedOrganization.id;
 
     return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
-        ),
-      ),
       child: organizations.isLoading
           ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: const LoadingWidget(),
             )
-          : DropdownButtonFormField<String>(
-              value: selectedOrgId,
-              style: Theme.of(context).textTheme.bodySmall,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
+          : Padding(
+              padding: const EdgeInsets.all(8),
+              child: DropdownButtonFormFieldWidget<String>(
+                value: selectedOrgId,
+                items: orgOptions,
+                onChanged: (String? val) => {
+                  if (val != null &&
+                      val != organizations.selectedOrganization.id)
+                    {
+                      updateSelectedOrganization(val),
+                    },
+                },
+                isExpanded: true, // Ensures the dropdown takes full width
               ),
-              items: orgOptions,
-              onChanged: (String? val) => {
-                if (val != null && val != organizations.selectedOrganization.id)
-                  {
-                    updateSelectedOrganization(val),
-                  },
-              },
-              isExpanded: true, // Ensures the dropdown takes full width
             ),
     );
   }

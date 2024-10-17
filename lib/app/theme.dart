@@ -89,42 +89,53 @@ class MyAppTheme {
         selectionColor: primarySwatch.shade500,
         selectionHandleColor: primarySwatch.shade500,
       ),
+
       inputDecorationTheme: InputDecorationTheme(
+        filled: true, // Fills the background
+        isDense: true,
+        fillColor: Colors.grey.withOpacity(0.2), // Opaque light background
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none, // No border
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide.none, // No border when enabled
+          borderRadius: BorderRadius.circular(12),
+        ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: primarySwatch.shade500,
-          ),
+          borderSide: BorderSide.none, // No border when focused
+          borderRadius: BorderRadius.circular(12),
         ),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: primaryGrey,
-          ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 167, 21, 21)),
+          borderRadius: BorderRadius.circular(12),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: primaryGrey,
-          ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 167, 21, 21)),
+          borderRadius: BorderRadius.circular(12),
         ),
-        floatingLabelStyle:
-            WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
-          if (states.contains(WidgetState.error)) {
-            return TextStyle(color: lightTheme.colorScheme.error);
-          }
-          return TextStyle(color: lightTheme.colorScheme.secondary);
-        }),
-        labelStyle: WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
-          if (states.contains(WidgetState.error)) {
-            return TextStyle(color: lightTheme.colorScheme.error);
-          }
-          return TextStyle(color: lightTheme.colorScheme.secondary);
-        }),
-        hintStyle: WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
-          if (states.contains(WidgetState.error)) {
-            return TextStyle(color: lightTheme.colorScheme.error);
-          }
-          return TextStyle(color: lightTheme.colorScheme.secondary);
-        }),
-        // set border to inverse primary when focused
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+
+        hintStyle: TextStyle(
+          color: primarySwatch.shade800,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        floatingLabelStyle: TextStyle(color: primarySwatch.shade900),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        labelStyle: TextStyle(
+          color: primarySwatch.shade900,
+          fontSize: 16,
+        ),
+
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black.withOpacity(0.05),  // Very subtle shadow
+        //     blurRadius: 10,
+        //     offset: const Offset(0, 4),
+        //   ),
+        // ],
       ),
 
       switchTheme: SwitchThemeData(
@@ -216,6 +227,44 @@ class MyAppTheme {
             }
             return primarySwatch.shade50;
           },
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true, // Fills the background
+        isDense: true,
+
+        fillColor: Colors.grey.withOpacity(0.1), // Opaque light background
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none, // No border
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide.none, // No border when enabled
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none, // No border when focused
+          borderRadius: BorderRadius.circular(12),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 167, 21, 21)),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 167, 21, 21)),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+        hintStyle: TextStyle(
+          color: primarySwatch.shade50,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        floatingLabelStyle: const TextStyle(color: Colors.white),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        labelStyle: const TextStyle(
+          color: Colors.white,
         ),
       ),
       scaffoldBackgroundColor: const Color(0xFF121212),

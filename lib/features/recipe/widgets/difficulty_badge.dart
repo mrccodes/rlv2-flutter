@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rlv2_flutter/utils/capitalize_string.dart';
+import 'package:rlv2_flutter/utils/constants.dart';
 
 class DifficultyBadge extends StatelessWidget {
   const DifficultyBadge({
@@ -8,7 +9,7 @@ class DifficultyBadge extends StatelessWidget {
     this.small = false,
     this.colored = true,
   });
-  final String difficulty;
+  final RecipeDifficulty difficulty;
   final bool small;
   final bool colored;
 
@@ -16,17 +17,15 @@ class DifficultyBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     Color badgeColor;
 
-    switch (difficulty.toLowerCase()) {
-      case 'beginner':
+    switch (difficulty) {
+      case RecipeDifficulty.beginner:
         badgeColor = const Color.fromARGB(255, 3, 169, 9);
-      case 'intermediate':
+      case RecipeDifficulty.intermediate:
         badgeColor = const Color.fromARGB(255, 230, 209, 19);
-      case 'advanced':
+      case RecipeDifficulty.advanced:
         badgeColor = Theme.of(context).primaryColor;
-      case 'expert':
+      case RecipeDifficulty.expert:
         badgeColor = Theme.of(context).colorScheme.error;
-      default:
-        badgeColor = Colors.grey; // Default case for unexpected values
     }
 
     TextStyle? getTextStyle() {
@@ -60,7 +59,7 @@ class DifficultyBadge extends StatelessWidget {
           ),
         ),
         child: Text(
-          capitalize(difficulty),
+          capitalize(difficulty.name),
           style: getTextStyle(),
         ),
       ),

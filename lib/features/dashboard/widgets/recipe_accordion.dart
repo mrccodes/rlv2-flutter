@@ -6,6 +6,7 @@ import 'package:rlv2_flutter/features/recipe/providers/recipe_list_provider.dart
 import 'package:rlv2_flutter/features/recipe/screens/create_recipe_screen.dart';
 import 'package:rlv2_flutter/features/recipe/screens/view_recipe_screen.dart';
 import 'package:rlv2_flutter/features/recipe/widgets/difficulty_badge.dart';
+import 'package:rlv2_flutter/utils/constants.dart';
 import 'package:rlv2_flutter/utils/format_time_string.dart';
 
 class RecipeAccordion extends ConsumerWidget {
@@ -193,7 +194,7 @@ class RecipeVersionCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   DifficultyBadge(
-                    difficulty: version.difficulty,
+                    difficulty: RecipeDifficulty.fromString(version.difficulty),
                     small: true,
                   ),
                 ],

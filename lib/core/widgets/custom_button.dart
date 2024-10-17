@@ -8,7 +8,7 @@ enum ButtonType {
 class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.onPressed,
-    required this.text,
+    this.text,
     this.fullWidth = false,
     this.visualDensity = VisualDensity.standard,
     this.icon,
@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   });
   final VisualDensity? visualDensity;
   final VoidCallback? onPressed;
-  final String text;
+  final String? text;
   final bool fullWidth;
   final Widget? icon;
   final bool isLoading;
@@ -27,8 +27,14 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Define styles for primary and secondary buttons
+    final isIconOnlyButton = icon != null && text == null;
     final primaryStyle = ElevatedButton.styleFrom(
       elevation: 3,
+      shape: isIconOnlyButton
+          ? const CircleBorder()
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
       visualDensity: visualDensity,
       backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Theme.of(context).colorScheme.primary,
@@ -42,6 +48,11 @@ class CustomButton extends StatelessWidget {
       side: BorderSide(
         color: Theme.of(context).primaryColor,
       ),
+      shape: isIconOnlyButton
+          ? const CircleBorder()
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
     );
 
     // Choose the style based on buttonType
@@ -54,7 +65,24 @@ class CustomButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: null,
           style: buttonStyle,
-          child: const CircularProgressIndicator(),
+          child: const SizedBox(
+            height: 20,
+            width: 20,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (isIconOnlyButton) {
+      return SizedBox(
+        width: fullWidth ? double.infinity : null,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: buttonStyle,
+          child: icon,
         ),
       );
     }
@@ -65,7 +93,7 @@ class CustomButton extends StatelessWidget {
           ? ElevatedButton.icon(
               onPressed: onPressed,
               label: Text(
-                text,
+                text ?? 'Submit',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               icon: icon,
@@ -75,7 +103,7 @@ class CustomButton extends StatelessWidget {
               onPressed: onPressed,
               style: buttonStyle,
               child: Text(
-                text,
+                text ?? 'Submit',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ),

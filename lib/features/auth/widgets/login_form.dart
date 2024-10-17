@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rlv2_flutter/core/widgets/custom_button.dart';
+import 'package:rlv2_flutter/core/widgets/text_form_field_widget.dart';
 import 'package:rlv2_flutter/utils/app_flavor.dart';
 import 'package:rlv2_flutter/utils/app_logger.dart';
 import 'package:rlv2_flutter/utils/validators.dart';
@@ -96,21 +97,19 @@ class LoginFormState extends ConsumerState<LoginForm> {
       key: formKey,
       child: Column(
         children: [
-          TextFormField(
+          TextFormFieldWidget(
             validator: emailValidator,
             decoration: const InputDecoration(
               labelText: 'Email',
-              border: OutlineInputBorder(),
             ),
             onSaved: (value) => email = value!,
           ),
           const SizedBox(height: 16),
-          TextFormField(
+          TextFormFieldWidget(
             validator: _passwordValidator,
             obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Password',
-              border: OutlineInputBorder(),
             ),
             onSaved: (value) => password = value!,
           ),
